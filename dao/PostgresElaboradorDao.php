@@ -140,7 +140,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $elaboradors[] = new Elaborador($id,$login,$senha,$nome, $instituicao, $isAdmin);
+            $elaboradors[] = new Elaborador($id, $login, $senha, $nome, $instituicao, $isAdmin);
         }
         
         return $elaboradors;
@@ -155,9 +155,9 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
                 FROM
                     " . $this->table_name . "
                 WHERE
-                    nome = ?
-                LIMIT
-                    1 OFFSET 0";
+                    nome = ?";
+                // LIMIT
+                //     1 OFFSET 0";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->bindParam(1, $nome);
@@ -165,7 +165,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;
@@ -180,9 +180,9 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
                 FROM
                     " . $this->table_name . "
                 WHERE
-                    email = ?
-                LIMIT
-                    1 OFFSET 0";
+                    email = ?";
+                // LIMIT
+                //     1 OFFSET 0";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->bindParam(1, $email);
@@ -190,7 +190,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;

@@ -1,2 +1,2 @@
-resposta ou é texto ou ta gravado o id da alternativa
-trocar avaliação por nota + observação do professor
+Na classe Resposta, ou é um texto ou está gravado o id da alternativa da resposta
+Trocar campo avaliação da classe Resposta por nota e observação do professor
