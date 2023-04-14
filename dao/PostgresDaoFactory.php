@@ -3,7 +3,7 @@
 include_once('DaoFactory.php');
 include_once('PostgresUsuarioDao.php');
 
-class PostgresDaofactory extends DaoFactory {
+class PostgresDaoFactory extends DaoFactory {
 
     // specify your own database credentials
     private $host = "localhost";

@@ -5,14 +5,16 @@ class Usuario {
     private $login;
     private $senha;
     private $nome;
+    private $email;
     private $telefone;
 
-    public function __construct( $id, $login, $senha, $nome, $telefone)
+    public function __construct( $id, $login, $senha, $nome, $email, $telefone)
     {
         $this->id=$id;
         $this->login=$login;
         $this->senha=$senha;
         $this->nome=$nome;
+        $this->email=$email;
         $this->telefone=$telefone;
     }
 
@@ -27,6 +29,9 @@ class Usuario {
 
     public function getSenha() { return $this->senha; }
     public function setSenha($senha) {$this->senha = $senha;}
+
+    public function getEmail() { return $this->email; }
+    public function setEmail($email) {$this->email = $email;}
 
     public function getTelefone() { return $this->telefone; }
     public function setTelefone($telefone) {$this->telefone = $telefone;}

@@ -10,8 +10,8 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
     public function insere($usuario) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (login, senha, nome) VALUES" .
-        " (:login, :senha, :nome)";
+        " (login, senha, nome, email, telefone) VALUES" .
+        " (:login, :senha, :nome, :email, :telefone)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -51,7 +51,7 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         return removePorId($usuario->getId());
     }
 
-    public function altera(&$usuario) {
+    public function altera($usuario) {
 
         $query = "UPDATE " . $this->table_name . 
         " SET login = :login, senha = :senha, nome = :nome, email = :email" .

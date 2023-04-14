@@ -52,10 +52,10 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         return removePorId($elaborador->getId());
     }
 
-    public function altera(&$elaborador) {
+    public function altera($elaborador) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, senha = :senha, nome = :nome, instituicao = :instituicao" .
+        " SET login = :login, senha = :senha, nome = :nome, email = :email, instituicao = :instituicao" .
         " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -64,7 +64,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $stmt->bindParam(":login", $elaborador->getLogin());
         $stmt->bindParam(":senha", md5($elaborador->getSenha()));
         $stmt->bindParam(":nome", $elaborador->getNome());
-        $stmt->bindParam(':id', $elaborador->getId());
+        $stmt->bindParam(':email', $elaborador->getEmail());
         $stmt->bindParam(":instituicao", $elaborador->getInstituicao());
 
         // execute the query
@@ -80,7 +80,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $elaborador = null;
 
         $query = "SELECT
-                    id, login, nome, senha, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isAdmin
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -94,7 +94,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;
@@ -105,7 +105,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $elaborador = null;
 
         $query = "SELECT
-                    id, login, nome, senha, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isAdmin
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -119,7 +119,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;
@@ -130,7 +130,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $elaboradors = array();
 
         $query = "SELECT
-                    id, login, senha, nome, instituicao, isAdmin
+                    id, login, senha, nome, email, instituicao, isAdmin
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -140,7 +140,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $elaboradors[] = new Elaborador($id, $login, $senha, $nome, $instituicao, $isAdmin);
+            $elaboradors[] = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isAdmin);
         }
         
         return $elaboradors;
@@ -151,7 +151,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $elaborador = null;
 
         $query = "SELECT
-                    id, login, nome, senha, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isAdmin
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -165,7 +165,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;
@@ -190,7 +190,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
         } 
      
         return $elaborador;

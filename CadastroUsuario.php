@@ -1,9 +1,14 @@
 <?php 
-    include_once 'LayoutHeader.php'
+    $titulo = 'Cadastro';
+    include_once 'LayoutHeader.php';
 ?>
 
 <div>
-    <h1>Cadastro</h1>
+    <h1>Sistema de Questionários</h1>
+</div>
+    
+<div>
+    <h2>Login</h2>
     <form action="CadastraUsuario.php" method="POST">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" required>
@@ -18,5 +23,5 @@
         <input type="submit" value="Enviar">
     </form>
 
-    <a href="Login.php">Voltar</a>
+    <a href="Index.php">Voltar</a>
 </div>
