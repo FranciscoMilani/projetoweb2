@@ -1,0 +1,2 @@
+resposta ou é texto ou ta gravado o id da alternativa
+trocar avaliação por nota + observação do professor
