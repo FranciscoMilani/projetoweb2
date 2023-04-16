@@ -1,19 +1,15 @@
-<?php 
-    $titulo = "Página de Login";
-    include_once 'LayoutHeader.php';
+<?php
+$titulo = "Página de Login";
+include_once 'LayoutHeader.php';
 ?>
-    <div>
-        <h1>Sistema de Questionários</h1>
-    </div>
-    
-    <div>
-        <h2>Login</h2>
-        <form action="ExecutaLogin.php" method="POST">
-            <label for="login">Login:</label>
-            <input type="text" name="login" required>
-            <label for="senha">Senha:</label>
-            <input type="password" name="senha" required>
-            <input type="submit" value="Entrar">
+
+<div class="paginaLogin">
+    <div class="form">
+        <form id="formId" action="ExecutaLogin.php" method="POST" class="login-form">
+            <input type="text" name="login" placeholder="Login" />
+            <input type="password" name="senha" placeholder="Senha" />
+            <input type="submit" id="btLogin" value="Entrar">
+            <p class="msgCadastrar"><a href="CadastroUsuario.php">Criar uma Conta</a></p>
         </form>
-        <a href="CadastroUsuario.php">Cadastre-se</a>
     </div>
+</div>
