@@ -1,5 +1,7 @@
 <?php 
     // validar sessão
+    include "verificaUsuarios.php";
 
-    echo '<h1> LISTA OFERTAS </h1>'
+    $titulo = "Lista de Ofertas";
+    include_once 'LayoutHeader.php';
 ?>

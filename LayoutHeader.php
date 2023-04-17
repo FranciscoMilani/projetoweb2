@@ -34,12 +34,12 @@
                 session_start();
             }
 
-            // if(isset($_SESSION["nome_usuario"])) {
-            //     echo "<span>Você está logado como " . $_SESSION["nome_usuario"];		
-            //     echo "<a href='ExecutaLogout.php'> Logout </a></span>";
-            // } else {
-            //     echo "<span><a href='Login.php'> Efetuar Login </a></span>";
-            // }
+            if(isset($_SESSION["nome_usuario"])) {
+                echo "<span class=\"usuarioLogado\">Você está logado como " . $_SESSION["nome_usuario"];		
+                echo "<a href='ExecutaLogout.php' class=\"usuarioLogado\"> Logout </a></span>";
+            } else {
+                echo "<span><a href='index.php' class=\"usuarioLogado\"> Efetuar Login </a></span>";
+            }
             ?>
         </div>
     </header>

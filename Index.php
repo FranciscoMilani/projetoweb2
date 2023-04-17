@@ -5,7 +5,7 @@ include_once 'LayoutHeader.php';
 
 <div class="paginaLogin">
     <div class="form">
-        <form id="formId" action="ExecutaLogin.php" method="POST" class="login-form">
+        <form id="formId" action="ExecutaLogin.php" method="POST" class="cadastro-form">
             <input type="text" name="login" placeholder="Login" />
             <input type="password" name="senha" placeholder="Senha" />
             <input type="submit" id="btLogin" value="Entrar">
