@@ -105,7 +105,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $elaborador = null;
 
         $query = "SELECT
-                    id, login, nome, senha, email, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isadmin
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -119,7 +119,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
+            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
         } 
      
         return $elaborador;

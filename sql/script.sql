@@ -21,8 +21,8 @@ create table elaborador (
     isAdmin boolean not null
 );
 -- insere dados do administrador
--- ver como criptografar essa senha manualmente para inserir
-insert into elaborador(login, senha, nome, instituicao, email, isAdmin) values ('admin','admin','Administrador', 'UCS', 'adm@ucs.br', True);
+-- senha = '123' em md5
+insert into elaborador(login, senha, nome, instituicao, email, isAdmin) values ('admin','202cb962ac59075b964b07152d234b70','Administrador', 'UCS', 'adm@ucs.br', True);
 
 
 alter table elaborador 

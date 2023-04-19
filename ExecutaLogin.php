@@ -14,6 +14,9 @@ if (!$login || !$senha) {
 
 $dao = $factory->getUsuarioDao();
 $usuario = $dao->buscaPorLogin($login);
+//instanciar mais um dao para elaborador (verificar se essa é a maneira correta de procurar um elaborador)
+$daoElab = $factory->getElaboradorDao();
+$elaborador = $daoElab->buscaPorLogin($login);
 
 var_dump($usuario);
 
@@ -23,6 +26,20 @@ if ($usuario) {
     if (!strcmp($senha, $usuario->getSenha())) {
         $_SESSION["id_usuario"] = $usuario->getId();
         $_SESSION["nome_usuario"] = stripslashes($usuario->getNome());
+        $_SESSION["is_elaborador"] = FALSE;
+        $_SESSION["is_admin"] = FALSE;
+        header("Location: ListaOfertas.php");
+        exit;
+    } else {
+        $problemas = TRUE;
+    }
+} else if ($elaborador) {
+    if (!strcmp($senha, $elaborador->getSenha())) {
+        $_SESSION["id_usuario"] = $elaborador->getId();
+        $_SESSION["nome_usuario"] = stripslashes($elaborador->getNome());
+        $_SESSION["is_elaborador"] = TRUE;
+        $_SESSION["is_admin"] = $elaborador->getIsAdmin();
+        
         header("Location: ListaOfertas.php");
         exit;
     } else {

@@ -2,6 +2,7 @@
 
 include_once('DaoFactory.php');
 include_once('PostgresUsuarioDao.php');
+include_once('PostgresElaboradorDao.php');
 
 class PostgresDaoFactory extends DaoFactory {
 
