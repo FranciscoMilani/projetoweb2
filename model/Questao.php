@@ -6,6 +6,7 @@
         private $isObjetiva;
         private $isMultiplaEscolha;
         private $imagem;
+        private $alternativas = array();
 
         public function __construct($descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha, $imagem) {
             $this->$descricao = $descricao;
@@ -29,6 +30,11 @@
 
         public function getImagem() { return $this->imagem; }
         public function setImagem($imagem) {$this->imagem = $imagem;}
+
+        public function getAlternativas() { return $this->alternativas; }
+        public function setAlternativas($alternativas) {$this->alternativas = $alternativas;}
+
+        public function addAlternativa($alternativa) { array_push($alternativa); }
     }
     
 ?>

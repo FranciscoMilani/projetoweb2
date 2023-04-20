@@ -29,5 +29,10 @@
 
         public function getElaborador() { return $this->elaborador; }
         public function setElaborador($elaborador) { $this->elaborador = $elaborador; }
+
+        public function getQuestionarioQuestao() { return $this->questionarioQuestao; }
+        public function setQuestionarioQuestao($questionarioQuestao) {$this->questionarioQuestao = $questionarioQuestao;}
+
+        public function addQuestionarioQuestao($questionarioQuestao) { array_push($questionarioQuestao); }
     }
 ?>
