@@ -45,7 +45,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
     }
 
     public function remove($questionarioquestao) {
-        return removePorIds($questionarioquestao->getQuestionarioId(),
+        return $this->removePorIds($questionarioquestao->getQuestionarioId(),
                             $questionarioquestao->getQuestaoId());
     }
 

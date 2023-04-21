@@ -7,7 +7,7 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
 
     private $table_name = 'questionario';
     
-    public function insere(Questionario $questionario) {
+    public function insere($questionario) {
 
         $query = "INSERT INTO " . $this->table_name . 
         " (nome, descricao, datacriacao, notaaprovacao, elaboradorid) VALUES" .
@@ -45,7 +45,7 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
     }
 
     public function remove($questionario) {
-        return removePorId($questionario->getId());
+        return $this->removePorId($questionario->getId());
     }
 
     /*                  IMPLEMENTAR ALTERAÇÃO SE FOR NECESSÁRIO
