@@ -5,7 +5,7 @@
         private $questionarioId;
         private $questaoId;
 
-        public function __construct($pontos, $ordem, $questionarioId, $questao)
+        public function __construct($pontos, $ordem, $questionarioId, $questaoId)
         {
             $this->pontos = $pontos;
             $this->ordem = $ordem;
