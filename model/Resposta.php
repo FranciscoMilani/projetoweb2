@@ -5,9 +5,11 @@
         private $alternativa;
         private $questao;
 
-        public function __construct($texto, $avaliacao){
+        public function __construct($texto, $avaliacao, $alternativa, $questao){
             $this->texto = $texto;
             $this->avaliacao = $avaliacao;
+            $this->alternativa = $alternativa;
+            $this->questao = $questao;
         }
 
         public function getTexto() { return $this->texto; }

@@ -1,8 +1,13 @@
 <?php
 
 include_once('DaoFactory.php');
+
 include_once('PostgresUsuarioDao.php');
 include_once('PostgresElaboradorDao.php');
+
+include_once('PostgresQuestionarioDao.php');
+include_once('PostgresQuestaoDao.php');
+include_once('PostgresQuestionarioQuestaoDao.php');
 
 class PostgresDaoFactory extends DaoFactory {
 
@@ -29,12 +34,26 @@ class PostgresDaoFactory extends DaoFactory {
         return $this->conn;
     }
 
+    // ------------ USUARIOS -------------
     public function getUsuarioDao() {
         return new PostgresUsuarioDao($this->getConnection());
     }
 
     public function getElaboradorDao() {
         return new PostgresElaboradorDao($this->getConnection());
+    }
+
+    // ---------- QUESTIONARIOS E QUESTOES -----------
+    public function getQuestionarioDao() { 
+        return new PostgresQuestionarioDao($this->getConnection()); 
+    }
+
+    public function getQuestaoDao() { 
+        return new PostgresQuestaoDao($this->getConnection()); 
+    }
+
+    public function getQuestionarioQuestaoDao() { 
+        return new PostgresQuestionarioQuestaoDao($this->getConnection()); 
     }
 }
 ?>

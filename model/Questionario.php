@@ -1,5 +1,7 @@
 <?php 
     class Questionario {
+
+        private $id;
         private $nome;
         private $descricao;
         private $dataCriacao;
@@ -7,13 +9,17 @@
         private $elaborador;
         private $questionarioQuestao = array();
 
-        public function __construct($nome, $descricao, $dataCriacao, $notaAprovacao)
+        public function __construct($id, $nome, $descricao, $dataCriacao, $notaAprovacao)
         {
+            $this->id = $id;
             $this->nome = $nome;
             $this->descricao = $descricao;
             $this->dataCriacao = $dataCriacao;
             $this->notaAprovacao = $notaAprovacao;
         }
+
+        public function getId() { return $this->id; }
+        public function setId($id) { $this->id = $id; }
         
         public function getNome() { return $this->nome; }
         public function setNome($nome) { $this->nome = $nome; }

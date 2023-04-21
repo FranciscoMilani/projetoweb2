@@ -1,6 +1,8 @@
 <?php 
 
     class Questao {
+
+        private $id;
         private $descricao;
         private $isDiscursiva;
         private $isObjetiva;
@@ -8,12 +10,16 @@
         private $imagem;
         private $alternativas = array();
 
-        public function __construct($descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha) {
+        public function __construct($id, $descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha) {
+            $this->id = $id;
             $this->$descricao = $descricao;
             $this->$isDiscursiva = $isDiscursiva;
             $this->$isObjetiva = $isObjetiva;
             $this->$isMultiplaEscolha = $isMultiplaEscolha;
         }
+
+        public function getId() { return $this->id; }
+        public function setId($id) { $this->id = $id; }
 
         public function getDescricao() { return $this->descricao; }
         public function setDescricao($descricao) {$this->descricao = $descricao;}
