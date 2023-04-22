@@ -24,7 +24,7 @@
         header('Location: CadastroElaborador.php');
         exit;
     } else {
-        $dao->insere(new Usuario(null, $login, $senha, $nome, $email, $instituicao));
+        $dao->insere(new Elaborador(null, $login, $senha, $nome, $email, $instituicao, false));
     }
 
 ?>

@@ -12,18 +12,18 @@ if (!$login || !$senha) {
     exit;
 }
 
-$dao = $factory->getUsuarioDao();
-$usuario = $dao->buscaPorLogin($login);
+$dao = $factory->getRespondenteDao();
+$respondente = $dao->buscaPorLogin($login);
 //instanciar mais um dao para elaborador (verificar se essa é a maneira correta de procurar um elaborador)
 $daoElab = $factory->getElaboradorDao();
 $elaborador = $daoElab->buscaPorLogin($login);
 
 $problemas = FALSE;
-if ($usuario) {
+if ($respondente) {
     // Aviso: comparando senha md5 com hash md5. Se inserir direto no banco p/ testes, sem md5, nao vai logar
-    if (!strcmp($senha, $usuario->getSenha())) {
-        $_SESSION["id_usuario"] = $usuario->getId();
-        $_SESSION["nome_usuario"] = stripslashes($usuario->getNome());
+    if (!strcmp($senha, $respondente->getSenha())) {
+        $_SESSION["id_usuario"] = $respondente->getId();
+        $_SESSION["nome_usuario"] = stripslashes($respondente->getNome());
         //$_SESSION["is_elaborador"] = FALSE;
         $_SESSION["is_admin"] = FALSE;
         header("Location: ListaOfertas.php");

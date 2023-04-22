@@ -4,7 +4,7 @@ abstract class DaoFactory {
     protected abstract function getConnection();
 
     // DAOs
-    public abstract function getUsuarioDao();
+    public abstract function getRespondenteDao();
     public abstract function getElaboradorDao();
 
     public abstract function getQuestionarioDao();

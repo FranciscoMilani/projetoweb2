@@ -1,13 +1,13 @@
 <?php
 
-include_once('UsuarioDao.php');
+include_once('RespondenteDao.php');
 include_once('PostgresDao.php');
 
-class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
+class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
 
-    private $table_name = 'usuario';
+    private $table_name = 'respondente';
     
-    public function insere($usuario) {
+    public function insere($respondente) {
 
         $query = "INSERT INTO " . $this->table_name . 
         " (login, senha, nome, email, telefone) VALUES" .
@@ -16,11 +16,11 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         $stmt = $this->conn->prepare($query);
 
         // bind values 
-        $stmt->bindParam(":login", $usuario->getLogin());
-        $stmt->bindParam(":senha", md5($usuario->getSenha()));
-        $stmt->bindParam(":nome", $usuario->getNome());
-        $stmt->bindParam(':email', $usuario->getEmail());
-        $stmt->bindParam(':telefone', $usuario->getTelefone());
+        $stmt->bindParam(":login", $respondente->getLogin());
+        $stmt->bindParam(":senha", md5($respondente->getSenha()));
+        $stmt->bindParam(":nome", $respondente->getNome());
+        $stmt->bindParam(':email', $respondente->getEmail());
+        $stmt->bindParam(':telefone', $respondente->getTelefone());
 
         if($stmt->execute()){
             return true;
@@ -47,11 +47,11 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         return false;
     }
 
-    public function remove($usuario) {
-        return removePorId($usuario->getId());
+    public function remove($respondente) {
+        return removePorId($respondente->getId());
     }
 
-    public function altera($usuario) {
+    public function altera($respondente) {
 
         $query = "UPDATE " . $this->table_name . 
         " SET login = :login, senha = :senha, nome = :nome, email = :email" .
@@ -60,11 +60,11 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
-        $stmt->bindParam(":login", $usuario->getLogin());
-        $stmt->bindParam(":senha", md5($usuario->getSenha()));
-        $stmt->bindParam(":nome", $usuario->getNome());
-        $stmt->bindParam(':email', $usuario->getEmail());
-        $stmt->bindParam(':telefone', $usuario->getTelefone());
+        $stmt->bindParam(":login", $respondente->getLogin());
+        $stmt->bindParam(":senha", md5($respondente->getSenha()));
+        $stmt->bindParam(":nome", $respondente->getNome());
+        $stmt->bindParam(':email', $respondente->getEmail());
+        $stmt->bindParam(':telefone', $respondente->getTelefone());
 
         // execute the query
         if($stmt->execute()){
@@ -76,7 +76,7 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
 
     public function buscaPorId($id) {
         
-        $usuario = null;
+        $respondente = null;
 
         $query = "SELECT
                     id, login, nome, senha, email, telefone
@@ -93,15 +93,15 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $usuario = new Usuario($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         } 
      
-        return $usuario;
+        return $respondente;
     }
 
     public function buscaPorLogin($login) {
 
-        $usuario = null;
+        $respondente = null;
 
         $query = "SELECT
                     id, login, nome, senha, email, telefone
@@ -118,15 +118,15 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $usuario = new Usuario($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         } 
      
-        return $usuario;
+        return $respondente;
     }
 
     public function buscaTodos() {
 
-        $usuarios = array();
+        $respondentes = array();
 
         $query = "SELECT
                     id, login, senha, nome, email, telefone
@@ -139,15 +139,15 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $usuarios[] = new Usuario($id, $login, $senha, $nome, $email, $telefone);
+            $respondentes[] = new Respondente($id, $login, $senha, $nome, $email, $telefone);
         }
         
-        return $usuarios;
+        return $respondentes;
     }
 
     public function buscaPorNome($nome) {
 
-        $usuario = null;
+        $respondente = null;
 
         $query = "SELECT
                     id, login, senha, nome, email, telefone
@@ -163,15 +163,15 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         $stmt->execute();
      
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $usuario = new Usuario($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         }
      
-        return $usuario;
+        return $respondente;
     }
 
     public function buscaPorEmail($email) {
 
-        $usuario = null;
+        $respondente = null;
 
         $query = "SELECT
                     id, login, nome, senha, instituicao, isAdmin
@@ -187,10 +187,10 @@ class PostgresUsuarioDao extends PostgresDao implements UsuarioDao {
         $stmt->execute();
      
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $usuario = new Usuario($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         }
      
-        return $usuario;
+        return $respondente;
     }
 }
 ?>

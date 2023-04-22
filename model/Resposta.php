@@ -1,13 +1,13 @@
 <?php 
     class Resposta {
         private $texto;
-        private $avaliacao;
+        private $nota;
         private $alternativa;
         private $questao;
 
-        public function __construct($texto, $avaliacao, $alternativa, $questao){
+        public function __construct($texto, $nota, $alternativa, $questao){
             $this->texto = $texto;
-            $this->avaliacao = $avaliacao;
+            $this->nota = $nota;
             $this->alternativa = $alternativa;
             $this->questao = $questao;
         }
@@ -15,8 +15,8 @@
         public function getTexto() { return $this->texto; }
         public function setTexto($texto) { $this->texto = $texto; }
 
-        public function getAvaliacao() { return $this->avaliacao; }
-        public function setAvaliacao($avaliacao) { $this->avaliacao = $avaliacao; }
+        public function getNota() { return $this->nota; }
+        public function setNota($nota) { $this->nota = $nota; }
 
         public function getAlternativa() { return $this->alternativa; }
         public function setAlternativa($alternativa) { $this->alternativa = $alternativa; }
