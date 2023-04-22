@@ -44,7 +44,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
     }
 
     public function remove($questao) {
-        return removePorId($questao->getId());
+        return $this->removePorId($questao->getId());
     }
 
     /*                  IMPLEMENTAR ALTERAÇÃO SE FOR NECESSÁRIO

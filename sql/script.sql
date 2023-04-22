@@ -67,5 +67,25 @@ ADD CONSTRAINT fk_questionario FOREIGN KEY (questionarioId) REFERENCES questiona
 ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id);
 
 
+CREATE TABLE alternativa (
+    id SERIAL NOT NULL,
+    descricao VARCHAR(1000) NOT NULL,
+    isCorreta BOOLEAN NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- analisar melhor se esta tabela esta correta
+CREATE TABLE resposta (
+    id SERIAL NOT NULL,
+    texto VARCHAR(5000), -- RESPOSTA PODE SER NULL
+    avaliacao DECIMAL NOT NULL, -- nota
+    questaoId BIGINT NOT NULL,
+    alternativaId BIGINT, --  ALTERNATIVA PODE SER NULL
+	PRIMARY KEY(id),
+    FOREIGN KEY (questaoId) REFERENCES questao(id),
+    FOREIGN KEY (alternativaId) REFERENCES alternativa(id),
+    CHECK ((texto IS NOT NULL) OR (alternativaId IS NOT NULL))
+);
+
 -- alterar tabela usuario para respondente no banco
 -- e no php criar a classe usuário com todos gets e sets, para as outras estenderem a ela

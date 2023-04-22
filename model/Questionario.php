@@ -9,13 +9,14 @@
         private $elaborador;
         private $questionarioQuestao = array();
 
-        public function __construct($id, $nome, $descricao, $dataCriacao, $notaAprovacao)
+        public function __construct($id, $nome, $descricao, $dataCriacao, $notaAprovacao, $elaborador)
         {
             $this->id = $id;
             $this->nome = $nome;
             $this->descricao = $descricao;
             $this->dataCriacao = $dataCriacao;
             $this->notaAprovacao = $notaAprovacao;
+            $this->elaborador = $elaborador;
         }
 
         public function getId() { return $this->id; }

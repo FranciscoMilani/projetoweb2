@@ -49,7 +49,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
     }
 
     public function remove($elaborador) {
-        return removePorId($elaborador->getId());
+        return $this->removePorId($elaborador->getId());
     }
 
     public function altera($elaborador) {

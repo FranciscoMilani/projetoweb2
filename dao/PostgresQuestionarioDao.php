@@ -14,12 +14,12 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         " (:nome, :descricao, :datacriacao, :notaaprovacao, :elaboradorid)";
 
         $stmt = $this->conn->prepare($query);
-
+        $a = $questionario->getElaborador();
         $stmt->bindParam(":nome", $questionario->getNome());
         $stmt->bindParam(":descricao", $questionario->getDescricao());
         $stmt->bindParam(":datacriacao", $questionario->getDataCriacao());
         $stmt->bindParam(":notaaprovacao", $questionario->getNotaAprovacao());
-        $stmt->bindParam(":elaboradorid", $questionario->getElaborador());
+        $stmt->bindParam(":elaboradorid", $a->getId());
 
         if($stmt->execute()){
             return true;

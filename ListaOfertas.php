@@ -9,7 +9,7 @@ include_once 'LayoutHeader.php';
 // cadastro de novos elaboradores, botão para cadastro de questionário, cadastro de alternativas..
 
 //verifica se é adm para ter funções diferentes
-if ($_SESSION["is_elaborador"]) {
+if (isset($_SESSION["id_elaborador"])) {
     echo "Este é um usuário elaborador ";
 } else {
     echo "usuário normal";
