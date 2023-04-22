@@ -15,7 +15,7 @@
     $email = @$_POST["email"];
     $telefone = @$_POST["telefone"];
 
-    $dao = $factory->getUsuarioDao();
+    $dao = $factory->getRespondenteDao();
     $loginExistente = $dao->buscaPorLogin($login);
 
     if ( $loginExistente != null 
@@ -24,7 +24,8 @@
         header('Location: CadastroUsuario.php');
         exit;
     } else {
-        $dao->insere(new Usuario(null, $login, $senha, $nome, $email, $telefone));
+        $dao->insere(new Respondente(null, $login, $senha, $nome, $email, $telefone));
+        header('Location: Index.php');
     }
 
 ?>

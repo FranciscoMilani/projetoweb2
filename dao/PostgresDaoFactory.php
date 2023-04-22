@@ -2,7 +2,7 @@
 
 include_once('DaoFactory.php');
 
-include_once('PostgresUsuarioDao.php');
+include_once('PostgresRespondenteDao.php');
 include_once('PostgresElaboradorDao.php');
 
 include_once('PostgresQuestionarioDao.php');
@@ -16,7 +16,7 @@ class PostgresDaoFactory extends DaoFactory {
     private $db_name = "projetoweb2";
     private $port = "5432";
     private $username = "postgres";
-    private $password = "ucs";
+    private $password = "Sidiemadi@3";
     public $conn;
   
     // get the database connection
@@ -35,8 +35,8 @@ class PostgresDaoFactory extends DaoFactory {
     }
 
     // ------------ USUARIOS -------------
-    public function getUsuarioDao() {
-        return new PostgresUsuarioDao($this->getConnection());
+    public function getRespondenteDao() {
+        return new PostgresRespondenteDao($this->getConnection());
     }
 
     public function getElaboradorDao() {

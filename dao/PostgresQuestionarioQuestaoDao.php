@@ -60,11 +60,11 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
-        $stmt->bindParam(":login", $usuario->getLogin());
-        $stmt->bindParam(":senha", md5($usuario->getSenha()));
-        $stmt->bindParam(":nome", $usuario->getNome());
-        $stmt->bindParam(':email', $usuario->getEmail());
-        $stmt->bindParam(':telefone', $usuario->getTelefone());
+        $stmt->bindParam(":login", $respondente->getLogin());
+        $stmt->bindParam(":senha", md5($respondente->getSenha()));
+        $stmt->bindParam(":nome", $respondente->getNome());
+        $stmt->bindParam(':email', $respondente->getEmail());
+        $stmt->bindParam(':telefone', $respondente->getTelefone());
 
         // execute the query
         if($stmt->execute()){

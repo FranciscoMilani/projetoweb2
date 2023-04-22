@@ -1,4 +1,4 @@
-﻿create table usuario (
+﻿create table respondente (
     id serial not null,
     login varchar(30) not null unique,
     senha varchar(255) not null,
@@ -7,8 +7,8 @@
     email varchar(255) not null
 );
 
-alter table usuario 
-add constraint pk_usuario
+alter table respondente 
+add constraint pk_respondente
 primary key(id);
 
 create table elaborador (
@@ -78,7 +78,7 @@ CREATE TABLE alternativa (
 CREATE TABLE resposta (
     id SERIAL NOT NULL,
     texto VARCHAR(5000), -- RESPOSTA PODE SER NULL
-    avaliacao DECIMAL NOT NULL, -- nota
+    nota DECIMAL NOT NULL, -- nota
     questaoId BIGINT NOT NULL,
     alternativaId BIGINT, --  ALTERNATIVA PODE SER NULL
 	PRIMARY KEY(id),
@@ -86,6 +86,3 @@ CREATE TABLE resposta (
     FOREIGN KEY (alternativaId) REFERENCES alternativa(id),
     CHECK ((texto IS NOT NULL) OR (alternativaId IS NOT NULL))
 );
-
--- alterar tabela usuario para respondente no banco
--- e no php criar a classe usuário com todos gets e sets, para as outras estenderem a ela
