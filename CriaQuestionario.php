@@ -7,15 +7,15 @@
     $notaAprovacao = $_POST['notaaprovacao'];
     $dataCriacao = date("d/m/Y");
     $elaboradorId = $_SESSION['id_elaborador'];
-
+    
     $daoE = $factory->getElaboradorDao();  
     $elaborador = $daoE->buscaPorId($elaboradorId);
-
+    
     if (!isset($elaborador)){
         header('Location: CriacaoQuestionario.php');
         exit;
     }
-
+    
     $daoQ = $factory->getQuestionarioDao();
     verificaVariaveis($_POST);
 
@@ -29,8 +29,9 @@
     }
 
     $questionario = new Questionario(null, $nome, $descricao, $dataCriacao, $notaAprovacao, $elaborador);
-    $daoQ->insere($questionario);
-
-    header('Location: CriacaoQuestionario.php');
+    $questionarioId = $daoQ->insere($questionario);
+    var_dump($questionarioId);
+   // $_SESSION["id_questionario"] = $questionarioId;
+    header('Location: VinculoQuestionarioQuestao.php?questionarioId='.$questionarioId);
     exit;
 ?>

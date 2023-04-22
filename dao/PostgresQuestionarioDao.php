@@ -11,22 +11,24 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
 
         $query = "INSERT INTO " . $this->table_name . 
         " (nome, descricao, datacriacao, notaaprovacao, elaboradorid) VALUES" .
-        " (:nome, :descricao, :datacriacao, :notaaprovacao, :elaboradorid)";
-
+        " (:nome, :descricao, :datacriacao, :notaaprovacao, :elaboradorid)" .
+        " RETURNING id";
+        
         $stmt = $this->conn->prepare($query);
-        $a = $questionario->getElaborador();
+        
         $stmt->bindParam(":nome", $questionario->getNome());
         $stmt->bindParam(":descricao", $questionario->getDescricao());
         $stmt->bindParam(":datacriacao", $questionario->getDataCriacao());
         $stmt->bindParam(":notaaprovacao", $questionario->getNotaAprovacao());
-        $stmt->bindParam(":elaboradorid", $a->getId());
+        $stmt->bindParam(":elaboradorid", $questionario->getElaborador()->getId());
 
+        // retorna ID inserido
         if($stmt->execute()){
-            return true;
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['id'];
         }else{
             return false;
         }
-
     }
 
     public function removePorId($id) {
