@@ -1,9 +1,12 @@
 <?php 
-    include 'verificaElaborador.php';
     $titulo = "Vincular Questões (Questionário ". $_GET['questionarioId']. ")";
-    include 'LayoutHeader.php';
 
-    
+    include_once 'verificaElaborador.php';
+    include_once 'Fachada.php';
+    include_once 'LayoutHeader.php';
+
+    $daoQuestao = $factory->getQuestaoDao();
+    $questoes = $daoQuestao->buscaTodos();
 ?>
         <section class="tabela-questoes container my-5">
             <h2 class="">Questões</h2>
@@ -15,23 +18,24 @@
                         <th>Discursiva</th>
                         <th>Objetiva</th>
                         <th>Multipla escolha</th>
-                        <th>ADD</th>
-                        <th>RMV</th>
+                        <th>Adicionar</th>
+                        <th>Remover</th>
                     </tr>
                 </thead>
                 <tbody>
                 </th>
                 <?php 
-
-                    echo '<tr>';
-                    echo '    <td>1</td>';
-                    echo '    <td>teste data</td>';
-                    echo '    <td>teste data</td>';
-                    echo '    <td>teste data</td>';
-                    echo '    <td>teste data</td>';
-                    echo '    <td><button class="btn btn-success fw-bold">+</button></td>';
-                    echo '    <td><button class="btn btn-danger fw-bold">-</button></td>';
-                    echo '</tr>';
+                    foreach ($questoes as $questao){
+                        echo '<tr>';
+                        echo '    <td>'.$questao->getId().'</td>';
+                        echo '    <td>'.$questao->getDescricao().'</td>';
+                        echo '    <td>'.$questao->getIsDiscursiva().'</td>';
+                        echo '    <td>'.$questao->getIsObjetiva().'</td>';
+                        echo '    <td>'.$questao->getIsMultiplaEscolha().'</td>';
+                        echo '    <td><button class="btn btn-success fw-bold">+</button></td>';
+                        echo '    <td><button class="btn btn-danger fw-bold">-</button></td>';
+                        echo '</tr>';
+                }
                 ?>
                 </tbody>
             </table>  

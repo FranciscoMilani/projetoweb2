@@ -41,7 +41,6 @@ create table questionario (
 alter table questionario 
 add constraint pk_questionario primary key(id);
 
-
 create table questao (
     id serial not null,
     descricao varchar(5000) not null,
@@ -51,7 +50,15 @@ create table questao (
 );
 
 alter table questao 
-add constraint pk_questao primary key(id);
+add constraint pk_questao primary key(id),
+ADD CONSTRAINT CheckOnlyOneColumnIsNull
+CHECK 
+(
+    ( CASE WHEN isDiscursiva = false THEN 0 ELSE 1 END
+    + CASE WHEN isObjetiva = false THEN 0 ELSE 1 END
+    + CASE WHEN isMultiplaEscolha = false THEN 0 ELSE 1 END
+    ) = 1
+)
 
 
 create table questionarioquestao (
