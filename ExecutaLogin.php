@@ -14,7 +14,6 @@ if (!$login || !$senha) {
 
 $dao = $factory->getRespondenteDao();
 $respondente = $dao->buscaPorLogin($login);
-//instanciar mais um dao para elaborador (verificar se essa é a maneira correta de procurar um elaborador)
 $daoElab = $factory->getElaboradorDao();
 $elaborador = $daoElab->buscaPorLogin($login);
 
@@ -24,9 +23,10 @@ if ($respondente) {
     if (!strcmp($senha, $respondente->getSenha())) {
         $_SESSION["id_usuario"] = $respondente->getId();
         $_SESSION["nome_usuario"] = stripslashes($respondente->getNome());
-        //$_SESSION["is_elaborador"] = FALSE;
+        // necessario para mostrar apenas os botoes de cada tipo de usuario na tela de menu
+        $_SESSION["is_elaborador"] = FALSE;
         $_SESSION["is_admin"] = FALSE;
-        header("Location: ListaOfertas.php");
+        header("Location: Menu.php");
         exit;
     } else {
         $problemas = TRUE;
@@ -35,11 +35,10 @@ if ($respondente) {
     if (!strcmp($senha, $elaborador->getSenha())) {
         $_SESSION["id_usuario"] = $elaborador->getId();
         $_SESSION["nome_usuario"] = stripslashes($elaborador->getNome());
-        //$_SESSION["is_elaborador"] = TRUE;
-        $_SESSION["id_elaborador"] = $elaborador->getId();
+        $_SESSION["is_elaborador"] = TRUE;
         $_SESSION["is_admin"] = $elaborador->getIsAdmin();
         
-        header("Location: ListaOfertas.php");
+        header("Location: Menu.php");
         exit;
     } else {
         $problemas = TRUE;

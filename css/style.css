@@ -101,3 +101,20 @@ body {
 .usuarioLogado{
 	color: white;
 }
+
+.divMenu {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.classeBotoes {
+	padding: 10px;
+	border: none;
+	background-color: #166fce;
+	color: white;
+	font-size: 16px;
+	margin: 10px auto;
+	cursor: pointer;
+	border-radius: 5px;
+	display: block;
+}
