@@ -101,17 +101,17 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $questoes = array();
 
         $query = "SELECT
-                    id, descricao, isDiscursiva, isObjetiva, isMultiplaEscolha
+                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY id DESC";
+                    " ORDER BY id ASC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $questoes[] = new Questao($id, $descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
         }
         
         return $questoes;

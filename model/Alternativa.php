@@ -1,13 +1,18 @@
 <?php 
     class Alternativa {
 
+        private $id;
         private $descricao;
         private $isCorreta;
 
-        public function __construct($descricao, $isCorreta){
+        public function __construct($id, $descricao, $isCorreta){
+            $this->$id = $id;
             $this->descricao = $descricao;
             $this->isCorreta = $isCorreta;
         }
+
+        public function getId() { return $this->id; }
+        public function setId($id) { $this->id = $id; }
 
         public function getDescricao() { return $this->descricao; }
         public function setDescricao($descricao) { $this->descricao = $descricao; }

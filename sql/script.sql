@@ -41,7 +41,6 @@ create table questionario (
 alter table questionario 
 add constraint pk_questionario primary key(id);
 
-
 create table questao (
     id serial not null,
     descricao varchar(5000) not null,
@@ -51,7 +50,15 @@ create table questao (
 );
 
 alter table questao 
-add constraint pk_questao primary key(id);
+add constraint pk_questao primary key(id),
+ADD CONSTRAINT CheckOnlyOneColumnIsNull
+CHECK 
+(
+    ( CASE WHEN isDiscursiva = false THEN 0 ELSE 1 END
+    + CASE WHEN isObjetiva = false THEN 0 ELSE 1 END
+    + CASE WHEN isMultiplaEscolha = false THEN 0 ELSE 1 END
+    ) = 1
+)
 
 
 create table questionarioquestao (
@@ -73,6 +80,10 @@ CREATE TABLE alternativa (
     isCorreta BOOLEAN NOT NULL,
     PRIMARY KEY (id)
 );
+
+ALTER TABLE alternativa
+ADD questaoId BIGINT NOT NULL,
+ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id)
 
 -- analisar melhor se esta tabela esta correta
 CREATE TABLE resposta (
