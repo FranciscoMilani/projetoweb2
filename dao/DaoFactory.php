@@ -10,6 +10,7 @@ abstract class DaoFactory {
     public abstract function getQuestionarioDao();
     public abstract function getQuestaoDao();
     public abstract function getQuestionarioQuestaoDao();
+    public abstract function getAlternativaDao();
 
 }
 ?>

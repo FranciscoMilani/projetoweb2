@@ -81,6 +81,10 @@ CREATE TABLE alternativa (
     PRIMARY KEY (id)
 );
 
+ALTER TABLE alternativa
+ADD questaoId BIGINT NOT NULL,
+ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id)
+
 -- analisar melhor se esta tabela esta correta
 CREATE TABLE resposta (
     id SERIAL NOT NULL,
