@@ -10,8 +10,8 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
     public function insere($elaborador) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (login, senha, nome, email, instituicao, isAdmin) VALUES" .
-        " (:login, :senha, :nome, :email, :instituicao, :isAdmin)";
+        " (login, senha, nome, email, instituicao, isadmin) VALUES" .
+        " (:login, :senha, :nome, :email, :instituicao, :isadmin)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -21,7 +21,7 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $stmt->bindParam(":nome", $elaborador->getNome());
         $stmt->bindParam(":email", $elaborador->getEmail());
         $stmt->bindParam(":instituicao", $elaborador->getInstituicao());
-        $stmt->bindParam(":isAdmin", $elaborador->getIsAdmin());
+        $stmt->bindParam(":isadmin", $elaborador->getIsAdmin(), PDO::PARAM_INT);
 
         if($stmt->execute()){
             return true;
@@ -55,17 +55,19 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
     public function altera($elaborador) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, senha = :senha, nome = :nome, email = :email, instituicao = :instituicao" .
+        " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, instituicao = :instituicao, isadmin = :isadmin" .
         " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
+        $stmt->bindParam(":id", $elaborador->getId());
         $stmt->bindParam(":login", $elaborador->getLogin());
         $stmt->bindParam(":senha", md5($elaborador->getSenha()));
         $stmt->bindParam(":nome", $elaborador->getNome());
         $stmt->bindParam(':email', $elaborador->getEmail());
         $stmt->bindParam(":instituicao", $elaborador->getInstituicao());
+        $stmt->bindParam(":isadmin", $elaborador->getIsAdmin(), PDO::PARAM_INT);
 
         // execute the query
         if($stmt->execute()){
@@ -127,10 +129,10 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
 
     public function buscaTodos() {
 
-        $elaboradors = array();
+        $elaboradores = array();
 
         $query = "SELECT
-                    id, login, senha, nome, email, instituicao, isAdmin
+                    id, login, senha, nome, email, instituicao, isadmin
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -140,10 +142,10 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $elaboradors[] = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isAdmin);
+            $elaboradores[] = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isadmin);
         }
         
-        return $elaboradors;
+        return $elaboradores;
     }
 
     public function buscaPorNome($nome) {

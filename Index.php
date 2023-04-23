@@ -13,3 +13,7 @@ include_once 'LayoutHeader.php';
         </form>
     </div>
 </div>
+
+<?php
+include_once "LayoutFooter.php";
+?>

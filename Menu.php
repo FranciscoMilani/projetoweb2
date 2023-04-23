@@ -16,13 +16,17 @@ include_once 'LayoutHeader.php';
 
     //verifica se é admin para ter funções diferentes
     if ($_SESSION["is_admin"]) {
-        echo "<button class=\"classeBotoes\">Controle de Elaboradores</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='ControleElaboradores.php'\">Controle de Elaboradores</button>";
     }
 
     //se for respondente, mostra apenas botao de ofertas
     //se precisar direcionar para mais telas so add mais botoes
-    if (!$_SESSION["is_admin"] and !$_SESSION["is_elaborador"]) {
+    if (!$_SESSION["is_admin"] && !$_SESSION["is_elaborador"]) {
         echo "<button class=\"classeBotoes\">Ver Ofertas</button>";
     }
     ?>
 </div>
+
+<?php
+include_once "LayoutFooter.php";
+?>
