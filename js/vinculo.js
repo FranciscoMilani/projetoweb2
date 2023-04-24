@@ -7,7 +7,6 @@ $(document).ready(function(){
         let botao = celula.find('>:first-child');
 
         botao.click(function(){
-            console.log(linha.text());
             habilitaInputs(linha);
             switchBotao(botao, $(el).find('td').eq(6).find('>:first-child'));
         });
@@ -17,24 +16,35 @@ $(document).ready(function(){
     $('.botao-enviar-questao').click(function() {
 
         let celula = $(this).closest('tr').find('td:first');
-        let texto = celula.text();
+        let idQuestao = celula.text();
         
         let pontos = $(this).closest('tr').find('.ponto-input').val();
         let ordem = $(this).closest('tr').find('.ordem-input').val();
-
         
         if (pontos.trim() !== '' && ordem.trim() !== ''){
             $.ajax({
                 url: 'CriaVinculo.php',
                 type: 'POST',
+                dataType: 'json',
                 data: {
-                    id: texto,
+                    pontos: pontos,
+                    ordem: ordem,
+                    questionarioId: idQuestionario,
+                    questaoId: idQuestao,
                 },
-                success: function() {
-                    alert('Cadastrado questao ' + texto);
+                success: function(dados) {
+                    //window.location = 'CriaVinculo.php';
+                    if (dados.status === 'sucesso'){
+                        alert('Cadastro efetuado para a questão de ID ' + idQuestao);
+                    } else if (dados.status === 'erro'){
+                        alert('Ocorreu um erro inesperado.');
+                    } else if (dados.status === 'ja_existe'){
+                        alert('Ocorreu um erro. A questão já está cadastrada.');
+                    }
                 },
-                error: function() {
-                    alert('Erro no cadastro ' + texto);
+                error: function(xhs, status, erro) {
+                    console.log(erro)
+                    alert("Ocorreu um erro");
                 },
                 complete: function() {
                     

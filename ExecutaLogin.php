@@ -19,7 +19,6 @@ $elaborador = $daoElab->buscaPorLogin($login);
 
 $problemas = FALSE;
 if ($respondente) {
-    // Aviso: comparando senha md5 com hash md5. Se inserir direto no banco p/ testes, sem md5, nao vai logar
     if (!strcmp($senha, $respondente->getSenha())) {
         $_SESSION["id_usuario"] = $respondente->getId();
         $_SESSION["nome_usuario"] = stripslashes($respondente->getNome());
@@ -36,6 +35,7 @@ if ($respondente) {
         $_SESSION["id_usuario"] = $elaborador->getId();
         $_SESSION["nome_usuario"] = stripslashes($elaborador->getNome());
         $_SESSION["is_elaborador"] = TRUE;
+        $_SESSION["id_elaborador"] = $elaborador->getId();
         $_SESSION["is_admin"] = $elaborador->getIsAdmin();
         
         header("Location: Menu.php");

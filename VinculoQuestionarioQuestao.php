@@ -10,8 +10,13 @@
     $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
 
     $questoes = $daoQuestao->buscaTodos();
+
+    $obj = $_GET['questionarioId'];
 ?>
         <script src="js/vinculo.js"></script>
+        <script type="text/javascript">
+            var idQuestionario = '<?php echo $obj; ?>';
+        </script>
         
         <section class="tabela-questoes container my-5">
             <h2 class="">Questões</h2>
@@ -44,7 +49,7 @@
                 ?>
                 </tbody>
             </table>  
-            <a href="PaginaNavegacao.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</button>
+            <a href="Menu.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</button>
         </section>
 
 
