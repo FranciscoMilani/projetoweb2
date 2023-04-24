@@ -24,7 +24,7 @@ include_once "LayoutHeader.php";
             <label for="email">E-mail:</label>
             <input type="email" name="email" placeholder="email_elaborador@email.com"
                 value="<?php echo $elaborador->getEmail(); ?>" required>
-            <label for="telefone">Instituição:</label>
+            <label for="instituicao">Instituição:</label>
             <input type="text" name="instituicao" value="<?php echo $elaborador->getInstituicao(); ?>" required>
             <input type="submit" value="Enviar" id="btCadastro">
             <input type='hidden' name='id' value='<?php echo $elaborador->getId(); ?>' />

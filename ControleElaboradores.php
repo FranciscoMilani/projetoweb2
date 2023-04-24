@@ -15,6 +15,16 @@ $dao = $factory->getElaboradorDao();
 $elaboradores = $dao->buscaTodos();
 
 echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroElaborador.php'\">Novo Elaborador</button>";
+
+//falta implementar os metodos para buscar
+echo "Pesquisa por nome: ";
+echo "<input type=\"text\" name=\"nome\" value=\"" . $pesquisaNome . "\">";
+echo "<input type=\"button\" value=\"Pesquisar\">";
+echo "<br/><br/>";
+echo "Pesquisa por E-mail: ";
+echo "<input type=\"text\" name=\"email\" value=\"" . $pesquisaEmail . "\">";
+echo "<input type=\"button\" value=\"Pesquisar\">";
+
 if ($elaboradores) {
     echo "<table id=\"tbElaborador\" class='table table-hover table-responsive table-bordered'>";
     echo "<tr>";

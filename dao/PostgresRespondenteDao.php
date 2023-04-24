@@ -54,12 +54,13 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
     public function altera($respondente) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, senha = :senha, nome = :nome, email = :email" .
+        " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, telefone = :telefone" .
         " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
+        $stmt->bindParam(":id", $respondente->getId());
         $stmt->bindParam(":login", $respondente->getLogin());
         $stmt->bindParam(":senha", md5($respondente->getSenha()));
         $stmt->bindParam(":nome", $respondente->getNome());
