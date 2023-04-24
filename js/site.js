@@ -1,17 +1,18 @@
 $(document).ready(function (){
     $('#selecionavel').hide();
 
-    // $('#radio_selecionavel').change(function(){
-    //     $('#selecionavel').toggle();
-    // })
+    $('.radio-questao').change(function(){
+        console.log('teste');
+        if ($(this).val() == "selecionavel") {
+            $('#selecionavel').show();
+        }
+        else if ($(this).val() == "discursiva") {
+            $('#selecionavel').hide();
+        }
+    });
+
+
+    // $('.cadastro-questao-form').submit(function () {
+    //     return false;
+    // });
 })
-
-function selectEsconde(radio){
-    var selecionavel = document.getElementById("selecionavel");
-
-    if (radio == 'selecionavel') {
-        selecionavel.style.display = "block";
-    } else {
-        selecionavel.style.display = "none";
-    }
-}

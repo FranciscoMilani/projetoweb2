@@ -10,15 +10,15 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
     public function insere($alternativa) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (id, descricao, iscorreta) VALUES" .
-        " (:id, :descricao, :iscorreta)" .
+        " (descricao, iscorreta, questaoId) VALUES" .
+        " (:descricao, :iscorreta, :questaoId)" .
         " RETURNING id";
         
         $stmt = $this->conn->prepare($query);
         
-        $stmt->bindParam(":id", $alternativa->getId());
         $stmt->bindParam(":descricao", $alternativa->getDescricao());
         $stmt->bindParam(":iscorreta", $alternativa->getIsCorreta());
+        $stmt->bindParam(":questaoId", $alternativa->getQuestao()->getId());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -54,7 +54,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         $alternativa = null;
 
         $query = "SELECT
-                    id, descricao, iscorreta
+                    id, descricao, iscorreta, questaoId
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -68,7 +68,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $alternativa = new Alternativa($row['id'], $row['descricao'], $row['iscorreta']);
+            $alternativa = new Alternativa($row['id'], $row['descricao'], $row['iscorreta'], $row['questaoId']);
         } 
      
         return $alternativa;
@@ -79,17 +79,39 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         $alternativas = array();
 
         $query = "SELECT
-                    id, descricao, iscorreta
+                    id, descricao, iscorreta, questaoId
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
      
+
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $alternativas[] = new Alternativa($id, $descricao, $iscorreta);
+            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoId);
+        }
+        
+        return $alternativas;
+    }
+
+    public function buscaPorQuestaoId($questaoId) {
+        $alternativas = array();
+
+        $query = "SELECT
+                    id, descricao, iscorreta, questaoId
+                FROM
+                    " . $this->table_name . 
+                    " WHERE questaoId = :questaoId ";
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':questaoId', $questaoId);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoId);
         }
         
         return $alternativas;

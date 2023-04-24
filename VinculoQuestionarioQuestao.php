@@ -6,42 +6,49 @@
     include_once 'LayoutHeader.php';
 
     $daoQuestao = $factory->getQuestaoDao();
+    $daoQuestionario = $factory->getQuestionarioDao();
+    $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
+
     $questoes = $daoQuestao->buscaTodos();
 ?>
+        <script src="js/vinculo.js"></script>
+        
         <section class="tabela-questoes container my-5">
             <h2 class="">Questões</h2>
-            <table class="table table-striped table-hover table-bordered">
+            <table id="tabela-vinculo" class="table table-striped table-hover">
                 <thead>
                     <tr class="text-center">
                         <th>#</th>
                         <th>Descricao</th>
-                        <th>Discursiva</th>
-                        <th>Objetiva</th>
-                        <th>Multipla escolha</th>
-                        <th>Adicionar</th>
-                        <th>Remover</th>
+                        <th>Tipo</th>
+                        <th>Pontos</th>
+                        <th>Ordem</th>
+                        <th>Adicionar/Remover</th>
+                        <th>Enviar</th>
                     </tr>
                 </thead>
                 <tbody>
                 </th>
                 <?php 
                     foreach ($questoes as $questao){
-                        echo '<tr>';
+                        echo '<tr class="table-row">';
                         echo '    <td>'.$questao->getId().'</td>';
                         echo '    <td>'.$questao->getDescricao().'</td>';
-                        echo '    <td>'.$questao->getIsDiscursiva().'</td>';
-                        echo '    <td>'.$questao->getIsObjetiva().'</td>';
-                        echo '    <td>'.$questao->getIsMultiplaEscolha().'</td>';
-                        echo '    <td><button class="btn btn-success fw-bold">+</button></td>';
-                        echo '    <td><button class="btn btn-danger fw-bold">-</button></td>';
+                        echo '    <td>'.$questao->getTipo().'</td>';
+                        echo '    <td><input type="number" class="form-control ponto-input" disabled></td>';
+                        echo '    <td><input type="number" class="form-control ordem-input" disabled></td>';
+                        echo '    <td><button class="botao-vincular btn btn-secondary fw-bold">+</button></td>';
+                        echo '    <td><button class="botao-enviar-questao btn btn-primary fw-bold" disabled>></button></td>';
                         echo '</tr>';
                 }
                 ?>
                 </tbody>
             </table>  
+            <a href="PaginaNavegacao.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</button>
         </section>
 
-        <section class="container my-5 tabela-vinculo">
+
+        <!-- <section class="container my-5 tabela-vinculo">
             <h2 class="">Vincular</h2>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
@@ -63,7 +70,7 @@
                 echo '<td>teste data</td>';
                 echo '<td>teste data</td>';
             ?>
-        </section>
+        </section> -->
     </body>
 </html>
 

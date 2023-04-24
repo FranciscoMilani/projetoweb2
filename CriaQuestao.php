@@ -4,60 +4,59 @@
     
     $descricao = $_POST['descricao'];
     $tipoquestao = $_POST['tipoquestao'];
-
-    if ($tipoquestao == "discursiva"){
-        // discursiva
-        $questao = new Questao(null, $descricao, true, false, false);
-    } else if ($tipoquestao == "selecionavel"){
-        if (!empty($questao)){
-            if (count($questao) >= 2){
-                // multipla escolha
-                $questao = new Questao(null, $descricao, false, false, true);
-            } else {
-                // objetiva
-                $questao = new Questao(null, $descricao, false, true, false);
-            }
-
-            $questao->setAlternativas($alternativasCriadas);
-        }
-    }
-
+    
+    $alternativasCriadas = array();
+    $alternativas = array();
     $alternativas[] = $_POST['alternativa1'];
     $alternativas[] = $_POST['alternativa2'];
     $alternativas[] = $_POST['alternativa3'];
     $alternativas[] = $_POST['alternativa4'];
     $alternativas[] = $_POST['alternativa5'];
     $alternativasTexto = $_POST['alternativaTexto'];
-    
-    $alternativas = array();
-    $alternativasCriadas = array();
 
-    $daoQ = $factory->getQuestaoDao();
-    $daoA = $factory->getAlternativaDao();
+    $daoQuestao = $factory->getQuestaoDao();
+    $daoAlternativa = $factory->getAlternativaDao();
 
-    var_dump( $alternativas );
-    var_dump( $alternativasTexto );
-
-    for ($i = 0; $i < count($alternativas); $i++){
-        $alternativaTemp = new Alternativa(null, $alternativasTexto[$i], $alternativas[$i]);
-        $alternativasCriadas[] = $alternativaTemp;
-        $daoA->insere($alternativaTemp);
-    }
-    
-
-    verificaVariaveis($_POST);
-    $daoQ->insere($questao);
-
-    function verificaVariaveis($vars) {
-        foreach ($vars as $variavel){
-            if (!isset($variavel) || empty($variavel)) {
-               // header('Location: CriacaoQuestao.php');
-               // exit;
+    if ($tipoquestao == "discursiva"){
+        $questao = new Questao(null, $descricao, 1, 0, 0);
+        $questaoId = $daoQuestao->insere($questao);
+        
+    } else if ($tipoquestao == "selecionavel"){
+        
+        if (!empty($alternativas)) {
+            if (count($alternativas) >= 2){
+                // multipla escolha
+                $questao = new Questao(null, $descricao, 0, 0, 1);
+            } else {
+                // objetiva
+                $questao = new Questao(null, $descricao, 0, 1, 0);
             }
+            
+            $questao->setId($daoQuestao->insere($questao));
+            
+            for ($i = 0; $i < count($alternativas); $i++){
+                //$isCorreta = (bool) $alternativas[$i];
+                $alternativaTemp = new Alternativa(null, $alternativasTexto[$i], $alternativas[$i], $questao);
+                $alternativasCriadas[] = $alternativaTemp;
+                $daoAlternativa->insere($alternativaTemp);
+            }
+    
+            $questao->setAlternativas($alternativasCriadas);
         }
     }
+    
+    header('Location: CriacaoQuestao.php');
+    exit;
 
+    // verificaVariaveis($_POST);
 
-    //header('Location: CriacaoQuestao.php');
-    //exit;
+    // function verificaVariaveis($vars) {
+    //     foreach ($vars as $variavel){
+    //         if (!isset($variavel) || empty($variavel)) {
+    //            // header('Location: CriacaoQuestao.php');
+    //            // exit;
+    //         }
+    //     }
+    // }
+    
 ?>

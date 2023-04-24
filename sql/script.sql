@@ -29,6 +29,8 @@ primary key(id);
 -- senha = '123' em md5
 insert into elaborador(login, senha, nome, instituicao, email, isAdmin) values ('admin','202cb962ac59075b964b07152d234b70','Administrador', 'UCS', 'adm@ucs.br', True);
 
+insert into respondente(login, senha, nome, telefone, email) values ('user','202cb962ac59075b964b07152d234b70','Usuario Respondente', '987654321', 'user@ucs.br');
+
 create table questionario (
     id serial not null,
     nome varchar(255) not null,
@@ -58,7 +60,7 @@ CHECK
     + CASE WHEN isObjetiva = false THEN 0 ELSE 1 END
     + CASE WHEN isMultiplaEscolha = false THEN 0 ELSE 1 END
     ) = 1
-)
+);
 
 
 create table questionarioquestao (
@@ -83,7 +85,7 @@ CREATE TABLE alternativa (
 
 ALTER TABLE alternativa
 ADD questaoId BIGINT NOT NULL,
-ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id)
+ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id);
 
 -- analisar melhor se esta tabela esta correta
 CREATE TABLE resposta (

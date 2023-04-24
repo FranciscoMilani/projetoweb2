@@ -9,13 +9,15 @@
         private $isMultiplaEscolha;
         private $imagem;
         private $alternativas = array();
+        private $tipo;
 
         public function __construct($id, $descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha) {
             $this->id = $id;
-            $this->$descricao = $descricao;
-            $this->$isDiscursiva = $isDiscursiva;
-            $this->$isObjetiva = $isObjetiva;
-            $this->$isMultiplaEscolha = $isMultiplaEscolha;
+            $this->descricao = $descricao;
+            $this->isDiscursiva = $isDiscursiva;
+            $this->isObjetiva = $isObjetiva;
+            $this->isMultiplaEscolha = $isMultiplaEscolha;
+            $this->tipo = $this->definirTipo();
         }
 
         public function getId() { return $this->id; }
@@ -37,6 +39,27 @@
         public function setAlternativas($alternativas) {$this->alternativas = $alternativas;}
 
         public function addAlternativa($alternativa) { array_push($alternativa); }
+
+        public function getTipo(){ return $this->tipo; }
+        public function setTipo(Tipo $tipo){ $this->tipo = $tipo; }
+
+        private function definirTipo() {
+            if ($this->isDiscursiva) {
+                return Tipo::DISCURSIVA;
+            } elseif ($this->isObjetiva) {
+                return Tipo::OBJETIVA;
+            } elseif ($this->isMultiplaEscolha) {
+                return Tipo::MULTIPLA_ESCOLHA;
+            } else {
+                return Tipo::UNDEFINED;
+            }
+        }
     }
     
+    abstract class Tipo {
+        const UNDEFINED = "?";
+        const DISCURSIVA = "Discursiva";
+        const OBJETIVA = "Objetiva";
+        const MULTIPLA_ESCOLHA = "Multipla Escolha";
+    }
 ?>

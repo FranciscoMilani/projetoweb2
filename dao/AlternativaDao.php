@@ -5,6 +5,7 @@
         public function remove($alternativa);
         public function removePorId($id);
         public function buscaPorId($id);
+        public function buscaPorQuestaoId($questaoId);
         public function buscaTodos();
     }
 ?>

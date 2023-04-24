@@ -11,7 +11,8 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
 
         $query = "INSERT INTO " . $this->table_name . 
         " (descricao, isDiscursiva, isObjetiva, isMultiplaEscolha) VALUES" .
-        " (:descricao, :isDiscursiva, :isObjetiva, :isMultiplaEscolha)";
+        " (:descricao, :isDiscursiva, :isObjetiva, :isMultiplaEscolha)" .
+        " RETURNING id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -20,12 +21,13 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $stmt->bindParam(":isObjetiva", $questao->getIsObjetiva());
         $stmt->bindParam(":isMultiplaEscolha", $questao->getIsMultiplaEscolha());
 
+        // retorna ID inserido
         if($stmt->execute()){
-            return true;
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['id'];
         }else{
             return false;
         }
-
     }
 
     public function removePorId($id) {
