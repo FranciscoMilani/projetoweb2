@@ -114,7 +114,8 @@ CREATE TABLE submissao (
 CREATE TABLE resposta (
     id SERIAL NOT NULL,
     texto VARCHAR(5000),
-    nota DECIMAL NOT NULL, -- nota
+    nota DECIMAL NOT NULL,
+    observacao VARCHAR(1000),
     questaoId INTEGER NOT NULL,
     alternativaId INTEGER,
     submissaoId INTEGER NOT NULL,
