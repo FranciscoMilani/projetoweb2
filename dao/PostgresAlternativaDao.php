@@ -10,15 +10,15 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
     public function insere($alternativa) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (descricao, iscorreta, questaoId) VALUES" .
-        " (:descricao, :iscorreta, :questaoId)" .
+        " (descricao, iscorreta, questaoid) VALUES" .
+        " (:descricao, :iscorreta, :questaoid)" .
         " RETURNING id";
         
         $stmt = $this->conn->prepare($query);
         
         $stmt->bindParam(":descricao", $alternativa->getDescricao());
         $stmt->bindParam(":iscorreta", $alternativa->getIsCorreta());
-        $stmt->bindParam(":questaoId", $alternativa->getQuestao()->getId());
+        $stmt->bindParam(":questaoid", $alternativa->getQuestao()->getId());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -54,7 +54,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         $alternativa = null;
 
         $query = "SELECT
-                    id, descricao, iscorreta, questaoId
+                    id, descricao, iscorreta, questaoid
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -68,7 +68,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $alternativa = new Alternativa($row['id'], $row['descricao'], $row['iscorreta'], $row['questaoId']);
+            $alternativa = new Alternativa($row['id'], $row['descricao'], $row['iscorreta'], $row['questaoid']);
         } 
      
         return $alternativa;
@@ -79,7 +79,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         $alternativas = array();
 
         $query = "SELECT
-                    id, descricao, iscorreta, questaoId
+                    id, descricao, iscorreta, questaoid
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -90,7 +90,7 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoId);
+            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoid);
         }
         
         return $alternativas;
@@ -100,18 +100,18 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         $alternativas = array();
 
         $query = "SELECT
-                    id, descricao, iscorreta, questaoId
+                    id, descricao, iscorreta, questaoid
                 FROM
                     " . $this->table_name . 
-                    " WHERE questaoId = :questaoId ";
+                    " WHERE questaoid = :questaoid ";
      
         $stmt = $this->conn->prepare( $query );
-        $stmt->bindParam(':questaoId', $questaoId);
+        $stmt->bindParam(':questaoid', $questaoId);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoId);
+            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoid);
         }
         
         return $alternativas;

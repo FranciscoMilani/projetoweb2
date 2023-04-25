@@ -2,15 +2,15 @@
     class QuestionarioQuestao {
         private $pontos;
         private $ordem;
-        private $questionarioId;
-        private $questaoId;
+        private $questionario;
+        private $questao;
 
-        public function __construct($pontos, $ordem, $questionarioId, $questaoId)
+        public function __construct($pontos, $ordem, $questionario, $questao)
         {
             $this->pontos = $pontos;
             $this->ordem = $ordem;
-            $this->questionarioId = $questionarioId;
-            $this->questaoId = $questaoId;
+            $this->questionario = $questionario;
+            $this->questao = $questao;
         }
         
         public function getPontos() { return $this->pontos; }
@@ -19,10 +19,10 @@
         public function getOrdem() { return $this->ordem; }
         public function setOrdem($ordem) { $this->ordem = $ordem; }
 
-        public function getQuestionarioId() { return $this->questionarioId; }
-        public function setQuestionarioId($questionarioId) { $this->questionarioId = $questionarioId; }
+        public function getQuestionario() { return $this->questionario; }
+        public function setQuestionario($questionario) { $this->questionario = $questionario; }
 
-        public function getQuestaoId() { return $this->questaoId; }
-        public function setQuestaoId($questaoId) { $this->questaoId = $questaoId; }
+        public function getQuestao() { return $this->questao; }
+        public function setQuestao($questao) { $this->questao = $questao; }
     }
 ?>

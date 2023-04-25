@@ -4,12 +4,14 @@
         private $nota;
         private $alternativa;
         private $questao;
+        private $submissao;
 
-        public function __construct($texto, $nota, $alternativa, $questao){
+        public function __construct($texto, $nota, $alternativa, $questao, $submissao){
             $this->texto = $texto;
             $this->nota = $nota;
             $this->alternativa = $alternativa;
             $this->questao = $questao;
+            $this->submissao = $submissao;
         }
 
         public function getTexto() { return $this->texto; }
@@ -23,5 +25,8 @@
 
         public function getQuestao() { return $this->questao; }
         public function setQuestao($questao) { $this->questao = $questao; }
+
+        public function getSubmissao() { return $this->submissao; }
+        public function setSubmissao($submissao) { $this->submissao = $submissao; }
     }
 ?>

@@ -44,11 +44,11 @@
         public function setTipo(Tipo $tipo){ $this->tipo = $tipo; }
 
         private function definirTipo() {
-            if ($this->isDiscursiva) {
+            if ($this->isDiscursiva || $this->isDiscursiva == 1) {
                 return Tipo::DISCURSIVA;
-            } elseif ($this->isObjetiva) {
+            } elseif ($this->isObjetiva || $this->isObjetiva == 1) {
                 return Tipo::OBJETIVA;
-            } elseif ($this->isMultiplaEscolha) {
+            } elseif ($this->isMultiplaEscolha || $this->isMultiplaEscolha == 1) {
                 return Tipo::MULTIPLA_ESCOLHA;
             } else {
                 return Tipo::UNDEFINED;

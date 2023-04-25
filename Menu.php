@@ -11,8 +11,8 @@ include_once 'LayoutHeader.php';
     //verifica se é elaborador para ter funções diferentes
     if ($_SESSION["is_elaborador"]) {
         echo " <button class=\"classeBotoes\" onclick=\"location.href='ControleRespondentes.php'\">Controle de Respondentes</button>";
-        echo "<button class=\"classeBotoes\">Criação de Questionários</button>";
-        echo "<button class=\"classeBotoes\">Criação de Questões</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='CriacaoQuestionario.php'\">Criação de Questionários</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='CriacaoQuestao.php'\">Criação de Questões</button>";
     }
 
     //verifica se é admin para ter funções diferentes

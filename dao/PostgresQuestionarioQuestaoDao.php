@@ -16,8 +16,8 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
 
         $stmt->bindParam(":pontos", $questionarioquestao->getPontos());
         $stmt->bindParam(":ordem", $questionarioquestao->getOrdem());
-        $stmt->bindParam(":questionarioid", $questionarioquestao->getQuestionarioId());
-        $stmt->bindParam(":questaoid", $questionarioquestao->getQuestaoId());
+        $stmt->bindParam(":questionarioid", $questionarioquestao->getQuestionario());
+        $stmt->bindParam(":questaoid", $questionarioquestao->getQuestao());
 
         if($stmt->execute()){
             return true;
@@ -45,8 +45,8 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
     }
 
     public function remove($questionarioquestao) {
-        return $this->removePorIds($questionarioquestao->getQuestionarioId(),
-                            $questionarioquestao->getQuestaoId());
+        return $this->removePorIds($questionarioquestao->getQuestionario(),
+                            $questionarioquestao->getQuestao());
     }
 
     /*                  IMPLEMENTAR ALTERAÇÃO SE FOR NECESSÁRIO
@@ -83,9 +83,9 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
                 FROM
                     " . $this->table_name . "
                 WHERE
-                    questionarioId = ?
+                    questionarioid = ?
                 AND 
-                    questaoId = ?
+                    questaoid = ?
                 LIMIT
                     1 OFFSET 0";
      
@@ -97,6 +97,26 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
             $questionarioquestao = new QuestionarioQuestao($row['pontos'], $row['ordem'], $row['questionarioid'], $row['questaoid']);
+        } 
+     
+        return $questionarioquestao;
+    }
+
+    public function buscaPorQuestionario($questionarioId) {
+        $questionarioquestao = array();
+
+        $query = "SELECT pontos, ordem, questionarioid, questaoid
+                FROM ". $this->table_name . "
+                WHERE questionarioid = ?
+                ORDER BY ordem ASC";
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(1, $questionarioId);
+        $stmt->execute();
+     
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $questionarioquestao[] = new QuestionarioQuestao($pontos, $ordem, $questionarioid, $questaoid);
         } 
      
         return $questionarioquestao;

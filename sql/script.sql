@@ -71,7 +71,10 @@ create table questionarioquestao (
 );
 
 ALTER TABLE questionarioquestao
-ADD PRIMARY KEY (questionarioId, questaoId),
+DROP CONSTRAINT IF EXISTS questionarioquestao_pkey,
+ADD UNIQUE (ordem, questionarioId),
+ADD UNIQUE (questaoId, questionarioId),
+ADD PRIMARY KEY (questionarioId, questaoId);
 ADD CONSTRAINT fk_questionario FOREIGN KEY (questionarioId) REFERENCES questionario(id),
 ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id);
 
@@ -84,18 +87,40 @@ CREATE TABLE alternativa (
 );
 
 ALTER TABLE alternativa
-ADD questaoId BIGINT NOT NULL,
+ADD questaoId INTEGER NOT NULL,
 ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id);
 
--- analisar melhor se esta tabela esta correta
+
+CREATE TABLE oferta (
+	id SERIAL NOT NULL,
+    data DATE NOT NULL,
+    questionarioId INTEGER NOT NULL,
+    respondenteId INTEGER NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (questionarioId) REFERENCES questionario(id),
+    FOREIGN KEY (respondenteId) REFERENCES respondente(id)
+);
+
+CREATE TABLE submissao (
+    id SERIAL NOT NULL,
+    nomeOcasiao VARCHAR(255),
+    descricao VARCHAR(255),
+    data DATE NOT NULL,
+    ofertaId INTEGER NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY (ofertaId) REFERENCES oferta(id)
+);
+
 CREATE TABLE resposta (
     id SERIAL NOT NULL,
-    texto VARCHAR(5000), -- RESPOSTA PODE SER NULL
+    texto VARCHAR(5000),
     nota DECIMAL NOT NULL, -- nota
-    questaoId BIGINT NOT NULL,
-    alternativaId BIGINT, --  ALTERNATIVA PODE SER NULL
+    questaoId INTEGER NOT NULL,
+    alternativaId INTEGER,
+    submissaoId INTEGER NOT NULL,
 	PRIMARY KEY(id),
     FOREIGN KEY (questaoId) REFERENCES questao(id),
     FOREIGN KEY (alternativaId) REFERENCES alternativa(id),
+    FOREIGN KEY (submissaoId) REFERENCES submissao(id),
     CHECK ((texto IS NOT NULL) OR (alternativaId IS NOT NULL))
 );

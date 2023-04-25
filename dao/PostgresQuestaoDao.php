@@ -10,16 +10,16 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
     public function insere($questao) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (descricao, isDiscursiva, isObjetiva, isMultiplaEscolha) VALUES" .
-        " (:descricao, :isDiscursiva, :isObjetiva, :isMultiplaEscolha)" .
+        " (descricao, isdiscursiva, isobjetiva, ismultiplaescolha) VALUES" .
+        " (:descricao, :isdiscursiva, :isobjetiva, :ismultiplaescolha)" .
         " RETURNING id";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":descricao", $questao->getDescricao());
-        $stmt->bindParam(":isDiscursiva", $questao->getIsDiscursiva());
-        $stmt->bindParam(":isObjetiva", $questao->getIsObjetiva());
-        $stmt->bindParam(":isMultiplaEscolha", $questao->getIsMultiplaEscolha());
+        $stmt->bindParam(":isdiscursiva", $questao->getIsDiscursiva());
+        $stmt->bindParam(":isobjetiva", $questao->getIsObjetiva());
+        $stmt->bindParam(":ismultiplaescolha", $questao->getIsMultiplaEscolha());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -79,7 +79,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $questao = null;
 
         $query = "SELECT
-                    id, descricao, isDiscursiva, isObjetiva, isMultiplaEscolha
+                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -93,7 +93,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $questao = new Questao($row['id'], $row['descricao'], $row['isDiscursiva'], $row['isObjetiva'], $row['isMultiplaEscolha']);
+            $questao = new Questao($row['id'], $row['descricao'], $row['isdiscursiva'], $row['isobjetiva'], $row['ismultiplaescolha']);
         } 
      
         return $questao;

@@ -22,9 +22,13 @@
         $questaoId = $daoQuestao->insere($questao);
         
     } else if ($tipoquestao == "selecionavel"){
-        
+        var_dump($alternativas);
+
+        $arr = array_count_values($alternativas);
+        $qtd = $arr[1];
+
         if (!empty($alternativas)) {
-            if (count($alternativas) >= 2){
+            if ($qtd >= 2){
                 // multipla escolha
                 $questao = new Questao(null, $descricao, 0, 0, 1);
             } else {
@@ -45,8 +49,8 @@
         }
     }
     
-    header('Location: CriacaoQuestao.php');
-    exit;
+   header('Location: CriacaoQuestao.php');
+   exit;
 
     // verificaVariaveis($_POST);
 

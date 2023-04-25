@@ -26,7 +26,6 @@
         exit;
     } else {
         $dao->insere($qq);
-
         $response_array['status'] = 'sucesso';
         echo json_encode($response_array);
     }
