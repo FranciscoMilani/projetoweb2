@@ -3,15 +3,17 @@
 include_once('ElaboradorDao.php');
 include_once('PostgresDao.php');
 
-class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
+class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
+{
 
     private $table_name = 'elaborador';
-    
-    public function insere($elaborador) {
 
-        $query = "INSERT INTO " . $this->table_name . 
-        " (login, senha, nome, email, instituicao, isadmin) VALUES" .
-        " (:login, :senha, :nome, :email, :instituicao, :isadmin)";
+    public function insere($elaborador)
+    {
+
+        $query = "INSERT INTO " . $this->table_name .
+            " (login, senha, nome, email, instituicao, isadmin) VALUES" .
+            " (:login, :senha, :nome, :email, :instituicao, :isadmin)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -23,17 +25,18 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $stmt->bindParam(":instituicao", $elaborador->getInstituicao());
         $stmt->bindParam(":isadmin", $elaborador->getIsAdmin(), PDO::PARAM_INT);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
 
-    public function removePorId($id) {
-        $query = "DELETE FROM " . $this->table_name . 
-        " WHERE id = :id";
+    public function removePorId($id)
+    {
+        $query = "DELETE FROM " . $this->table_name .
+            " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -41,22 +44,24 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $stmt->bindParam(':id', $id);
 
         // execute the query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }    
+        }
 
         return false;
     }
 
-    public function remove($elaborador) {
+    public function remove($elaborador)
+    {
         return $this->removePorId($elaborador->getId());
     }
 
-    public function altera($elaborador) {
+    public function altera($elaborador)
+    {
 
-        $query = "UPDATE " . $this->table_name . 
-        " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, instituicao = :instituicao, isadmin = :isadmin" .
-        " WHERE id = :id";
+        $query = "UPDATE " . $this->table_name .
+            " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, instituicao = :instituicao, isadmin = :isadmin" .
+            " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -70,15 +75,16 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
         $stmt->bindParam(":isadmin", $elaborador->getIsAdmin(), PDO::PARAM_INT);
 
         // execute the query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }    
+        }
 
         return false;
     }
 
-    public function buscaPorId($id) {
-        
+    public function buscaPorId($id)
+    {
+
         $elaborador = null;
 
         $query = "SELECT
@@ -89,20 +95,21 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
                     id = ?
                 LIMIT
                     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
-     
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
-        } 
-     
+        if ($row) {
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
+        }
+
         return $elaborador;
     }
 
-    public function buscaPorLogin($login) {
+    public function buscaPorLogin($login)
+    {
 
         $elaborador = null;
 
@@ -114,88 +121,88 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao {
                     login = ?
                 LIMIT
                     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $login);
         $stmt->execute();
-     
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $elaborador = new Elaborador($row['id'],$row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
-        } 
-     
+        if ($row) {
+            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
+        }
+
         return $elaborador;
     }
 
-    public function buscaTodos() {
+    public function buscaTodos()
+    {
 
         $elaboradores = array();
 
         $query = "SELECT
                     id, login, senha, nome, email, instituicao, isadmin
                 FROM
-                    " . $this->table_name . 
-                    " ORDER BY id ASC";
-     
-        $stmt = $this->conn->prepare( $query );
+                    " . $this->table_name .
+            " ORDER BY id ASC";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
             $elaboradores[] = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isadmin);
         }
-        
+
         return $elaboradores;
     }
 
-    public function buscaPorNome($nome) {
-
-        $elaborador = null;
+    public function buscaPorNome($nome)
+    {
+        $elaboradores = array();
 
         $query = "SELECT
-                    id, login, nome, senha, email, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isadmin
                 FROM
                     " . $this->table_name . "
                 WHERE
                     nome = ?";
-                // LIMIT
-                //     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+        // LIMIT
+        //     1 OFFSET 0";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $nome);
         $stmt->execute();
-     
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
-        } 
-     
-        return $elaborador;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $elaboradores[] = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
+        }
+        return $elaboradores;
     }
 
-    public function buscaPorEmail($email) {
+    public function buscaPorEmail($email)
+    {
 
-        $elaborador = null;
+        $elaboradores = array();
 
         $query = "SELECT
-                    id, login, nome, senha, instituicao, isAdmin
+                    id, login, nome, senha, email, instituicao, isadmin
                 FROM
                     " . $this->table_name . "
                 WHERE
                     email = ?";
-                // LIMIT
-                //     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+        // LIMIT
+        //     1 OFFSET 0";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $email);
         $stmt->execute();
-     
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $elaborador = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isAdmin']);
-        } 
-     
-        return $elaborador;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $elaboradores[] = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
+        }
+        return $elaboradores;
     }
 }
 ?>

@@ -6,27 +6,41 @@ $titulo = 'Controle Respondentes';
 include_once 'LayoutHeader.php';
 include_once "fachada.php";
 
+$nome = @$_POST["pesquisaNome"];
+$email = @$_POST["pesquisaEmail"];
+
+
 echo "<section>";
 
-// procura elaboradores
-$pesquisaNome = null;
-$pesquisaEmail = null;
 $dao = $factory->getRespondenteDao();
-$respondentes = $dao->buscaTodos();
+if (($nome == null || $nome == "") && ($email == null || $email == "")) {
+    $respondentes = $dao->buscaTodos();
+}
+if ($nome != null || $nome != "") {
+    $respondentes = $dao->buscaPorNome($nome);
+}
+if ($email != null || $email != "") {
+    $respondentes = $dao->buscaPorEmail($email);
+}
 
-echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroUsuario.php'\">Novo Respondente</button>";
+// echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroUsuario.php'\">Novo Respondente</button>";
 
-//falta implementar os metodos para buscar
+//Campos de busca
+echo "<form action=\"ControleRespondentes.php\" method=\"POST\" class=\"formCampoPesquisa\">";
 echo "Pesquisa por nome: ";
-echo "<input type=\"text\" name=\"nome\" value=\"" . $pesquisaNome . "\">";
-echo "<input type=\"button\" value=\"Pesquisar\">";
-echo "<br/><br/>";
+echo "<input type=\"text\" name=\"pesquisaNome\" value=\"" . $nome . "\" class='camposInputPesquisa'>";
+echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
+echo "</form>";
+echo "<form action=\"ControleRespondentes.php\" method=\"POST\" class=\"formCampoPesquisa\">";
 echo "Pesquisa por E-mail: ";
-echo "<input type=\"text\" name=\"email\" value=\"" . $pesquisaEmail . "\">";
-echo "<input type=\"button\" value=\"Pesquisar\">";
+echo "<input type=\"text\" name=\"pesquisaEmail\" value=\"" . $email . "\" class='camposInputPesquisa'>";
+echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
+echo "</form>";
 
+
+//Criacao da tabela
 if ($respondentes) {
-    echo "<table id=\"tbElaborador\" class='table table-hover table-responsive table-bordered'>";
+    echo "<table id=\"tbRespondente\" class='table table-hover table-responsive table-bordered'>";
     echo "<tr>";
     echo "<th>Id</th>";
     echo "<th>Login</th>";

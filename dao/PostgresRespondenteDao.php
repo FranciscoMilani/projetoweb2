@@ -3,15 +3,17 @@
 include_once('RespondenteDao.php');
 include_once('PostgresDao.php');
 
-class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
+class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
+{
 
     private $table_name = 'respondente';
-    
-    public function insere($respondente) {
 
-        $query = "INSERT INTO " . $this->table_name . 
-        " (login, senha, nome, email, telefone) VALUES" .
-        " (:login, :senha, :nome, :email, :telefone)";
+    public function insere($respondente)
+    {
+
+        $query = "INSERT INTO " . $this->table_name .
+            " (login, senha, nome, email, telefone) VALUES" .
+            " (:login, :senha, :nome, :email, :telefone)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -22,17 +24,18 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
         $stmt->bindParam(':email', $respondente->getEmail());
         $stmt->bindParam(':telefone', $respondente->getTelefone());
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
 
-    public function removePorId($id) {
-        $query = "DELETE FROM " . $this->table_name . 
-        " WHERE id = :id";
+    public function removePorId($id)
+    {
+        $query = "DELETE FROM " . $this->table_name .
+            " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -40,22 +43,24 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
         $stmt->bindParam(':id', $id);
 
         // execute the query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }    
+        }
 
         return false;
     }
 
-    public function remove($respondente) {
+    public function remove($respondente)
+    {
         return removePorId($respondente->getId());
     }
 
-    public function altera($respondente) {
+    public function altera($respondente)
+    {
 
-        $query = "UPDATE " . $this->table_name . 
-        " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, telefone = :telefone" .
-        " WHERE id = :id";
+        $query = "UPDATE " . $this->table_name .
+            " SET id = :id, login = :login, senha = :senha, nome = :nome, email = :email, telefone = :telefone" .
+            " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -68,15 +73,16 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
         $stmt->bindParam(':telefone', $respondente->getTelefone());
 
         // execute the query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        }    
+        }
 
         return false;
     }
 
-    public function buscaPorId($id) {
-        
+    public function buscaPorId($id)
+    {
+
         $respondente = null;
 
         $query = "SELECT
@@ -87,20 +93,21 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
                     id = ?
                 LIMIT
                     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
-     
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
+        if ($row) {
             $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
-        } 
-     
+        }
+
         return $respondente;
     }
 
-    public function buscaPorLogin($login) {
+    public function buscaPorLogin($login)
+    {
 
         $respondente = null;
 
@@ -112,43 +119,45 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
                     login = ?
                 LIMIT
                     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $login);
         $stmt->execute();
-     
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
+        if ($row) {
             $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
-        } 
-     
+        }
+
         return $respondente;
     }
 
-    public function buscaTodos() {
+    public function buscaTodos()
+    {
 
         $respondentes = array();
 
         $query = "SELECT
                     id, login, senha, nome, email, telefone
                 FROM
-                    " . $this->table_name . 
-                    " ORDER BY id ASC";
-     
-        $stmt = $this->conn->prepare( $query );
+                    " . $this->table_name .
+            " ORDER BY id ASC";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
             $respondentes[] = new Respondente($id, $login, $senha, $nome, $email, $telefone);
         }
-        
+
         return $respondentes;
     }
 
-    public function buscaPorNome($nome) {
+    public function buscaPorNome($nome)
+    {
 
-        $respondente = null;
+        $respondentes = array();
 
         $query = "SELECT
                     id, login, senha, nome, email, telefone
@@ -156,42 +165,45 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao {
                     " . $this->table_name . "
                 WHERE
                     nome = ?";
-                // LIMIT
-                //     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+        // LIMIT
+        //     1 OFFSET 0";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $nome);
         $stmt->execute();
-     
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            extract($row);
+            $respondentes[] = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         }
-     
-        return $respondente;
+
+        return $respondentes;
     }
 
-    public function buscaPorEmail($email) {
+    public function buscaPorEmail($email)
+    {
 
-        $respondente = null;
+        $respondentes = array();
 
         $query = "SELECT
-                    id, login, nome, senha, instituicao, isAdmin
+                    id, login, senha, nome, email, telefone
                 FROM
                     " . $this->table_name . "
                 WHERE
                     email = ?";
-                // LIMIT
-                //     1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
+        // LIMIT
+        //     1 OFFSET 0";
+
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $email);
         $stmt->execute();
-     
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            extract($row);
+            $respondentes[] = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         }
-     
-        return $respondente;
+
+        return $respondentes;
     }
 }
 ?>

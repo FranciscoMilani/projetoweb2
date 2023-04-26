@@ -6,25 +6,38 @@ $titulo = 'Controle Elaboradores';
 include_once 'LayoutHeader.php';
 include_once "fachada.php";
 
-echo "<section>";
+$nome = @$_POST["pesquisaNome"];
+$email = @$_POST["pesquisaEmail"];
 
-// echo "<div class=\"divControleElab\">";
+echo "<section>";
 
 // procura elaboradores
 $dao = $factory->getElaboradorDao();
-$elaboradores = $dao->buscaTodos();
+if (($nome == null || $nome == "") && ($email == null || $email == "")) {
+    $elaboradores = $dao->buscaTodos();
+}
+if ($nome != null || $nome != "") {
+    $elaboradores = $dao->buscaPorNome($nome);
+}
+if ($email != null || $email != "") {
+    $elaboradores = $dao->buscaPorEmail($email);
+}
 
 echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroElaborador.php'\">Novo Elaborador</button>";
 
-//falta implementar os metodos para buscar
+//Campos de busca
+echo "<form action=\"ControleElaboradores.php\" method=\"POST\" class=\"formCampoPesquisa\">";
 echo "Pesquisa por nome: ";
-echo "<input type=\"text\" name=\"nome\" value=\"" . $pesquisaNome . "\">";
-echo "<input type=\"button\" value=\"Pesquisar\">";
-echo "<br/><br/>";
+echo "<input type=\"text\" name=\"pesquisaNome\" value=\"" . $nome . "\" class='camposInputPesquisa'>";
+echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
+echo "</form>";
+echo "<form action=\"ControleElaboradores.php\" method=\"POST\" class=\"formCampoPesquisa\">";
 echo "Pesquisa por E-mail: ";
-echo "<input type=\"text\" name=\"email\" value=\"" . $pesquisaEmail . "\">";
-echo "<input type=\"button\" value=\"Pesquisar\">";
+echo "<input type=\"text\" name=\"pesquisaEmail\" value=\"" . $email . "\" class='camposInputPesquisa'>";
+echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
+echo "</form>";
 
+//cria tabela
 if ($elaboradores) {
     echo "<table id=\"tbElaborador\" class='table table-hover table-responsive table-bordered'>";
     echo "<tr>";
@@ -63,7 +76,6 @@ if ($elaboradores) {
     }
     echo "</table>";
 }
-// echo "</div>";
 echo "</section>";
 include_once "LayoutFooter.php";
 ?>
