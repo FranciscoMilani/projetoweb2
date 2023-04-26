@@ -114,14 +114,24 @@ CREATE TABLE submissao (
 CREATE TABLE resposta (
     id SERIAL NOT NULL,
     texto VARCHAR(5000),
-    nota DECIMAL NOT NULL,
+    nota DECIMAL,
     observacao VARCHAR(1000),
     questaoId INTEGER NOT NULL,
-    alternativaId INTEGER,
+--  alternativaId INTEGER,
     submissaoId INTEGER NOT NULL,
 	PRIMARY KEY(id),
     FOREIGN KEY (questaoId) REFERENCES questao(id),
-    FOREIGN KEY (alternativaId) REFERENCES alternativa(id),
-    FOREIGN KEY (submissaoId) REFERENCES submissao(id),
-    CHECK ((texto IS NOT NULL) OR (alternativaId IS NOT NULL))
+    FOREIGN KEY (submissaoId) REFERENCES submissao(id)
+--  FOREIGN KEY (alternativaId) REFERENCES alternativa(id),
+--  CHECK ((texto IS NOT NULL) OR (alternativaId IS NOT NULL))
+);
+
+-- Criado porque respostas podem ter mais de uma alternativa (questões multipla escolha)
+CREATE TABLE respostaalternativa (
+    id SERIAL NOT NULL,
+    respostaId INTEGER NOT NULL,
+    alternativaId INTEGER NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (respostaId) REFERENCES resposta(id),
+    FOREIGN KEY (alternativaId) REFERENCES alternativa(id)
 );

@@ -10,6 +10,7 @@
     include_once 'dao/QuestionarioQuestaoDao.php';
     include_once 'dao/AlternativaDao.php';
     include_once 'dao/RespostaDao.php';
+    include_once 'dao/RespostaAlternativaDao.php';
     // include_once 'dao/SubmissaoDao.php';
     // include_once 'dao/OfertaDao.php';
 
@@ -22,6 +23,7 @@
     include_once 'model/QuestionarioQuestao.php';
     include_once 'model/Alternativa.php';
     include_once 'model/Resposta.php';
+    include_once 'model/RespostaAlternativa.php';
     // include_once 'model/Submissao.php';
     // include_once 'model/Oferta.php';
 

@@ -1,20 +1,26 @@
 <?php 
 
     class Submissao {
+
+        private $id;
         private $nomeOcasiao;
         private $descricao;
         private $data;
         private $ofertaAtendida;
         private $respostas = array();
 
-        public function __construct($nomeOcasiao, $descricao, $data, $ofertaAtendida, $respostas)
+        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida, $respostas)
         {
+            $this->id = $id;
             $this->nomeOcasiao = $nomeOcasiao;
             $this->descricao = $descricao;
             $this->data = $data;
             $this->ofertaAtendida = $ofertaAtendida;
             $this->respostas = $respostas;
         }
+
+        public function getId() { return $this->id; }
+        public function setId($id) { $this->id = $id; }
 
         public function getNomeOcasiao() { return $this->nomeOcasiao; }
         public function setNomeOcasiao($nomeOcasiao) { $this->nomeOcasiao = $nomeOcasiao; }

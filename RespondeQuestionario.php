@@ -15,7 +15,7 @@
     
     
     // REMOVER!
-    $questionarioId = 9;  //                   REMOVER temporario pra teste!!!
+    $questionarioId = 9;  // REMOVER temporario pra teste!!!
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
     $questoes = array();
@@ -31,11 +31,10 @@
         $('#enviar-form').click(function(evento){
             evento.preventDefault();
 
-            var dadosArr = []
             var discursivaArr = [];
             var selecionavelArr = [];
 
-            dadosArr.push({idQuestionario:<?=$questionarioId?>});
+            //dadosArr.push(<?=$questionarioId?>);
             
             $('.questao').each(function(){  
                 var alternativas = [];
@@ -57,12 +56,12 @@
             });
 
             data = {
-                dados: dadosArr,
+                idQuestionario: <?=$questionarioId?>,
                 selecionaveis: selecionavelArr,
                 discursivas: discursivaArr
             }
 
-            jsonData = JSON.stringify(data, null,  2);
+            jsonData = JSON.stringify(data, null, 2);
             //console.log(jsonData);
 
             $.ajax({

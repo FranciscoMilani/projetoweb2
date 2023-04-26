@@ -3,41 +3,39 @@
     include_once 'Fachada.php';
 
     $dadosJson = file_get_contents('php://input');
+    $dados = json_decode($dadosJson, true);
 
     $respostaDao = $factory->getRespostaDao();
     $questaoDao = $factory->getQuestaoDao();
     $questionarioQuestaoDao = $factory->getQuestionarioQuestaoDao();
-    //$alternativaDao = $factory->getAlternativaDao();
-
-    //$questionarioQuestaoDao->buscaPorQuestionarioEQuestao();
-
-    $dados = json_decode($dadosJson, true);
-
-    $dadosRnd = $dados['dados'];
+    
+    $idQuestionario = $dados['idQuestionario'];
     $selecionaveis = $dados['selecionaveis'];
     $discursivas = $dados['discursivas'];
+    
+    // validar se oferta existe aqui?
+    // validar se o questionario é o mesmo da oferta
 
+    
     foreach($selecionaveis as $s){
-        //$r = new Resposta(null, null, $s);
-       // $respostaDao->insere();
-        var_dump($s['idQuestao']);
+        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $s['idQuestao']);
+        var_dump($idQuestionario);
+        if ($qq != null){
+            $r = new Resposta(null, null, $qq->getPontos(), null, $s['alternativas'], $s['idQuestao'], null);
+            $respostaDao->insere($r);
+        } else {
+            echo 'nulo';
+        }
     }
 
-    // $resDao = $factory->getRespostaDao();
-    // $questaoDao = $factory->getQuestaoDao();
-    // $respostasObj = array();
-    // foreach ($respostasArr as $r){
-    //     $idQuestao = array_search($r, $respostasPost);
-    // //    $respostasObj[] =  
-    // }
+    foreach($discursivas as $d){
+        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $s['idQuestao']);
+        if ($qq != null){
+            $r = new Resposta(null, null, $qq->getPontos(), null, null, $s['idQuestao'], null);
+            $respostaDao->insere($r);
+        } else {
+            echo 'nulo';
+        }
+    }
 
-    // //new Resposta(null, );
-    // // valida se oferta existe aqui?
-    // // valida se o questionario é o mesmo da oferta
-    // // id (-1) da questao é discursiva n tem alternativa
-
-    // foreach ($respostasArr as $r){
-    //     $idQuestao = array_search($r, $respostasPost);
-        
-    // }
 ?>

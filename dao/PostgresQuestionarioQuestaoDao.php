@@ -125,7 +125,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
     public function buscaPorQuestionarioEQuestao($questionarioId, $questaoId) {
         $questionarioquestao = null;
 
-        $query = "SELECT pontos, ordem, questionarioid, questaoid,
+        $query = "SELECT pontos, ordem, questionarioid, questaoid
                 FROM ". $this->table_name . "
                 WHERE questionarioid = ?
                 AND questaoid = ?
