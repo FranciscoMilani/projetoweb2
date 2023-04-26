@@ -7,20 +7,18 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
 
     private $table_name = 'submissao';
     
-    public function insere($resposta) {
+    public function insere($submissao) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (texto, nota, alternativa, questao, submissao) VALUES" .
-        " (:texto, :nota, :alternativa, :questao, :submissao)" .
+        " (nomeocasiao, descricao, data, ofertaid) VALUES" .
+        " (:nomeocasiao, :descricao, DEFAULT, :ofertaid)" .
         " RETURNING id";
-        
+
         $stmt = $this->conn->prepare($query);
         
-        $stmt->bindParam(":texto", $resposta->getTexto());
-        $stmt->bindParam(":nota", $resposta->getNota());
-        $stmt->bindParam(":alternativa", $resposta->getAlternativa());
-        $stmt->bindParam(":questao", $resposta->getQuestao());
-        $stmt->bindParam(":submissao", $resposta->getSubmissao());
+        $stmt->bindParam(":nomeocasiao", $submissao->getNomeOcasiao());
+        $stmt->bindParam(":descricao", $submissao->getDescricao());
+        $stmt->bindParam(":ofertaid", $submissao->getOferta());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -46,15 +44,15 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         return false;
     }
 
-    public function remove($resposta) {
-        return $this->removePorId($resposta->getId());
+    public function remove($submissao) {
+        return $this->removePorId($submissao->getId());
     }
 
     public function buscaPorId($id) {
-        $resposta = null;
+        $submissao = null;
 
         $query = "SELECT
-                    id, texto, nota, alternativaid, questaoid, submissaoid
+                    id, nomeocasiao, descricao, data, ofertaid
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -68,55 +66,33 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['alternativaid'], $row['questaoid'], $row['submissaoid']);
+            $dataFormatada = date('d/m/Y', strtotime($row['data']));
+            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid']);
         } 
      
-        return $resposta;
+        return $submissao;
     }
-
-    public function buscaPorSubmissaoId($submissaoId)
-    {
-        $resposta = null;
-
-        $query = "SELECT
-                    id, texto, nota, alternativaid, questaoid, submissaoid
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    id = ?
-                LIMIT
-                    1 OFFSET 0";
-     
-        $stmt = $this->conn->prepare( $query );
-        $stmt->bindParam(1, $submissaoId);
-        $stmt->execute();
-     
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['alternativaid'], $row['questaoid'], $row['submissaoid']);
-        } 
-     
-        return $resposta;
-    }
-
+    
     public function buscaTodos() {
-        $respostas = array();
+        $submissoes = array();
 
         $query = "SELECT
-                    id, texto, nota, alternativaid, questaoid, submissaoid
+                    id, nomeocasiao, descricao, data, ofertaid
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY datacriacao DESC";
+                    " ORDER BY data DESC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $respostas[] = new Resposta($id, $texto, $nota, $alternativaid, $questaoid, $submissaoid);
+            //$data =  date('d-m-Y', strtotime($row['data']));
+            $dataFormatada = date('d/m/Y', strtotime($data));
+            $submissoes[] = new Submissao($id, $nomeocasiao, $descricao, $dataFormatada, $ofertaid);
         }
         
-        return $respostas;
+        return $submissoes;
     }
 }
 ?>

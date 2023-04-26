@@ -12,7 +12,7 @@ abstract class DaoFactory {
     public abstract function getAlternativaDao();
     public abstract function getRespostaDao();
     public abstract function getRespostaAlternativaDao();
-    //public abstract function getSubmissaoDao();
+    public abstract function getSubmissaoDao();
     // public abstract function getOfertaDao();
 }
 ?>

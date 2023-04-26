@@ -101,6 +101,11 @@ CREATE TABLE oferta (
     FOREIGN KEY (respondenteId) REFERENCES respondente(id)
 );
 
+-- a inserção da data pode ser feita assim, com um valor DEFAULT do sql:
+-- ALTER TABLE oferta
+-- ALTER COLUMN data SET DEFAULT CURRENT_DATE;
+
+
 CREATE TABLE submissao (
     id SERIAL NOT NULL,
     nomeOcasiao VARCHAR(255),
@@ -110,6 +115,10 @@ CREATE TABLE submissao (
 	PRIMARY KEY (id),
     FOREIGN KEY (ofertaId) REFERENCES oferta(id)
 );
+
+ALTER TABLE submissao
+ALTER COLUMN data SET DEFAULT CURRENT_DATE;
+
 
 CREATE TABLE resposta (
     id SERIAL NOT NULL,

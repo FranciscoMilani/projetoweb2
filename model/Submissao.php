@@ -9,14 +9,13 @@
         private $ofertaAtendida;
         private $respostas = array();
 
-        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida, $respostas)
+        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida)
         {
             $this->id = $id;
             $this->nomeOcasiao = $nomeOcasiao;
             $this->descricao = $descricao;
             $this->data = $data;
             $this->ofertaAtendida = $ofertaAtendida;
-            $this->respostas = $respostas;
         }
 
         public function getId() { return $this->id; }

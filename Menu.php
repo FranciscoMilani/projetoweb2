@@ -19,11 +19,12 @@ include_once 'LayoutHeader.php';
     if ($_SESSION["is_admin"]) {
         echo "<button class=\"classeBotoes\" onclick=\"location.href='ControleElaboradores.php'\">Controle de Elaboradores</button>";
     }
-
+    
     //se for respondente, mostra apenas botao de ofertas
     //se precisar direcionar para mais telas so add mais botoes
     if (!$_SESSION["is_admin"] && !$_SESSION["is_elaborador"]) {
         echo "<button class=\"classeBotoes\">Ver Ofertas</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='RespondeQuestionario.php'\">(Temporário) Responde Questionário</button>";
     }
     ?>
 </div>

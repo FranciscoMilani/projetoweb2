@@ -15,7 +15,7 @@
     
     
     // REMOVER!
-    $questionarioId = 9;  // REMOVER temporario pra teste!!!
+    $questionarioId = 9;  // REMOVER, temporario pra teste!!!
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
     $questoes = array();

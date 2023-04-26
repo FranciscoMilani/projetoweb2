@@ -10,8 +10,8 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
     public function insere($resposta) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (texto, nota, observacao, alternativaid, questaoid, submissaoid) VALUES" .
-        " (:texto, :nota, :observacao, :alternativaid, :questaoid, :submissaoid)" .
+        " (texto, nota, observacao, questaoid, submissaoid) VALUES" .
+        " (:texto, :nota, :observacao, :questaoid, :submissaoid)" .
         " RETURNING id";
         
         $stmt = $this->conn->prepare($query);
@@ -19,7 +19,6 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
         $stmt->bindParam(":texto", $resposta->getTexto());
         $stmt->bindParam(":nota", $resposta->getNota());
         $stmt->bindParam(":observacao", $resposta->getObservacao());
-        $stmt->bindParam(":alternativaid", $resposta->getAlternativa());
         $stmt->bindParam(":questaoid", $resposta->getQuestao());
         $stmt->bindParam(":submissaoid", $resposta->getSubmissao());
 
@@ -55,7 +54,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
         $resposta = null;
 
         $query = "SELECT
-                    id, texto, nota, observacao, alternativaid, questaoid, submissaoid
+                    id, texto, nota, observacao, questaoid, submissaoid
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -69,7 +68,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['observacao'], $row['alternativaid'], $row['questaoid'], $row['submissaoid']);
+            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['observacao'], $row['questaoid'], $row['submissaoid']);
         } 
      
         return $resposta;
@@ -80,7 +79,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
         $resposta = null;
 
         $query = "SELECT
-                    id, texto, nota, observacao, alternativaid, questaoid, submissaoid
+                    id, texto, nota, observacao, questaoid, submissaoid
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -94,7 +93,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['observacao'], $row['alternativaid'], $row['questaoid'], $row['submissaoid']);
+            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['observacao'], $row['questaoid'], $row['submissaoid']);
         } 
      
         return $resposta;
@@ -104,7 +103,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
         $respostas = array();
 
         $query = "SELECT
-                    id, texto, nota, observacao, alternativaid, questaoid, submissaoid
+                    id, texto, nota, observacao, questaoid, submissaoid
                 FROM
                     " . $this->table_name . 
                     " ORDER BY datacriacao DESC";
@@ -114,7 +113,7 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $respostas[] = new Resposta($id, $texto, $nota, $observacao, $alternativaid, $questaoid, $submissaoid);
+            $respostas[] = new Resposta($id, $texto, $nota, $observacao, $questaoid, $submissaoid);
         }
         
         return $respostas;

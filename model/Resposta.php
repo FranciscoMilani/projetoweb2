@@ -5,16 +5,14 @@
         private $texto;
         private $nota;
         private $observacao;
-        private $alternativa;
         private $questao;
         private $submissao;
 
-        public function __construct($id, $texto, $nota, $observacao, $alternativa, $questao, $submissao){
+        public function __construct($id, $texto, $nota, $observacao, $questao, $submissao){
             $this->id = $id;
             $this->texto = $texto;
             $this->nota = $nota;
             $this->observacao = $observacao;
-            $this->alternativa = $alternativa;
             $this->questao = $questao;
             $this->submissao = $submissao;
         }
@@ -30,10 +28,7 @@
         
         public function getObservacao() { return $this->observacao; }
         public function setObservacao($observacao) { $this->observacao = $observacao; }
-
-        public function getAlternativa() { return $this->alternativa; }
-        public function setAlternativa($alternativa) { $this->alternativa = $alternativa; }
-
+        
         public function getQuestao() { return $this->questao; }
         public function setQuestao($questao) { $this->questao = $questao; }
 
