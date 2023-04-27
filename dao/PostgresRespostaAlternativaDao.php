@@ -28,7 +28,7 @@
             }
         }
 
-        public function removePorResposta($respostaId) {
+        public function removePorRespostaId($respostaId) {
             $query = "DELETE FROM " . $this->table_name . 
             " WHERE respostaid = :id";
     
@@ -43,15 +43,15 @@
             return false;
         }
 
-        public function buscaPorResposta($respostaId) {
-            $respostaAlternativa = null;
+        public function buscaPorRespostaId($respostaId) {
+            $respostaAlternativas = array();
 
             $query = "SELECT
                         id, respostaid, alternativaid
                     FROM
                         " . $this->table_name . "
                     WHERE
-                        respostaid = id";
+                        respostaid = :id";
          
             $stmt = $this->conn->prepare( $query );
             $stmt->bindParam(':id', $respostaId);
@@ -59,10 +59,30 @@
          
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 extract($row);
-                $respostaAlternativa = new RespostaAlternativa($row['id'], $row['respostaid'], $row['alternativaid']);
+                $respostaAlternativas[] = new RespostaAlternativa($id, $respostaid, $alternativaid);
             } 
          
-            return $respostaAlternativa;
+            return $respostaAlternativas;
+        }
+
+        public function buscaAlternativasPorRespostaId($respostaId){
+            $alternativas = array();
+
+            $query =   "SELECT a.id, a.descricao, a.iscorreta, a.questaoid
+                        FROM alternativa a
+                        INNER JOIN {$this->table_name} ra ON ra.alternativaid = a.id
+                        AND ra.respostaid = :id";
+         
+            $stmt = $this->conn->prepare( $query );
+            $stmt->bindParam(':id', $respostaId);
+            $stmt->execute();
+
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoid);
+            } 
+         
+            return $alternativas;
         }
     }
 

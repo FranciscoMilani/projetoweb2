@@ -144,6 +144,30 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
         return $questionarioquestao;
     }
 
+
+    public function buscaQuestoesPorQuestionarioId($questionarioId) {
+        $questoes = array();
+
+        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+                    FROM questao q
+                    JOIN questionarioquestao qq
+                    ON q.id = qq.questaoid
+                    AND qq.questionarioid = :questionarioid
+                    ORDER BY qq.ordem ASC";
+
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':questionarioid', $questionarioId);
+        $stmt->execute();
+     
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
+        } 
+     
+        return $questoes;
+    }
+
     /* PENSAR SE PRECISA IMPLEMENTAR BUSCA TODOS */
 
     // public function buscaTodos() {

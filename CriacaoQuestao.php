@@ -19,9 +19,9 @@
             <textarea class="form-control" style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição da questão..." required></textarea>
             <fieldset class="container py-3">
                 <label for="discursiva">Discursiva</label>
-                <input type="radio" class="radio-questao " name="tipoquestao" value="discursiva" checked>
+                <input type="radio" class="radio-questao" name="tipoquestao" value="discursiva" checked>
                 <br>    
-                <label for="Selecionavel">Selecionável</label>
+                <label for="selecionavel">Selecionável</label>
                 <input type="radio" class="radio-questao" name="tipoquestao" value="selecionavel">
             </fieldset>
 

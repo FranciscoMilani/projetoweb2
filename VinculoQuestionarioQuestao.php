@@ -49,33 +49,8 @@
                 ?>
                 </tbody>
             </table>  
-            <a href="Menu.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</button>
+            <a href="Menu.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</a>
         </section>
-
-
-        <!-- <section class="container my-5 tabela-vinculo">
-            <h2 class="">Vincular</h2>
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Pontos</th>
-                        <th>Ordem</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><input type="text"></td>
-                        <td><input type="number"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php 
-                echo '<td>teste data</td>';
-                echo '<td>teste data</td>';
-            ?>
-        </section> -->
     </body>
 </html>
 

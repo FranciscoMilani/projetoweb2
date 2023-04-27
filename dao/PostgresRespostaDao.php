@@ -76,27 +76,22 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
 
     public function buscaPorSubmissaoId($submissaoId)
     {
-        $resposta = null;
+        $respostas = array();
 
-        $query = "SELECT
-                    id, texto, nota, observacao, questaoid, submissaoid
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    id = ?
-                LIMIT
-                    1 OFFSET 0";
+        $query = "SELECT id, texto, nota, observacao, questaoid, submissaoid
+                  FROM {$this->table_name}
+                  WHERE submissaoid = :id";
      
         $stmt = $this->conn->prepare( $query );
-        $stmt->bindParam(1, $submissaoId);
+        $stmt->bindParam(':id', $submissaoId);
         $stmt->execute();
      
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $resposta = new Resposta($row['id'], $row['texto'], $row['nota'], $row['observacao'], $row['questaoid'], $row['submissaoid']);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $respostas[] = new Resposta($id, $texto, $nota, $observacao, $questaoid, $submissaoid);
         } 
      
-        return $resposta;
+        return $respostas;
     }
 
     public function buscaTodos() {

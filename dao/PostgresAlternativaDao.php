@@ -116,5 +116,28 @@ class PostgresAlternativaDao extends PostgresDao implements AlternativaDao {
         
         return $alternativas;
     }
+
+    
+    public function buscaCorretasPorQuestaoId($questaoId) {
+        $alternativas = array();
+
+        $query = "SELECT
+                    id, descricao, iscorreta, questaoid
+                FROM
+                    " . $this->table_name . 
+                    " WHERE questaoid = :questaoid 
+                    AND iscorreta = TRUE";
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':questaoid', $questaoId);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $alternativas[] = new Alternativa($id, $descricao, $iscorreta, $questaoid);
+        }
+        
+        return $alternativas;
+    }
 }
 ?>

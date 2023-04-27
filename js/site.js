@@ -23,31 +23,28 @@ $(document).ready(function (){
     $('.cadastro-questao-form').submit(function(e){
         checks = $('input:checkbox:checked').length;
 
-        if (checks == 0){
-            e.preventDefault();
-            alert('Selecione ao menos uma alternativa');
-            //Swal.fire('Selecione ao menos uma alternativa');
-            return false;
-        }
-
-        $('.texto-alternativa').each(function(){
-            let str = $(this).val().trim()
-            if (!str){
+        if ($('.radio-questao:checked').val() == 'selecionavel'){
+            if (checks == 0){
                 e.preventDefault();
-                alert('Preencha o texto de todas as alternativas');
-                //Swal.fire('Preencha o texto de todas as alternativas');
+                alert('Selecione ao menos uma alternativa');
+                //Swal.fire('Selecione ao menos uma alternativa');
                 return false;
             }
-        })
-
+            
+            $('.texto-alternativa').each(function(){
+                let str = $(this).val().trim()
+                if (!str){
+                    e.preventDefault();
+                    alert('Preencha o texto de todas as alternativas');
+                    //Swal.fire('Preencha o texto de todas as alternativas');
+                    return false;
+                }
+            })
+        }
     })
-
-    // $('.cadastro-questao-form').submit(function () {
-    //     return false;
 })
 
 function atualizaSelectOptions(qtd){
-    //let qtdNova = parseInt(($('#quantidade-alternativas').val()));
     let qtdNova = qtd;
     let diferenca =  qtdNova - qtdAtual;
    

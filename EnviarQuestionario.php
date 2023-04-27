@@ -38,33 +38,31 @@
         $questao = $s['idQuestao'];
 
         $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
-        if ($qq != null){
-            $corretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
-            $notaFracionada = $qq->getPontos() / count($alternativas);   
-            $idR = $respostaDao->insere($r);
-
+        if ($qq != null){ 
             if (count($alternativas) > 1){
+                $corretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
+                $notaFracionada = $qq->getPontos() / count($alternativas);
+                $notaObtida = 0;
+                $raArray = array();
+
                 foreach ($alternativas as $idA){      
                     if (in_array($idA, $corretasArr)){
-                        $notaFracionada++;
-                        $ra = new RespostaAlternativa(null, $idR, $idA);
-                        $respAltDao->insere($ra);
+                        $notaObtida += $notaFracionada;
                     }
                 } 
+                
+                $r = new Resposta(null, null, $notaObtida, null, $questao, $submissaoId);
+                $idR = $respostaDao->insere($r);
+                var_dump(count($raArray));
+                foreach ($raArray as $ra){      
+                    $raArray[] = new RespostaAlternativa(null, $idR, $idA);
+                    $respAltDao->insere($ra);
+                } 
 
-                $r = new Resposta(null, null, $notaFracionada, null, $questao, $submissaoId);
-                $respostaDao->insere($r);
             } else {
                 $r = new Resposta(null, null, $qq->getPontos(), null, $questao, $submissaoId);
                 $respostaDao->insere($r);
             }
-
-            // foreach ($corretasArr as $altCorreta){      
-            //     if (in_array($altCorreta->getId(), $alternativas)){
-            //         $ra = new RespostaAlternativa(null, $idR, $idA);
-            //         $respAltDao->insere($ra);
-            //     }
-            // } 
         }
     }
 

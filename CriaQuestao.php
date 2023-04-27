@@ -52,7 +52,7 @@
         }
     }
     
-   header('Location: CriacaoQuestao.php');
+   header('Location: Menu.php');
    exit;
 
     // verificaVariaveis($_POST);

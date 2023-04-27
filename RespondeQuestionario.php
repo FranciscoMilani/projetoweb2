@@ -36,24 +36,60 @@
 
             //dadosArr.push(<?=$questionarioId?>);
             
-            $('.questao').each(function(){  
-                var alternativas = [];
-                var idQuestao;
+            // $('.questao').each(function(){  
+            //     var alternativas = [];
+            //     var idQuestao;
                 
-                idQuestao = $(this).attr('id');
+            //     idQuestao = $(this).attr('id');
 
-                $(this).find('.selecionavel:checked').each(function(){
-                    var idAlternativa = $(this).attr('id');
-                    alternativas.push(idAlternativa);
-                });
+            //     $(this).find('.selecionavel:checked').each(function(){
+            //         var idAlternativa = $(this).attr('id');
+            //         alternativas.push(idAlternativa);
+            //     });
+            //     selecionavelArr.push({idQuestao, alternativas});
 
-                $(this).find('.discursiva').each(function(){
-                    var val = $(this).val();
-                    discursivaArr.push({idQuestao, val});
-                })
+            //     $(this).find('.discursiva').each(function(){
+            //         var val = $(this).val();
+            //         discursivaArr.push({idQuestao, val});
+            //     })
+            // });
 
-                selecionavelArr.push({idQuestao, alternativas});
+            var alternativas = [];
+            var idQuestao;
+            
+            $('.selecionavel:checked').each(function(){
+                idQuestao = $(this).closest('.questao').attr('id');
+                console.log(idQuestao);
+                idAlternativa = $(this).attr('id');
+                alternativas.push(idAlternativa);
             });
+            selecionavelArr.push({idQuestao, alternativas});
+
+                
+            $('.discursiva').each(function(){
+                idQuestao = $(this).closest('.questao').attr('id');
+                var val = $(this).val();
+                discursivaArr.push({idQuestao, val});
+            })
+
+            // $('.questao').each(function(){  
+            //     var alternativas = [];
+            //     var idQuestao;
+                
+            //     idQuestao = $(this).attr('id');
+
+            //     $(this).find('.selecionavel:checked').each(function(){
+            //         var idAlternativa = $(this).attr('id');
+            //         alternativas.push(idAlternativa);
+            //     });
+                
+            //     $(this).find('.discursiva').each(function(){
+            //         var val = $(this).val();
+            //         discursivaArr.push({idQuestao, val});
+            //     })
+                
+            //     selecionavelArr.push({idQuestao, alternativas});
+            // });
 
             data = {
                 idQuestionario: <?=$questionarioId?>,
