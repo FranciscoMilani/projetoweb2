@@ -24,12 +24,13 @@
     $questionarioQuestaoDao = $factory->getQuestionarioQuestaoDao();
     $respAltDao = $factory->getRespostaAlternativaDao();
     $submissaoDao = $factory->getSubmissaoDao();
+    $alternativaDao = $factory->getAlternativaDao();
 
 
     // nao precisa passar data pq o sql faz o trabalho de obter a data.
     // pensar se precisa fazer uma transaction aqui e passar tudo no dao da submissao?
-    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, 1); // passar ofertaId qndo criação de ofertas estiver pronto
-    $subId = $submissaoDao->insere($submissao);
+    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, 1); // !!! passar ofertaId qndo criação de ofertas estiver pronto
+    $submissaoId = $submissaoDao->insere($submissao);
 
     
     foreach($selecionaveis as $s){
@@ -38,13 +39,32 @@
 
         $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
         if ($qq != null){
-            $r = new Resposta(null, null, $qq->getPontos(), null, $questao, $subId); // !! Passar id submissao aqui
+            $corretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
+            $notaFracionada = $qq->getPontos() / count($alternativas);   
             $idR = $respostaDao->insere($r);
-            
-            foreach ($alternativas as $idA){
-                $ra = new RespostaAlternativa(null, $idR, $idA);
-                $respAltDao->insere($ra);
-            }    
+
+            if (count($alternativas) > 1){
+                foreach ($alternativas as $idA){      
+                    if (in_array($idA, $corretasArr)){
+                        $notaFracionada++;
+                        $ra = new RespostaAlternativa(null, $idR, $idA);
+                        $respAltDao->insere($ra);
+                    }
+                } 
+
+                $r = new Resposta(null, null, $notaFracionada, null, $questao, $submissaoId);
+                $respostaDao->insere($r);
+            } else {
+                $r = new Resposta(null, null, $qq->getPontos(), null, $questao, $submissaoId);
+                $respostaDao->insere($r);
+            }
+
+            // foreach ($corretasArr as $altCorreta){      
+            //     if (in_array($altCorreta->getId(), $alternativas)){
+            //         $ra = new RespostaAlternativa(null, $idR, $idA);
+            //         $respAltDao->insere($ra);
+            //     }
+            // } 
         }
     }
 
@@ -53,8 +73,8 @@
         $questao = $d['idQuestao'];
 
         $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
-        if ($qq != null){
-            $r = new Resposta(null, $texto, $qq->getPontos(), null, $questao, $subId); // !! Passar id submissao aqui
+        if ($qq != null){                          // null? nao foi avaliado ainda
+            $r = new Resposta(null, $texto, null, null, $questao, $submissaoId); // !! Passar id submissao aqui
             $respostaDao->insere($r);
         }
     }
