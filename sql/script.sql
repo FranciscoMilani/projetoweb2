@@ -74,7 +74,7 @@ ALTER TABLE questionarioquestao
 DROP CONSTRAINT IF EXISTS questionarioquestao_pkey,
 ADD UNIQUE (ordem, questionarioId),
 ADD UNIQUE (questaoId, questionarioId),
-ADD PRIMARY KEY (questionarioId, questaoId);
+ADD PRIMARY KEY (questionarioId, questaoId),
 ADD CONSTRAINT fk_questionario FOREIGN KEY (questionarioId) REFERENCES questionario(id),
 ADD CONSTRAINT fk_questao FOREIGN KEY (questaoId) REFERENCES questao(id);
 

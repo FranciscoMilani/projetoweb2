@@ -18,7 +18,7 @@ class PostgresDaoFactory extends DaoFactory {
 
     // specify your own database credentials
     private $host = "localhost";
-    private $db_name = "projetoweb2";
+    private $db_name = "ProjetoWeb2";
     private $port = "5432";
     private $username = "postgres";
     private $password = "ucs";
