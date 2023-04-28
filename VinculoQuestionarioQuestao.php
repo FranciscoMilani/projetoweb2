@@ -29,7 +29,7 @@
                         <th>Pontos</th>
                         <th>Ordem</th>
                         <th>Adicionar/Remover</th>
-                        <th>Enviar</th>
+                        <th>Vincular</th>
                     </tr>
                 </thead>
                 <tbody>

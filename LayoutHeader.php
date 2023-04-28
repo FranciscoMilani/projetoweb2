@@ -25,26 +25,30 @@
     </title>
 </head>
 
-<body>
-    <header>
-        <div class="fundoUcs">
-            <img src="imagens/ucs.png">
-            <h4>
-                <?= $titulo ?>
-            </h4>
-            <?php
-            include_once "Comum.php";
-
-            if (is_session_started() === FALSE) {
-                session_start();
-            }
-
-            if(isset($_SESSION["nome_usuario"])) {
-                echo "<span class=\"usuarioLogado\">Você está logado como " . $_SESSION["nome_usuario"];		
-                echo "<a href='ExecutaLogout.php' class=\"usuarioLogado\"> Logout </a></span>";
-            } else {
-                echo "<span><a href='index.php' class=\"usuarioLogado\"> Efetuar Login </a></span>";
-            }
-            ?>
+<body class="bg-light">
+    <header class="container mx-auto mw-100 text-center align-middle">
+        <nav class="row bg-secondary">
+        <a class="col my-2" href="Menu.php">
+            <img src="imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
+        </a>
+        <div class="col d-flex align-self-center">
+            <h3 class="my-0 mx-auto text-white align-middle"><?= $titulo ?></h3>
         </div>
+        <div class="col d-flex justify-content-center align-self-center flex-column">
+            <?php
+                include_once "Comum.php";
+                
+                if (is_session_started() === FALSE) {
+                    session_start();
+                }
+                
+                if(isset($_SESSION["nome_usuario"])) {
+                    echo "<span class=\"usuarioLogado d-block\">Login | " . $_SESSION["nome_usuario"];		
+                    echo "<a href='ExecutaLogout.php' class=\"usuarioLogado d-block\"> Logout </a></span>";
+                } else {
+                    echo "<a href='index.php' class=\"usuarioLogado d-block\"> Efetuar Login </a></span>";
+                }
+                ?>
+            <div>
+        </nav>
     </header>

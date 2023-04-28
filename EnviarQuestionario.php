@@ -1,10 +1,10 @@
 <?php 
     include_once 'verificaUsuarios.php';
     include_once 'Fachada.php';
-    
+
     $dadosJson = file_get_contents('php://input');
     $dados = json_decode($dadosJson, true);
-    
+
     $idQuestionario = $dados['idQuestionario'];
     $selecionaveis = $dados['selecionaveis'];
     $discursivas = $dados['discursivas'];
@@ -15,8 +15,7 @@
     // pegar id da oferta atendida para passar para a submissao
 
     if (!isset($idQuestionario)){
-        header('Location: Menu.php');
-        exit;
+        exit('erro');
     }
 
     $respostaDao = $factory->getRespostaDao();
@@ -53,7 +52,7 @@
                 
                 $r = new Resposta(null, null, $notaObtida, null, $questao, $submissaoId);
                 $idR = $respostaDao->insere($r);
-                var_dump(count($raArray));
+
                 foreach ($raArray as $ra){      
                     $raArray[] = new RespostaAlternativa(null, $idR, $idA);
                     $respAltDao->insere($ra);
@@ -77,6 +76,7 @@
         }
     }
 
-    header('Location: Menu.php');
-
+    exit('sucesso');
+    //header('Location: Menu.php');
+    //exit;
 ?>

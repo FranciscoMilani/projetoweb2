@@ -15,7 +15,7 @@
     
     
     // REMOVER!
-    $questionarioId = 2;  // REMOVER, temporario pra teste!!!
+    $questionarioId = 9;  // REMOVER, temporario pra teste!!!
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
     $questoes = array();
@@ -26,70 +26,40 @@
 ?>
 
 <script type="text/javascript">
+    var submitting = false;
 
     $(document).ready(function(){
-        $('#enviar-form').click(function(evento){
-            evento.preventDefault();
+        
+        $('#enviar-questionario').click(function(evento){
+            if (submitting){
+                return false;
+            }
+            console.log('Submetendo questionário...');
+            submitting = true;
 
             var discursivaArr = [];
             var selecionavelArr = [];
-
-            //dadosArr.push(<?=$questionarioId?>);
             
-            // $('.questao').each(function(){  
-            //     var alternativas = [];
-            //     var idQuestao;
+            $('.questao').each(function(){  
+                var alternativas = [];
+                var idQuestao;
                 
-            //     idQuestao = $(this).attr('id');
+                idQuestao = $(this).attr('id');
+                if($(this).find('.selecionavel').length){
+                    $(this).find('.selecionavel:checked').each(function(){
+                        var idAlternativa = $(this).attr('id');
+                        alternativas.push(idAlternativa);
+                    });
 
-            //     $(this).find('.selecionavel:checked').each(function(){
-            //         var idAlternativa = $(this).attr('id');
-            //         alternativas.push(idAlternativa);
-            //     });
-            //     selecionavelArr.push({idQuestao, alternativas});
+                    selecionavelArr.push({idQuestao, alternativas});
+                } else {
+                    $(this).find('.discursiva').each(function(){
+                        var val = $(this).val();
+                        discursivaArr.push({idQuestao, val});
+                    })
+                }
 
-            //     $(this).find('.discursiva').each(function(){
-            //         var val = $(this).val();
-            //         discursivaArr.push({idQuestao, val});
-            //     })
-            // });
-
-            var alternativas = [];
-            var idQuestao;
-            
-            $('.selecionavel:checked').each(function(){
-                idQuestao = $(this).closest('.questao').attr('id');
-                console.log(idQuestao);
-                idAlternativa = $(this).attr('id');
-                alternativas.push(idAlternativa);
             });
-            selecionavelArr.push({idQuestao, alternativas});
-
-                
-            $('.discursiva').each(function(){
-                idQuestao = $(this).closest('.questao').attr('id');
-                var val = $(this).val();
-                discursivaArr.push({idQuestao, val});
-            })
-
-            // $('.questao').each(function(){  
-            //     var alternativas = [];
-            //     var idQuestao;
-                
-            //     idQuestao = $(this).attr('id');
-
-            //     $(this).find('.selecionavel:checked').each(function(){
-            //         var idAlternativa = $(this).attr('id');
-            //         alternativas.push(idAlternativa);
-            //     });
-                
-            //     $(this).find('.discursiva').each(function(){
-            //         var val = $(this).val();
-            //         discursivaArr.push({idQuestao, val});
-            //     })
-                
-            //     selecionavelArr.push({idQuestao, alternativas});
-            // });
 
             data = {
                 idQuestionario: <?=$questionarioId?>,
@@ -98,22 +68,22 @@
             }
 
             jsonData = JSON.stringify(data, null, 2);
-            //console.log(jsonData);
 
             $.ajax({
                 url: 'EnviarQuestionario.php',
                 type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
+                contentType: 'text/html',
+                dataType: 'text',
                 data: jsonData,
                 success: function(msg){
-                    //window.location = 'EnviarQuestionario.php';
+                    console.log(msg)
+                    //window.location = 'Menu.php';
                 }, 
                 error: function(){
-                    //window.location = 'EnviarQuestionario.php';
+                    //window.location = 'Menu.php';
                 }
             }).done(function(){
-                //window.location = 'EnviarQuestionario.php';
+                window.location.href = 'Menu.php';
             })
         });
     });
@@ -122,7 +92,7 @@
 
 <main>
     <section class="mt-5 questionario">
-        <form method="POST" name="envio-questionario" id="envio-form">
+        <!--<form method="POST" name="envio-questionario" id="envio-form">-->
         <?php
             for ($i = 0; $i < count($questionarioQuestoes); $i++){
                 $questao = $questionarioQuestoes[$i]->getQuestao();
@@ -165,9 +135,10 @@
         ?>
 
         <div class="d-flex justify-content-center">
-            <input type="submit" value="Enviar questionário" id="enviar-form" class="btn btn-primary btn-lg m-4 mx-auto float-center">
+            <!--<input type="submit" value="Enviar questionário" id="enviar-form" class="btn btn-primary btn-lg m-4 mx-auto float-center">-->
+            <a type="button" id="enviar-questionario" class="btn btn-primary btn-lg m-4 mx-auto float-center">Enviar questionário<a>
         </div>
-        </form>
+        <!--</form>-->
     </section>
 
 
