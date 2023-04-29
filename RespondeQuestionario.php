@@ -72,17 +72,19 @@
             $.ajax({
                 url: 'EnviarQuestionario.php',
                 type: 'POST',
-                contentType: 'text/html',
-                dataType: 'text',
+                contentType: 'application/json', //sending
+                dataType: 'text', // expecting
                 data: jsonData,
                 success: function(msg){
-                    console.log(msg)
-                    //window.location = 'Menu.php';
+                    console.log(msg);
+                    
                 }, 
-                error: function(){
-                    //window.location = 'Menu.php';
+                error: function(a, b, err){
+                    console.log(err);
                 }
-            }).done(function(){
+            })
+            .done(function(){
+                console.log('done')
                 window.location.href = 'Menu.php';
             })
         });
