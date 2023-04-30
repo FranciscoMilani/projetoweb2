@@ -70,5 +70,28 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
 
         return $ofertas;
     }
+
+    public function ofertasPorUsuario($id)
+    {
+        $ofertas = array();
+
+        $query = "SELECT
+                    id, data, questionarioid, respondenteid 
+                FROM
+                    " . $this->table_name . "
+                WHERE
+                    respondenteid = ?";
+
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $ofertas[] = new Oferta($row['id'], $row['data'], $row['questionarioid'], $row['respondenteid']);
+        }
+        return $ofertas;
+    }
 }
 ?>

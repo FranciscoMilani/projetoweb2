@@ -47,6 +47,7 @@ if ($respondentes) {
     echo "<th>Nome</th>";
     echo "<th>Email</th>";
     echo "<th>Telefone</th>";
+    echo "<th></th>";
     echo "</tr>";
 
     foreach ($respondentes as $resp) {

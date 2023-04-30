@@ -4,5 +4,6 @@
         public function remove($oferta);
         public function removePorId($id);
         public function buscaTodos();
+        public function ofertasPorUsuario($id);
     } 
 ?>

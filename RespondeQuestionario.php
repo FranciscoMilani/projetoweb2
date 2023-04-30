@@ -10,12 +10,7 @@
     $daoQuestao = $factory->getQuestaoDao();
     $daoAlternativa = $factory->getAlternativaDao();
     
-    //validar se oferta existe
-    //$daoOferta = $factory->getOfertaDao();
-    
-    
-    // REMOVER!
-    $questionarioId = 9;  // REMOVER, temporario pra teste!!!
+    $questionarioId = @$_GET["id"];
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
     $questoes = array();

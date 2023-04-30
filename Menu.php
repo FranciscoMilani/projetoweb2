@@ -22,10 +22,8 @@ include_once 'LayoutHeader.php';
     }
     
     //se for respondente, mostra apenas botao de ofertas
-    //se precisar direcionar para mais telas so add mais botoes
     if (!$_SESSION["is_admin"] && !$_SESSION["is_elaborador"]) {
-        echo "<button class=\"classeBotoes\">Ver Ofertas</button>";
-        echo "<button class=\"classeBotoes\" onclick=\"location.href='RespondeQuestionario.php'\">(Temporário) Responde Questionário</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='ListaOfertas.php'\">Ver Ofertas</button>";
     }
     ?>
 </div>

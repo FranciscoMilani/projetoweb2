@@ -47,6 +47,7 @@ if ($elaboradores) {
     echo "<th>Email</th>";
     echo "<th>Instituição</th>";
     echo "<th>Admin</th>";
+    echo "<th></th>";
     echo "</tr>";
 
     foreach ($elaboradores as $elab) {
