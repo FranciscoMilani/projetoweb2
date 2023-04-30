@@ -187,25 +187,31 @@ body {
 }
 
 .wrapper {
-	width: 50%;
-	display: flex; 
-	justify-content: space-between;
+	width: 100%;
+	display: block;
 }
 
-.box1,
-.box2 {
-	display: inline-block;
-	width: 50%;
+.box1 {
+	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
-	padding: 10px;
-	margin: 5px;
+	margin-bottom: 50px;
+}
+
+.box2 {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
 	border: 1px solid black;
+	margin-bottom: 10px;
 }
 
 .formOfertas {
-	margin: auto;
-	width: 50%;
-	border: 2px solid black;
-	padding: 10px;
-  }
+	width: 40%;
+	margin: 0 auto 100px;
+	padding: 45px;
+	justify-content: space-between;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	position: relative;
+	top: 100px;
+}
