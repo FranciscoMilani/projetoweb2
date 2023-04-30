@@ -12,7 +12,7 @@
     include_once 'dao/RespostaDao.php';
     include_once 'dao/RespostaAlternativaDao.php';
     include_once 'dao/SubmissaoDao.php';
-    // include_once 'dao/OfertaDao.php';
+    include_once 'dao/OfertaDao.php';
 
     
     // models
@@ -25,7 +25,7 @@
     include_once 'model/Resposta.php';
     include_once 'model/RespostaAlternativa.php';
     include_once 'model/Submissao.php';
-    // include_once 'model/Oferta.php';
+    include_once 'model/Oferta.php';
 
     // não printa Notices
     error_reporting(E_ERROR | E_USER_ERROR);

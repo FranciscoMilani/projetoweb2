@@ -5,10 +5,11 @@
         private $respondente;
         private $id;
 
-        public function __construct($id, $data, $questionario){
+        public function __construct($id, $data, $questionario, $respondente){
             $this->id = $id;
             $this->data = $data;
             $this->questionario = $questionario;
+            $this->respondente = $respondente;
         }
 
         public function getId() { return $this->id; }

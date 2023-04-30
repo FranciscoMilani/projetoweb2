@@ -1,0 +1,74 @@
+<?php
+include_once('OfertaDao.php');
+include_once('PostgresDao.php');
+
+class PostgresOfertaDao extends PostgresDao implements OfertaDao
+{
+    private $table_name = 'oferta';
+
+    public function insere($oferta)
+    {
+        $query = "INSERT INTO " . $this->table_name .
+            " (data, questionarioid, respondenteid) VALUES" .
+            " (:data, :questionarioid, :respondenteid)";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind values 
+        $stmt->bindParam(":data", $oferta->getData());
+        $stmt->bindParam(":questionarioid", $oferta->getquestionario());
+        $stmt->bindParam(":respondenteid", $oferta->getRespondente());
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function removePorId($id)
+    {
+        $query = "DELETE FROM " . $this->table_name .
+            " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+        $stmt->bindParam(':id', $id);
+
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function remove($oferta)
+    {
+        return $this->removePorId($oferta->getId());
+    }
+
+    public function buscaTodos()
+    {
+
+        $ofertas = array();
+
+        $query = "SELECT
+                    id, data, questionarioid, respondenteid
+                FROM
+                    " . $this->table_name .
+            " ORDER BY id ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $ofertas[] = new Oferta($id, $data, $questionario, $respondente);
+        }
+
+        return $ofertas;
+    }
+}
+?>

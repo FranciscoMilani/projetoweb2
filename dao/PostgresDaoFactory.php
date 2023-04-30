@@ -11,7 +11,7 @@ include_once('PostgresAlternativaDao.php');
 include_once('PostgresRespostaDao.php');
 include_once('PostgresRespostaAlternativaDao.php');
 include_once('PostgresSubmissaoDao.php');
-// include_once('PostgresOfertaDao.php');
+include_once('PostgresOfertaDao.php');
 
 
 class PostgresDaoFactory extends DaoFactory {
@@ -77,8 +77,8 @@ class PostgresDaoFactory extends DaoFactory {
         return new PostgresSubmissaoDao($this->getConnection()); 
     }
 
-    // public function getOfertaDao() {
-    //     return new PostgresOfertaDao($this->getConnection()); 
-    // }
+    public function getOfertaDao() {
+        return new PostgresOfertaDao($this->getConnection()); 
+    }
 }
 ?>
