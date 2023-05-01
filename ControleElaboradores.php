@@ -9,6 +9,11 @@ include_once "fachada.php";
 $nome = @$_POST["pesquisaNome"];
 $email = @$_POST["pesquisaEmail"];
 
+$mensagem = @$_GET["mensagem"];
+if (!empty($mensagem)) {
+    echo "<script>alert('$mensagem');</script>";
+}
+
 echo "<section>";
 
 // procura elaboradores

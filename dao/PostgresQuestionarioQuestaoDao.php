@@ -43,6 +43,22 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
 
         return false;
     }
+    
+   //usado na hora de remover um questionario, para excluir seu vinculo com questoes
+    public function removePorQuestionario($questionarioId) {
+        $query = "DELETE FROM " . $this->table_name . 
+        " WHERE questionarioid = :questionarioid";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':questionarioid', $questionarioId);
+
+        if($stmt->execute()){
+            return true;
+        }    
+
+        return false;
+    }
 
     public function remove($questionarioquestao) {
         return $this->removePorIds($questionarioquestao->getQuestionario(),

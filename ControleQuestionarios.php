@@ -6,6 +6,11 @@ $titulo = 'Controle Questionários';
 include_once 'LayoutHeader.php';
 include_once "fachada.php";
 
+$mensagem = @$_GET["mensagem"];
+if (!empty($mensagem)) {
+    echo "<script>alert('$mensagem');</script>";
+}
+
 echo "<section>";
 
 // procura questionarios
@@ -28,9 +33,8 @@ if ($questionarios) {
     echo "<th>Elaborado Por</th>";
     echo "<th></th>";
     echo "</tr>";
-
     foreach ($questionarios as $quest) {
-        $elab = $daoElab->buscaPorId($quest->getId());
+        $elab = $daoElab->buscaPorId($quest->getElaborador());
 
         $date = new DateTime($quest->getDataCriacao());
         $formattedDate = date('d/m/Y', strtotime($date->format('Y-m-d')));
@@ -43,13 +47,13 @@ if ($questionarios) {
         echo "<td>{$quest->getNotaAprovacao()}</td>";
         echo "<td>{$elab->getNome()}</td>";
         echo "<td>";
-        //PRECISA IMPLEMENTAR OS METODOS
+        //PRECISA IMPLEMENTAR O METODO
         // botão para alterar um questionario
         echo "<a href='ModificaElaborador.php?id={$quest->getId()}' class='btn btn-info'>";
         echo "<span class='glyphicon glyphicon-edit'></span> Altera";
         echo "</a>";
         // botão para remover um questionario
-        echo "<a href='ExcluiElaborador.php?id={$quest->getId()}' class='btn btn-danger'";
+        echo "<a href='ExcluiQuestionario.php?id={$quest->getId()}' class='btn btn-danger'";
         echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
         echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
         echo "</a>";

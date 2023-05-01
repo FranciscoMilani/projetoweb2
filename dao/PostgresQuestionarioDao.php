@@ -107,7 +107,7 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
                     id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY datacriacao DESC";
+                    " ORDER BY id ASC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
