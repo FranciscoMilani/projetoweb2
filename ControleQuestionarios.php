@@ -49,7 +49,7 @@ if ($questionarios) {
         echo "<td>";
         //PRECISA IMPLEMENTAR O METODO
         // botão para alterar um questionario
-        echo "<a href='ModificaElaborador.php?id={$quest->getId()}' class='btn btn-info'>";
+        echo "<a href='ModificaQuestionario.php?id={$quest->getId()}' class='btn btn-info'>";
         echo "<span class='glyphicon glyphicon-edit'></span> Altera";
         echo "</a>";
         // botão para remover um questionario

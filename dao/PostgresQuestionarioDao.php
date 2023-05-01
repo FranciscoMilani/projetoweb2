@@ -50,22 +50,21 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         return $this->removePorId($questionario->getId());
     }
 
-    /*                  IMPLEMENTAR ALTERAÇÃO SE FOR NECESSÁRIO
     
     public function altera($questionario) {
-
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, senha = :senha, nome = :nome, email = :email" .
+        " SET nome = :nome, descricao = :descricao, datacriacao = :datacriacao, notaaprovacao = :notaaprovacao, elaboradorid = :elaboradorid" .
         " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
-        $stmt->bindParam(":login", $respondente->getLogin());
-        $stmt->bindParam(":senha", md5($respondente->getSenha()));
-        $stmt->bindParam(":nome", $respondente->getNome());
-        $stmt->bindParam(':email', $respondente->getEmail());
-        $stmt->bindParam(':telefone', $respondente->getTelefone());
+        $stmt->bindParam(":id", $questionario->getId());
+        $stmt->bindParam(":nome", $questionario->getNome());
+        $stmt->bindParam(":descricao", $questionario->getDescricao());
+        $stmt->bindParam(":datacriacao", $questionario->getDataCriacao());
+        $stmt->bindParam(':notaaprovacao', $questionario->getNotaAprovacao());
+        $stmt->bindParam(':elaboradorid', $questionario->getElaborador()->getId());
 
         // execute the query
         if($stmt->execute()){
@@ -74,7 +73,7 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
 
         return false;
     }
-    */
+
 
     public function buscaPorId($id) {
         $questionario = null;
