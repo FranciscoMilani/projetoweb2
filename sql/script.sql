@@ -119,6 +119,10 @@ CREATE TABLE submissao (
 ALTER TABLE submissao
 ALTER COLUMN data SET DEFAULT CURRENT_DATE;
 
+ALTER TABLE submissao
+ADD respondenteid INTEGER NOT NULL,
+ADD FOREIGN KEY (respondenteid) REFERENCES respondente(id)
+
 
 CREATE TABLE resposta (
     id SERIAL NOT NULL,

@@ -10,8 +10,8 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
     public function insere($submissao) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (nomeocasiao, descricao, data, ofertaid) VALUES" .
-        " (:nomeocasiao, :descricao, DEFAULT, :ofertaid)" .
+        " (nomeocasiao, descricao, data, ofertaid, respondenteid) VALUES" .
+        " (:nomeocasiao, :descricao, DEFAULT, :ofertaid, :respondenteid)" .
         " RETURNING id";
 
         $stmt = $this->conn->prepare($query);
@@ -19,6 +19,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $stmt->bindParam(":nomeocasiao", $submissao->getNomeOcasiao());
         $stmt->bindParam(":descricao", $submissao->getDescricao());
         $stmt->bindParam(":ofertaid", $submissao->getOferta());
+        $stmt->bindParam(":respondenteid", $submissao->getRespondente());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -52,7 +53,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $submissao = null;
 
         $query = "SELECT
-                    id, nomeocasiao, descricao, data, ofertaid
+                    id, nomeocasiao, descricao, data, ofertaid, respondenteid
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -67,7 +68,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
             $dataFormatada = date('d/m/Y', strtotime($row['data']));
-            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid']);
+            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid']);
         } 
      
         return $submissao;
@@ -77,7 +78,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $submissoes = array();
 
         $query = "SELECT
-                    id, nomeocasiao, descricao, data, ofertaid
+                    id, nomeocasiao, descricao, data, ofertaid, respondenteid
                 FROM
                     " . $this->table_name . 
                     " ORDER BY data DESC";
@@ -89,7 +90,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
             extract($row);
             //$data =  date('d-m-Y', strtotime($row['data']));
             $dataFormatada = date('d/m/Y', strtotime($data));
-            $submissoes[] = new Submissao($id, $nomeocasiao, $descricao, $dataFormatada, $ofertaid);
+            $submissoes[] = new Submissao($id, $nomeocasiao, $descricao, $dataFormatada, $ofertaid, $respondenteid);
         }
         
         return $submissoes;

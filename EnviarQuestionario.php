@@ -8,13 +8,14 @@
     $idQuestionario = $dados['idQuestionario'];
     $selecionaveis = $dados['selecionaveis'];
     $discursivas = $dados['discursivas'];
-    
+    $respondenteId = $_SESSION['id_usuario'];
+
     // validar se oferta existe aqui
     // validar se o questionario é o mesmo da oferta
     // validar se a oferta ja foi submetida por respondente
     // pegar id da oferta atendida para passar para a submissao
 
-    if (!isset($idQuestionario)){
+    if (!isset($idQuestionario)) {
         exit('erro');
     }
 
@@ -29,7 +30,7 @@
     $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, 1); // !!! passar ofertaId qndo criação de ofertas estiver pronto
     $submissaoId = $submissaoDao->insere($submissao);
 
-    foreach($selecionaveis as $s){
+    foreach($selecionaveis as $s) {
         $questao = $s['idQuestao'];
         $alternativasMarcadas = $s['alternativas'];
         $alternativasDaQuestao = $alternativaDao->buscaPorQuestaoId($questao);
@@ -37,7 +38,7 @@
         // TO-DO: validar questoes e alternativas recebidas
 
         if (!$alternativasMarcadas){
-            $r = new Resposta(null, null, 0, null, $questao, $submissaoId);
+            $r = new Resposta(null, null, 0, null, $questao, $submissaoId, $respondenteId);
             $idR = $respostaDao->insere($r);
 
             // Não tem alternativa pq nenhuma foi marcada, so tem resposta. Certo?
@@ -48,12 +49,11 @@
         
         $alternativasCorretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
         $idCorretasArr = array_map("mapAlternativasCorretasId", $alternativasCorretasArr);
-
         $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
+
         if ($qq != null){ 
-            //if (count($alternativasDaQuestao) > 1){
+            
             if ($qst->getIsMultiplaEscolha()){
-               // $corretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
                 $notaFracionada = $qq->getPontos() / count($idCorretasArr);
                 $notaObtida = 0;
                 
@@ -66,7 +66,7 @@
                 } 
 
                 $notaObtida = max(0, $notaObtida);
-                $r = new Resposta(null, null, $notaObtida, null, $questao, $submissaoId);
+                $r = new Resposta(null, null, $notaObtida, null, $questao, $submissaoId, $respondenteId);
                 $idR = $respostaDao->insere($r);
                 
                 foreach ($alternativasMarcadas as $idA){      
@@ -80,10 +80,10 @@
 
                 if ($idA == $idCorretasArr[0]){
                     // acertou
-                    $r = new Resposta(null, null, $qq->getPontos(), null, $questao, $submissaoId);
+                    $r = new Resposta(null, null, $qq->getPontos(), null, $questao, $submissaoId, $respondenteId);
                 } else {
                     // errou
-                    $r = new Resposta(null, null, 0, null, $questao, $submissaoId);
+                    $r = new Resposta(null, null, 0, null, $questao, $submissaoId, $respondenteId);
                 }
 
                 $idR = $respostaDao->insere($r);
@@ -101,7 +101,7 @@
 
         $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
         if ($qq != null) {
-            $r = new Resposta(null, $texto, null, null, $questao, $submissaoId);
+            $r = new Resposta(null, $texto, null, null, $questao, $submissaoId, $respondenteId);
             $respostaDao->insere($r);
         }
     }

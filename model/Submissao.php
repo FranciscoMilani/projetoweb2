@@ -8,14 +8,16 @@
         private $data;
         private $ofertaAtendida;
         private $respostas = array();
+        private $respondente;
 
-        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida)
+        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida, $respondente)
         {
             $this->id = $id;
             $this->nomeOcasiao = $nomeOcasiao;
             $this->descricao = $descricao;
             $this->data = $data;
             $this->ofertaAtendida = $ofertaAtendida;
+            $this->respondente = $respondente;
         }
 
         public function getId() { return $this->id; }
@@ -37,6 +39,9 @@
         public function setRespostas($respostas) { $this->respostas = $respostas; }
 
         public function addResposta($resposta) { array_push($resposta); }
+
+        public function getRespondente() { return $this->respondente; }
+        public function setRespondente($respondente) { $this->respondente = $respondente; }
     }
 
 ?>
