@@ -1,10 +1,10 @@
 <?php
 // validar sessão
-include "verificaElaborador.php";
+require "verificaElaborador.php";
 $titulo = 'Criação de Ofertas';
 
 include_once 'LayoutHeader.php';
-include_once "fachada.php";
+include_once "Fachada.php";
 
 $dao = $factory->getQuestionarioDao();
 $questionarios = $dao->buscaTodos();

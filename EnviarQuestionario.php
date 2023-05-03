@@ -1,11 +1,12 @@
 <?php 
-    include_once 'verificaUsuarios.php';
+    include_once 'verificaRespondente.php';
     include_once 'Fachada.php';
 
     $dadosJson = file_get_contents('php://input');
     $dados = json_decode($dadosJson, true);
 
-    $idQuestionario = $dados['idQuestionario'];
+    $ofertaId = $dados['ofertaId'];
+    $questionarioId = $dados['questionarioId'];
     $selecionaveis = $dados['selecionaveis'];
     $discursivas = $dados['discursivas'];
     $respondenteId = $_SESSION['id_usuario'];
@@ -15,7 +16,7 @@
     // validar se a oferta ja foi submetida por respondente
     // pegar id da oferta atendida para passar para a submissao
 
-    if (!isset($idQuestionario)) {
+    if (!isset($questionarioId)) {
         exit('erro');
     }
 
@@ -27,7 +28,8 @@
     $alternativaDao = $factory->getAlternativaDao();
 
     // pensar se precisa fazer uma transaction aqui e passar tudo no dao da submissao?
-    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, 1); // !!! passar ofertaId qndo criação de ofertas estiver pronto
+    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, $ofertaId, $respondenteId); 
+
     $submissaoId = $submissaoDao->insere($submissao);
 
     foreach($selecionaveis as $s) {
@@ -49,7 +51,7 @@
         
         $alternativasCorretasArr = $alternativaDao->buscaCorretasPorQuestaoId($questao);
         $idCorretasArr = array_map("mapAlternativasCorretasId", $alternativasCorretasArr);
-        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
+        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($questionarioId, $questao);
 
         if ($qq != null){ 
             
@@ -99,7 +101,7 @@
         $texto = $d['val'];
         $questao = $d['idQuestao'];
 
-        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($idQuestionario, $questao);
+        $qq = $questionarioQuestaoDao->buscaPorQuestionarioEQuestao($questionarioId, $questao);
         if ($qq != null) {
             $r = new Resposta(null, $texto, null, null, $questao, $submissaoId, $respondenteId);
             $respostaDao->insere($r);

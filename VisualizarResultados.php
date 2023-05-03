@@ -1,18 +1,15 @@
 <?php 
-    include_once 'verificaUsuarios.php';
+    include_once 'verificaRespondente.php';
 
-    // verifica se é o respondente que está logado
+    // verificar se o responpondente pode estar vendo o resultado (resposta é dele)
 
     $titulo = "Visualizando Respostas";
     include_once 'LayoutHeader.php';
     include_once 'Fachada.php';
 
-    // passar id questionario e submissao
     $respondenteId = $_SESSION['id_usuario'];
     $submissaoId = $_GET['submissaoId'];
     $questionarioId = $_GET['questionarioId'];
-    $questionarioId = 9; // REMOVER, temporário p/ visualização até linkar tudo!
-    $submissaoId = 328; // TEMPORÁRIO, REMOVER
 
     // DAOs
     $daoQuestionario = $factory->getQuestionarioDao();
@@ -162,7 +159,7 @@
         ?>
 
         <div class="d-flex justify-content-center">
-            <a href="Menu.php" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center">Retornar</a>
+            <a href="ListaOfertas.php" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center">Retornar</a>
         </div>
     </section>
 </main>

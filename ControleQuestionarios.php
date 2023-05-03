@@ -1,6 +1,6 @@
 <?php
 // validar sessão
-include "verificaAdmin.php";
+include_once "verificaElaborador.php";
 $titulo = 'Controle Questionários';
 
 include_once 'LayoutHeader.php';

@@ -1,6 +1,7 @@
 <?php
 $titulo = 'Cadastro de Elaboradores';
 include_once 'LayoutHeader.php';
+require "verificaAdmin.php";
 
 ?>
 <div class="paginaLogin">
@@ -17,7 +18,13 @@ include_once 'LayoutHeader.php';
         <input type="text" name="instituicao" required>
         <input type="submit" value="Enviar" id="btCadastro">
     </form>
-    <input type="button" onclick="location.href='Index.php'" value="voltar" class="classeVoltar">
+    <input type="button" onclick="location.href='Menu.php'" value="voltar" class="classeVoltar">
+    <?php 
+        if (isset($_SESSION['mensagem'])) {
+            echo $_SESSION['mensagem'];
+            unset($_SESSION['mensagem']);
+        }
+    ?>
 </div>
 
 <?php

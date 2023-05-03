@@ -1,6 +1,6 @@
 <?php
 // validar sessão
-include "verificaUsuarios.php";
+include "verificaRespondente.php";
 $titulo = 'Suas Ofertas';
 
 include_once 'LayoutHeader.php';
@@ -14,6 +14,7 @@ $ofertas = $dao->ofertasPorUsuario($idUsuario);
 
 $daoQuestionario = $factory->getQuestionarioDao();
 $daoElab = $factory->getElaboradorDao();
+$daoSubmissao = $factory->getSubmissaoDao();
 
 
 //Criacao da tabela
@@ -24,6 +25,7 @@ if ($ofertas) {
     echo "<th>Descrição</th>";
     echo "<th>Data</th>";
     echo "<th>Criado Por</th>";
+    echo "<th></th>";
     echo "<th></th>";
     echo "</tr>";
 
@@ -38,11 +40,36 @@ if ($ofertas) {
         echo "<td>{$quest->getDescricao()}</td>";
         echo "<td>{$formattedDate}</td>";
         echo "<td>{$elab->getNome()}</td>";
-        echo "<td>";
-        // botão para Responder
-        echo "<a href='RespondeQuestionario.php?id={$quest->getId()}' class='btn btn-info'>";
-        echo "<span class='glyphicon glyphicon-edit'></span> Responder";
-        echo "</a>";
+        // verifica se já foi respondido e troca botão
+        $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $idUsuario);
+        if (!isset($submissao)){
+            
+            // botão para Responder
+            echo "<td>";
+            echo "<a href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}' class='btn btn-info'>";
+            echo "<span class='glyphicon glyphicon-edit'></span> Responder";
+            echo "</a>";
+            echo "</td>";
+            
+            // botão para ver resposta
+            echo "<td>";
+            echo "<span class='glyphicon glyphicon-edit btn btn-secondary disabled'>Visualizar</span>";
+            echo "</td>";
+        } else {
+
+            // aviso de já respondido
+            echo "<td>";
+            echo "<button class='glyphicon glyphicon-edit btn btn-secondary' disabled>Respondido</button>";
+            echo "</td>";
+
+            // botão para ver resposta
+            echo "<td>";
+            echo "<a href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn btn-info'>";
+            echo "<span class='glyphicon glyphicon-edit'></span> Visualizar";
+            echo "</a>";
+            echo "</td>";
+            
+        }
         echo "</td>";
         echo "</tr>";
     }

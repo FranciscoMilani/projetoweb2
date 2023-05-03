@@ -29,6 +29,8 @@ primary key(id);
 -- senha = '123' em md5
 insert into elaborador(login, senha, nome, instituicao, email, isAdmin) values ('admin','202cb962ac59075b964b07152d234b70','Administrador', 'UCS', 'adm@ucs.br', True);
 
+INSERT INTO elaborador VALUES (DEFAULT, 'elab', '202cb962ac59075b964b07152d234b70', 'Professor Elaborador', 'UCS', 'professorelab@ucs.br', false)
+
 insert into respondente(login, senha, nome, telefone, email) values ('user','202cb962ac59075b964b07152d234b70','Usuario Respondente', '987654321', 'user@ucs.br');
 
 create table questionario (

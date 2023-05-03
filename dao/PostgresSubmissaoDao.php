@@ -96,6 +96,28 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         return $submissoes;
     }
 
+    public function buscaPorOfertaRespondenteId($ofertaId, $respondenteId){
+        $submissao = null;
+
+        $query = "SELECT id, nomeocasiao, descricao, data, ofertaid, respondenteid
+                  FROM {$this->table_name}
+                  WHERE ofertaid = :ofertaid
+                  AND respondenteid = :respondenteid";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':ofertaid', $ofertaId);
+        $stmt->bindParam(':respondenteid', $respondenteId);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row){
+            $dataFormatada = date('d/m/Y', strtotime($row['data']));
+            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid']);
+        }
+
+        return $submissao;
+    }
+
     // public function buscaPorRespondente($usuario) {
     //     $submissoes = array();
 

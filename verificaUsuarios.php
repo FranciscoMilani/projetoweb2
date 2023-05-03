@@ -9,11 +9,9 @@ if ( is_session_started() === FALSE ) {
 error_log("LOGIN");
 
 // Verifica se existe os dados da sessão de login 
-if(!isset($_SESSION["id_usuario"]) || !isset($_SESSION["nome_usuario"])) 
-{ 
-    error_log("SEM USUÁRIO LOGADO - Vai para index.php");
-    
-    // Usuário não logado! Redireciona para a página de login 
+if(!isset($_SESSION["id_usuario"])) 
+{
+    error_log("SEM USUARIO QUALQUER LOGADO - Vai para Index.php");
     header("Location: index.php"); 
     exit; 
 } 

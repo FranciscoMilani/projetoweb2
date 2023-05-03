@@ -2,15 +2,15 @@
 
     $titulo = "Questionário";
     include_once 'LayoutHeader.php';
-    include_once 'verificaUsuarios.php';
+    include_once 'verificaRespondente.php';
     include_once 'Fachada.php';
 
-    $questionarioId = $_POST['questionarioId'];
     $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
     $daoQuestao = $factory->getQuestaoDao();
     $daoAlternativa = $factory->getAlternativaDao();
     
-    $questionarioId = @$_GET["id"];
+    $ofertaId = $_GET['ofertaId'];
+    $questionarioId = $_GET['questId'];
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
     $questoes = array();
@@ -57,7 +57,8 @@
             });
 
             data = {
-                idQuestionario: <?=$questionarioId?>,
+                ofertaId: <?=$ofertaId?>,
+                questionarioId: <?=$questionarioId?>,
                 selecionaveis: selecionavelArr,
                 discursivas: discursivaArr
             }
