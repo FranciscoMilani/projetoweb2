@@ -16,7 +16,6 @@
     $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
     $daoQuestao = $factory->getQuestaoDao();
     $daoAlternativa = $factory->getAlternativaDao();
-
     $daoSubmissao = $factory->getSubmissaoDao();
     $daoResposta = $factory->getRespostaDao();
     $daoRespostaAlternativa = $factory->getRespostaAlternativaDao();
@@ -34,6 +33,24 @@
     }
 
     // Todas as Questoes do Questionário
+    $qqs = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
+    $notaSomada = 0;
+    $notaObtida = 0;
+    foreach ($qqs as $qq) {
+        $notaSomada += $qq->getPontos();
+    }
+
+    foreach($respostas as $resp)
+    {
+        $notaObtida += $resp->getNota();
+    }
+
+    if ($questionario->getNotaAprovacao() > $notaObtida){
+        $status = '<span class="d-block fs-3 fw-bold text-danger-emphasis text-center">Reprovado</span>';
+    } else {
+        $status = '<span class="d-block fs-3 fw-bold text-success-emphasis text-center">Aprovado</span>';
+    }
+
     $questoes = $daoQuestionarioQuestao->buscaQuestoesPorQuestionarioId($questionarioId);
 
 
@@ -59,9 +76,21 @@
 
 ?>
 
-<div class="container-fluid">
-    <h2 class="text-center pt-5 p-3"><?= $questionario->getNome() ?></h2>
-    <h3 class="text-center"><?= $questionario->getDescricao() ?></h3>
+<div class="d-flex justify-content-center">
+    <div class="d-flex flex-column">
+        <div class="container-fluid">
+            <h2 class="text-center pt-5 p-3"><?=$questionario->getNome()?></h2>
+            <h3 class="text-center"><?= $questionario->getDescricao() ?></h3>
+        </div>
+
+        <div class="d-flex rounded-2 flex-column bg-body-secondary border p-2 mt-5 shadow-sm">   
+            <div class="justify-content-start">
+                <p class="fw-semibold fs-5"><?="Nota: {$notaObtida} de {$notaSomada}<br>
+                Nota de aprovação: {$questionario->getNotaAprovacao()}"?> </p>
+                <?=$status?>
+            </div>
+        </div>
+    </div>
 </div>
 
 <main>

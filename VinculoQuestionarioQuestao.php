@@ -9,9 +9,17 @@
     $daoQuestionario = $factory->getQuestionarioDao();
     $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
 
-    $questoes = $daoQuestao->buscaTodos();
-
     $obj = $_GET['questionarioId'];
+    $questoes = $daoQuestao->buscaTodos();
+    $questoesQuest = $daoQuestionarioQuestao->buscaQuestoesPorQuestionarioId($obj);
+
+    // pega só questões que não estão vinculadas
+    $qstsExcept = $daoQuestionarioQuestao->buscaQuestoesExcetoPorQuestionarioId($obj);
+    $idQstsExcept = []; 
+    foreach ($qstsExcept as $qsts){
+        $idQstsExcept["{$qsts->getId()}"] = $qsts->getId();
+    }
+
 ?>
         <script src="js/vinculo.js"></script>
         <script type="text/javascript">
@@ -24,32 +32,47 @@
                 <thead>
                     <tr class="text-center">
                         <th>#</th>
-                        <th>Descricao</th>
+                        <th>Descrição</th>
                         <th>Tipo</th>
                         <th>Pontos</th>
                         <th>Ordem</th>
-                        <th>Adicionar/Remover</th>
-                        <th>Vincular</th>
+                        <th>Vínculo</th>
+                        <th>Remover</th>
                     </tr>
                 </thead>
                 <tbody>
                 </th>
                 <?php 
-                    foreach ($questoes as $questao){
+                    foreach ($questoes as $questao){               
                         echo '<tr class="table-row">';
                         echo '    <td>'.$questao->getId().'</td>';
                         echo '    <td>'.$questao->getDescricao().'</td>';
                         echo '    <td>'.$questao->getTipo().'</td>';
-                        echo '    <td><input type="number" class="form-control ponto-input" disabled></td>';
-                        echo '    <td><input type="number" class="form-control ordem-input" disabled></td>';
-                        echo '    <td><button class="botao-vincular btn btn-secondary fw-bold">+</button></td>';
-                        echo '    <td><button class="botao-enviar-questao btn btn-primary fw-bold" disabled>></button></td>';
+
+                        if (!in_array($questao->getId(), $idQstsExcept)){
+                            $qQuestao = $daoQuestionarioQuestao->buscaPorIds($obj, $questao->getId());
+
+                            // questoes já vinculadas
+                            echo '    <td><input type="number" class="form-control ponto-input" value="'.$qQuestao->getPontos().'" disabled></td>';
+                            echo '    <td><input type="number" class="form-control ordem-input" value="'.$qQuestao->getOrdem().'" disabled></td>';
+                            echo '    <td><button class="botao-vinculo btn btn-success bg-success-subtle text-black fw-bold" disabled>Vincular</button></td>';
+                            echo '    <td><button class="botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fw-bold">Remover</button></td>';
+                        } else {
+                            // questoes não vinculadas
+                            echo '    <td><input type="number" class="form-control ponto-input"></td>';
+                            echo '    <td><input type="number" class="form-control ordem-input"></td>';
+                            echo '    <td><button class="botao-vinculo btn btn-success bg-success-subtle text-black fw-bold">Vincular</button></td>';
+                            echo '    <td><button class="botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fw-bold" disabled>Remover</button></td>';
+                        }
+
                         echo '</tr>';
                 }
                 ?>
                 </tbody>
             </table>  
-            <a href="Menu.php" class="btn btn-primary w-100 btn-lg p-3 mt-4 fw-semibold fs-4">Prosseguir</a>
+            <div class="d-flex justify-content-center">
+                <a href="Menu.php" class="btn btn-primary btn-lg m-4 mx-auto float-center">Prosseguir</a>
+            </div>
         </section>
     </body>
 </html>

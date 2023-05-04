@@ -6,8 +6,6 @@
 
     $idQuestao = $_POST['questaoId'];
     $idQuestionario = $_POST['questionarioId'];
-    $pontos = $_POST['pontos'];
-    $ordem = $_POST['ordem'];
 
     // valida
     foreach ($_POST as $var){
@@ -19,23 +17,15 @@
     }
 
     $dao = $factory->getQuestionarioQuestaoDao();
-    $ordemArr = $dao->buscaOrdemArray($idQuestionario, $idQuestao);
-    $qq = new QuestionarioQuestao($pontos, $ordem, $idQuestionario, $idQuestao);
 
-    if (in_array($ordem, $ordemArr)){
-        $response_array['status'] = 'ordem_repetida';
-        echo json_encode($response_array);
-        exit;
-    }
-
-    if ($dao->buscaPorIds($idQuestionario, $idQuestao) != null){
-        $response_array['status'] = 'ja_existe';
-        echo json_encode($response_array);
-        exit;
-    } else {
-        $dao->insere($qq);
+    try{
+        $dao->removePorIds($idQuestionario, $idQuestao);
         $response_array['status'] = 'sucesso';
         echo json_encode($response_array);
+        exit;
+    } catch (Exception $e){
+        $response_array['status'] = 'erro';
+        echo json_encode($response_array);
+        exit;
     }
-
 ?>

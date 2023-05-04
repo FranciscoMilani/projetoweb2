@@ -184,6 +184,49 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
         return $questoes;
     }
 
+    public function buscaQuestoesExcetoPorQuestionarioId($questionarioId) {
+        $questoes = array();
+
+        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+                    FROM questao q
+                    LEFT OUTER JOIN questionarioquestao qq ON q.id = qq.questaoid
+                    AND qq.questionarioid = :questionarioid
+                    WHERE qq.questaoid IS NULL
+                    ORDER BY qq.ordem ASC ";
+
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':questionarioid', $questionarioId);
+        $stmt->execute();
+     
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
+        } 
+     
+        return $questoes;
+    }
+
+    public function buscaOrdemArray($questionarioId) {
+        $ordem = array();
+
+        $query =   "SELECT ordem
+                    FROM questionarioquestao
+                    WHERE questionarioid = :questionarioid
+                    ORDER BY ordem ASC ";
+
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':questionarioid', $questionarioId);
+        $stmt->execute();
+     
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $ordem[] = $row['ordem'];
+        } 
+     
+        return $ordem;
+    }
+
     /* PENSAR SE PRECISA IMPLEMENTAR BUSCA TODOS */
 
     // public function buscaTodos() {

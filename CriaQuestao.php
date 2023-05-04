@@ -54,16 +54,4 @@
     
    header('Location: Menu.php');
    exit;
-
-    // verificaVariaveis($_POST);
-
-    // function verificaVariaveis($vars) {
-    //     foreach ($vars as $variavel){
-    //         if (!isset($variavel) || empty($variavel)) {
-    //            // header('Location: CriacaoQuestao.php');
-    //            // exit;
-    //         }
-    //     }
-    // }
-    
 ?>

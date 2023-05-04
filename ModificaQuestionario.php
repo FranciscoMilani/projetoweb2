@@ -18,9 +18,7 @@ include_once "LayoutHeader.php";
             value="<?php echo $questionario->getNome(); ?>" required />
 
         <label for="descricao">Descrição</label>
-        <textarea style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição do questionário..."
-            value="<?php echo $questionario->getDescricao(); ?>" required>
-        </textarea>
+        <textarea style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição do questionário..." required><?= $questionario->getDescricao() ?></textarea>
 
         <label for="notaaprovacao">Nota de aprovação</label>
         <input type="number" name="notaaprovacao" placeholder="0" min="0" max="10" value="<?php echo $questionario->getNotaAprovacao(); ?>" required>

@@ -12,7 +12,7 @@ include_once 'LayoutHeader.php';
     if ($_SESSION["is_elaborador"]) {
         echo "<button class=\"classeBotoes\" onclick=\"location.href='ControleRespondentes.php'\">Controle de Respondentes</button>";
         echo "<button class=\"classeBotoes\" onclick=\"location.href='ControleQuestionarios.php'\">Controle de Questionários</button>";
-        echo "<button class=\"classeBotoes\" onclick=\"location.href='CriacaoQuestao.php'\">Criação de Questões</button>";
+        echo "<button class=\"classeBotoes\" onclick=\"location.href='ControleQuestoes.php'\">Visualiza Questões</button>";
         echo "<button class=\"classeBotoes\" onclick=\"location.href='OfertarQuestionario.php'\">Faz Oferta</button>";
     }
 
