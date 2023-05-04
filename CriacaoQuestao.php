@@ -41,14 +41,6 @@
             </fieldset>
             
             <input type="submit" class="btn btn-primary" name="submit" id="btSubmit" value="Prosseguir">
-            <!-- <select name="select_option">
-                //<?php 
-                //    $alts = $daoAlternativa->buscaTodos();
-                //    foreach($alts as $alt) {
-                //        echo '<option value="'.$alt->getId().'">'.$alt->getDescricao().'</option>';
-                //    }
-                //?>
-            </select> -->
 
         </form>
     </div>
