@@ -1,4 +1,5 @@
 <?php
+include_once "verificaElaborador.php";
 include_once "fachada.php";
 
 $id = @$_GET["id"];

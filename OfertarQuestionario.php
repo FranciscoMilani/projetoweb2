@@ -1,5 +1,4 @@
 <?php
-// validar sessão
 require "verificaElaborador.php";
 $titulo = 'Criação de Ofertas';
 
@@ -38,11 +37,17 @@ $respondentes = $daoResp->buscaTodos();
                     echo $resp->getNome() . "</label>";
                     echo "</div>";
                 }
-
                 ?>
             </div>
         </div>
         <input type="submit" value="Ofertar" id="btCadastro">
+        
+        <?php 
+            if (isset($_SESSION['mensagem'])) {
+                echo $_SESSION['mensagem'];
+                unset($_SESSION['mensagem']);
+            }
+        ?>
 </div>
 </form>
 

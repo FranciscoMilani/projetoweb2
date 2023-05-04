@@ -1,7 +1,7 @@
 <?php
+require "verificaAdmin.php";
 $titulo = 'Cadastro de Elaboradores';
 include_once 'LayoutHeader.php';
-require "verificaAdmin.php";
 
 ?>
 <div class="paginaLogin">

@@ -1,8 +1,7 @@
 <?php
-$titulo = "Altera Respondente";
-
-include_once "fachada.php";
 include "verificaElaborador.php";
+include_once "fachada.php";
+$titulo = "Altera Respondente";
 
 $id = @$_GET["id"];
 
