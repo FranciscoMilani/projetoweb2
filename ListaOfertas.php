@@ -6,7 +6,7 @@ $titulo = 'Suas Ofertas';
 include_once 'LayoutHeader.php';
 include_once "fachada.php";
 
-echo "<section>";
+echo "<section class=\"mt-5\">";
 $idUsuario = $_SESSION["id_usuario"];
 
 $dao = $factory->getOfertaDao();

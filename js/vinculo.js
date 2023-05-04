@@ -21,7 +21,6 @@ $(document).ready(function(){
                     questaoId: idQuestao,
                 },
                 success: function(dados) {
-                    //window.location = 'CriaVinculo.php';
                     if (dados.status === 'sucesso'){
                         alert('Cadastro efetuado para a questão de ID ' + idQuestao);
                         switchBotaoVinculo($botao);

@@ -228,3 +228,8 @@ body {
 	position: relative;
 	top: 100px;
 }
+
+.menuBotoes {
+	width: 150px;
+	height: 150px;
+}
