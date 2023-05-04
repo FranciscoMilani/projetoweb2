@@ -1,5 +1,4 @@
 <?php 
-
     $titulo = "Questionário";
     include_once 'LayoutHeader.php';
     include_once 'verificaRespondente.php';
@@ -8,11 +7,20 @@
     $daoQuestionarioQuestao = $factory->getQuestionarioQuestaoDao();
     $daoQuestao = $factory->getQuestaoDao();
     $daoAlternativa = $factory->getAlternativaDao();
+    $daoSubmissao = $factory->getSubmissaoDao();
     
+    $respondenteId = $_SESSION['id_usuario'];
     $ofertaId = $_GET['ofertaId'];
     $questionarioId = $_GET['questId'];
     $questionarioQuestoes = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     
+    // verifica se já foi respondido
+    $subExist = $daoSubmissao->buscaPorOfertaRespondenteId($ofertaId, $respondenteId);
+    if ($subExist){
+        header('Location: ListaOfertas.php');
+        exit;
+    }
+
     $questoes = array();
     foreach ($questionarioQuestoes as $qq){
         $id = $qq->getQuestao();
@@ -81,7 +89,7 @@
             })
             .done(function(){
                 console.log('done')
-                window.location.href = 'Menu.php';
+                window.location.href = 'ListaOfertas.php';
             })
         });
     });

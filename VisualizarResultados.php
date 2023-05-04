@@ -52,28 +52,7 @@
     }
 
     $questoes = $daoQuestionarioQuestao->buscaQuestoesPorQuestionarioId($questionarioId);
-
-
-    // // array de id das alternativas marcadas
-    // foreach($respostasAlternativas as $ra){
-    //     foreach($ra as $a){
-    //         $idAltsMarcadas[] = $a->getAlternativa();
-    //     }
-    // }
-
-    // submissao 328
-    // respostasID: 945 946 947
-    // Alternativas:                ME(945)  287 288 289    ||||    OBJ(946) 293      |||      DISC(947) X 
-    // RespostaAlternativas:            278, 279, 280       ||||         281          |||          X
-
-
-    // // QuestionarioQuestões da Submissão
-    // $questionarioQuestoes = $daoResposta->buscaQuestionarioQuestoesPorSubmissaoId($submissaoId, $questionarioId);
-    foreach ($questionarioQuestoes as $qq) {
-        $id = $qq->getQuestao();
-        $qq->setQuestao($daoQuestao->buscaPorId($qq->getQuestao()));
-    }
-
+    $data = $daoSubmissao->buscaPorId($submissaoId)->getData();
 ?>
 
 <div class="d-flex justify-content-center">
@@ -86,7 +65,8 @@
         <div class="d-flex rounded-2 flex-column bg-body-secondary border p-2 mt-5 shadow-sm">   
             <div class="justify-content-start">
                 <p class="fw-semibold fs-5"><?="Nota: {$notaObtida} de {$notaSomada}<br>
-                Nota de aprovação: {$questionario->getNotaAprovacao()}"?> </p>
+                Nota de aprovação: {$questionario->getNotaAprovacao()}"?></p>
+                <span class="">Envio: <?=$data?></span>
                 <?=$status?>
             </div>
         </div>
@@ -118,7 +98,7 @@
                 $alternativasRespondidas = $daoRespostaAlternativa->buscaAlternativasPorRespostaId($respostaId);
                 $qq = $daoQuestionarioQuestao->buscaPorQuestionarioEQuestao($questionarioId, $idQ);
 
-                // to jogando tudo no mesmo array, acho q nao é assim
+                // array de ids de alternativas marcadas
                 $idsAltsRespondidas = [];
                 foreach ($alternativasRespondidas as $ars) {
                     $idsAltsRespondidas[] = $ars->getId();
@@ -139,8 +119,6 @@
                     $tipo = $questao->getIsMultiplaEscolha() ? 'checkbox' : 'radio';
 
                     for ($j = 0; $j < count($alternativas); $j++){
-                       // $isCorreta = $alternativas[$j]->getIsCorreta();
-                       // $respostasAlternativas
                         $checked = '';
                         $styleClass = '';
 

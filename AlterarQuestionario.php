@@ -1,5 +1,7 @@
 <?php
+include_once 'verificaElaborador.php';
 include_once "fachada.php";
+
 $id = @$_POST["id"];
 $nome = @$_POST['nome'];
 $descricao = @$_POST['descricao'];
@@ -20,6 +22,6 @@ $questionario = new Questionario($id, $nome, $descricao, $dataCriacao, $notaApro
 $daoQ->altera($questionario);
 
 header('Location: VinculoQuestionarioQuestao.php?questionarioId='.$id);
-
+exit;
 
 ?>

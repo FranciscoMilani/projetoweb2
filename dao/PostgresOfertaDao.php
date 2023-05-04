@@ -44,6 +44,24 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
         return false;
     }
 
+    public function removePorQuestionarioId($id){
+        $query = "DELETE FROM " . $this->table_name .
+        " WHERE questionarioid = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+        $stmt->bindParam(':id', $id);
+
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     public function remove($oferta)
     {
         return $this->removePorId($oferta->getId());

@@ -1,5 +1,7 @@
 <?php
 
+include_once 'verificaUsuarios.php';
+
 include_once "comum.php";
 
 //if ( is_session_started() === FALSE ) {

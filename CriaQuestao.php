@@ -52,6 +52,6 @@
         }
     }
     
-   header('Location: Menu.php');
+   header('Location: ControleQuestoes.php');
    exit;
 ?>

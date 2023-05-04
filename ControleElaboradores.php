@@ -73,9 +73,11 @@ if ($elaboradores) {
                 echo "<span class='glyphicon glyphicon-edit'></span> Altera";
                 echo "</a>";
                 // botão para remover um elaborador
-                echo "<a href='ExcluiElaborador.php?id={$elab->getId()}' class='btn btn-danger'";
-                echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-                echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
+                if (!$elab->getIsAdmin()){
+                    echo "<a href='ExcluiElaborador.php?id={$elab->getId()}' class='btn btn-danger'";
+                    echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
+                    echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
+                }
                 echo "</a>";
             echo "</td>";
         echo "</tr>";
