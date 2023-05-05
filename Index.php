@@ -9,7 +9,7 @@ include_once 'LayoutHeader.php';
             <input type="text" name="login" placeholder="Login" />
             <input type="password" name="senha" placeholder="Senha" />
             <input type="submit" id="btLogin" value="Entrar">
-            <p class="msgCadastrar"><a href="CadastroUsuario.php">Criar uma Conta</a></p>
+            <p class="msgCadastrar"><a href="CadastroUsuario.php" style="font-size: 16px">Criar uma Conta</a></p>
         </form>
     </div>
 </div>

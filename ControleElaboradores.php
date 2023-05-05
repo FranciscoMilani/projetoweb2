@@ -32,13 +32,8 @@ echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroElaborador
 
 //Campos de busca
 echo "<form action=\"ControleElaboradores.php\" method=\"POST\" class=\"formCampoPesquisa\">";
-echo "Pesquisa por nome: ";
+echo "Pesquisa por nome ou E-mail: ";
 echo "<input type=\"text\" name=\"pesquisaNome\" value=\"" . $nome . "\" class='camposInputPesquisa'>";
-echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
-echo "</form>";
-echo "<form action=\"ControleElaboradores.php\" method=\"POST\" class=\"formCampoPesquisa\">";
-echo "Pesquisa por E-mail: ";
-echo "<input type=\"text\" name=\"pesquisaEmail\" value=\"" . $email . "\" class='camposInputPesquisa'>";
 echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
 echo "</form>";
 

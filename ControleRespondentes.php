@@ -32,13 +32,8 @@ if ($email != null || $email != "") {
 
 //Campos de busca
 echo "<form action=\"ControleRespondentes.php\" method=\"POST\" class=\"formCampoPesquisa\">";
-echo "Pesquisa por nome: ";
+echo "Pesquisa por nome ou e-mail: ";
 echo "<input type=\"text\" name=\"pesquisaNome\" value=\"" . $nome . "\" class='camposInputPesquisa'>";
-echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
-echo "</form>";
-echo "<form action=\"ControleRespondentes.php\" method=\"POST\" class=\"formCampoPesquisa\">";
-echo "Pesquisa por E-mail: ";
-echo "<input type=\"text\" name=\"pesquisaEmail\" value=\"" . $email . "\" class='camposInputPesquisa'>";
 echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
 echo "</form>";
 

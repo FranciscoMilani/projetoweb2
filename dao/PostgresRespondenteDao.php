@@ -156,46 +156,14 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
 
     public function buscaPorNome($nome)
     {
-
         $respondentes = array();
 
-        $query = "SELECT
-                    id, login, senha, nome, email, telefone
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    nome = ?";
-        // LIMIT
-        //     1 OFFSET 0";
+        $stmt = $this->conn->prepare("SELECT id, login, nome, senha, email, telefone
+        FROM " . $this->table_name . "
+        WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:email)");
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $nome);
-        $stmt->execute();
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            $respondentes[] = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
-        }
-
-        return $respondentes;
-    }
-
-    public function buscaPorEmail($email)
-    {
-
-        $respondentes = array();
-
-        $query = "SELECT
-                    id, login, senha, nome, email, telefone
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    email = ?";
-        // LIMIT
-        //     1 OFFSET 0";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $email);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':email', '%'.$nome.'%', PDO::PARAM_STR);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

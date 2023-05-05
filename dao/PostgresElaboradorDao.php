@@ -113,17 +113,11 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
 
         $elaborador = null;
 
-        $query = "SELECT
-                    id, login, nome, senha, email, instituicao, isadmin
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    login = ?
-                LIMIT
-                    1 OFFSET 0";
+        $stmt = $this->pdo->prepare("SELECT id, login, nome, senha, email, instituicao, isadmin
+        FROM " . $this->table_name . "
+        WHERE login LIKE :login");
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $login);
+        $stmt->bindValue(':login', '%'.$login.'%', PDO::PARAM_STR);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -160,42 +154,12 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
     {
         $elaboradores = array();
 
-        $query = "SELECT
-                    id, login, nome, senha, email, instituicao, isadmin
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    nome = ?";
-        // LIMIT
-        //     1 OFFSET 0";
+        $stmt = $this->conn->prepare("SELECT id, login, nome, senha, email, instituicao, isadmin
+        FROM " . $this->table_name . "
+        WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:email)");
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $nome);
-        $stmt->execute();
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            $elaboradores[] = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
-        }
-        return $elaboradores;
-    }
-
-    public function buscaPorEmail($email)
-    {
-
-        $elaboradores = array();
-
-        $query = "SELECT
-                    id, login, nome, senha, email, instituicao, isadmin
-                FROM
-                    " . $this->table_name . "
-                WHERE
-                    email = ?";
-        // LIMIT
-        //     1 OFFSET 0";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $email);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':email', '%'.$nome.'%', PDO::PARAM_STR);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

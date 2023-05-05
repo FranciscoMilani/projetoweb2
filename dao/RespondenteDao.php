@@ -4,7 +4,6 @@ interface RespondenteDao {
     public function altera($respondente);
     public function remove($respondente);
     public function buscaPorNome($nome);
-    public function buscaPorEmail($email);
     public function removePorId($id);
     public function buscaPorId($id);
     public function buscaPorLogin($login);
