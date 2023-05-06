@@ -119,6 +119,25 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         return $questionarios;
     }
 
+    public function buscaPorElaboradorId($elabId){
+        $questionarios = array();
+
+        $query = "SELECT id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
+                  FROM {$this->table_name}
+                  WHERE elaboradorid = :elaboradorid";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':elaboradorid', $elabId);
+        $stmt->execute(); 
+   
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $questionarios[] = new Questionario($id, $nome, $descricao, $datacriacao, $notaaprovacao, $elaboradorid);
+        }
+
+        return $questionarios;
+    }
+
     public function buscaOfertasPorElaboradorId($elabId){
         $ofertas = array();
 

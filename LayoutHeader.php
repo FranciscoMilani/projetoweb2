@@ -26,29 +26,33 @@
 </head>
 
 <body class="bg-light">
-    <header class="container mx-auto mw-100 text-center align-middle">
-        <nav class="row bg-secondary">
-        <a class="col my-2" href="Menu.php">
-            <img src="imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
-        </a>
-        <div class="col d-flex align-self-center">
-            <h3 class="my-0 mx-auto text-white align-middle"><?= $titulo ?></h3>
-        </div>
-        <div class="col d-flex justify-content-center align-self-center flex-column">
-            <?php
-                include_once "Comum.php";
-                
-                if (is_session_started() === FALSE) {
-                    session_start();
-                }
-                
-                if(isset($_SESSION["nome_usuario"])) {
-                    echo "<span class=\"usuarioLogado d-block\">Login | " . $_SESSION["nome_usuario"];		
-                    echo "<a href='ExecutaLogout.php' class=\"usuarioLogado d-block\"> Logout </a></span>";
-                } else {
-                    echo "<a href='index.php' class=\"usuarioLogado d-block\"> Efetuar Login </a></span>";
-                }
-                ?>
-            <div>
+    <header class="text-center align-middle">
+        <nav class="py-2 d-flex bg-secondary flex-col flex-wrap flex-sm-row flex-sm-nowrap justify-content-around align-content-center">
+            <div class="align-self-center w-100">
+                <a class="my-2" href="Menu.php">
+                    <img src="imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
+                </a>
+            </div>
+
+            <div class="align-self-center py-3 py-sm-0 w-100">
+                <h3 class="my-0 mx-auto text-white align-middle"><?= $titulo ?></h3>
+            </div>
+            
+            <div class="justify-content-center align-self-center d-flex flex-column w-100">
+                <?php
+                    include_once "Comum.php";
+                    
+                    if (is_session_started() === FALSE) {
+                        session_start();
+                    }
+                    
+                    if(isset($_SESSION["nome_usuario"])) {
+                        echo "<span class=\"usuarioLogado d-block\">Login | " . $_SESSION["nome_usuario"];		
+                        echo "<a href='ExecutaLogout.php' class=\"usuarioLogado d-block\"> Logout </a></span>";
+                    } else {
+                        echo "<a href='index.php' class=\"usuarioLogado d-block\"> Efetuar Login </a></span>";
+                    }
+                    ?>
+            </div>
         </nav>
     </header>

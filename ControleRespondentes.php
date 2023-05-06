@@ -40,7 +40,8 @@ echo "</form>";
 
 //Criacao da tabela
 if ($respondentes) {
-    echo "<table id=\"tbRespondente\" class='table table-hover table-responsive table-bordered'>";
+    echo "<div class=\"table-responsive\">";
+    echo "<table id=\"tbRespondente\" class='table table-hover table-bordered'>";
     echo "<tr>";
     echo "<th>Id</th>";
     echo "<th>Login</th>";
@@ -71,6 +72,7 @@ if ($respondentes) {
         echo "</tr>";
     }
     echo "</table>";
+    echo "</div>";
 }
 echo "</section>";
 include_once "LayoutFooter.php";

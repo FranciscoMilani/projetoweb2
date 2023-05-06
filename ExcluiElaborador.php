@@ -4,19 +4,18 @@ include_once "fachada.php";
 
 $id = @$_GET["id"];
 
-$dao = $factory->getElaboradorDao();
-$daoOferta = $factory->getOfertaDao();
-$questionarioDao = $factory->getQuestionarioDao();
+$elabDao = $factory->getElaboradorDao();
+$questDao = $factory->getQuestionarioDao();
 
 try {
-    $ofertas = $questionarioDao->buscaOfertasPorElaboradorId($id);
-    foreach ($ofertas as $o){
-        $daoOferta->removePorId($o->getId());
+    if (!$questDao->buscaPorElaboradorId($id)){
+        $elabDao->removePorId($id);
+        header("Location: ControleElaboradores.php");
+        exit;
     }
-
-    $dao->removePorId($id);
-    header("Location: ControleElaboradores.php");
     
+    header("Location: ControleElaboradores.php?mensagem=Erro ao excluir, este elaborador possui vínculos!");
+
 } catch (\Throwable $th) {
     header("Location: ControleElaboradores.php?mensagem=Erro ao excluir, este elaborador possui vínculos!");
     exit;

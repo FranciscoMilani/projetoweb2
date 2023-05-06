@@ -110,14 +110,15 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
 
     public function buscaPorLogin($login)
     {
-
         $elaborador = null;
 
-        $stmt = $this->pdo->prepare("SELECT id, login, nome, senha, email, instituicao, isadmin
-        FROM " . $this->table_name . "
-        WHERE login LIKE :login");
-
-        $stmt->bindValue(':login', '%'.$login.'%', PDO::PARAM_STR);
+        $query = "SELECT id, login, nome, senha, email, instituicao, isadmin
+                  FROM {$this->table_name}
+                  WHERE login = :login 
+                  LIMIT 1 OFFSET 0 ";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':login', $login);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);

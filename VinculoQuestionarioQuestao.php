@@ -27,7 +27,8 @@
         </script>
         
         <section class="tabela-questoes container my-5">
-            <h2 class="">Questões</h2>
+            <h2>Questões</h2>
+            <div class="table-responsive">
             <table id="tabela-vinculo" class="table table-striped table-hover">
                 <thead>
                     <tr class="text-center">
@@ -70,6 +71,7 @@
                 ?>
                 </tbody>
             </table>  
+            </div>
             <div class="d-flex justify-content-center">
                 <a href="Menu.php" class="btn btn-primary btn-lg m-4 mx-auto float-center">Prosseguir</a>
             </div>

@@ -34,7 +34,7 @@ create table questionario (
     dataCriacao DATE NOT NULL,
     elaboradorId bigint NOT NULL,
 	constraint pk_questionario primary key(id),
-    foreign key (elaboradorId) references elaborador(id) on delete cascade
+    foreign key (elaboradorId) references elaborador(id)
 );
 
 

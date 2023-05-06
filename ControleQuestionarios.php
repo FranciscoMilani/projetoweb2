@@ -23,7 +23,8 @@ echo "<button class=\"classeBotoes\" onclick=\"location.href='CriacaoQuestionari
 
 //cria tabela
 if ($questionarios) {
-    echo "<table id=\"tbQuestionario\" class='table table-hover table-responsive table-bordered'>";
+    echo "<div class=\"table-responsive\">";
+    echo "<table id=\"tbQuestionario\" class='table table-hover table-bordered'>";
     echo "<tr>";
     echo "<th>Id</th>";
     echo "<th>Nome</th>";
@@ -61,6 +62,7 @@ if ($questionarios) {
         echo "</tr>";
     }
     echo "</table>";
+    echo "</div>";
 }
 echo "</section>";
 include_once "LayoutFooter.php";

@@ -1,8 +1,8 @@
 <?php
-$titulo = "Editar Questionário";
-
-include_once "fachada.php";
 include_once 'verificaElaborador.php';
+$titulo = "Editar Questionário";
+include_once "fachada.php";
+
 $id = @$_GET["id"];
 
 $dao = $factory->getQuestionarioDao();
