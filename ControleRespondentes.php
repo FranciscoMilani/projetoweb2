@@ -49,6 +49,7 @@ if ($respondentes) {
     echo "<th>Email</th>";
     echo "<th>Telefone</th>";
     echo "<th></th>";
+    echo "<th></th>";
     echo "</tr>";
 
     foreach ($respondentes as $resp) {
@@ -60,13 +61,19 @@ if ($respondentes) {
         echo "<td>{$resp->getTelefone()}</td>";
         echo "<td>";
         // botão para alterar um respondente
-        echo "<a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info'>";
+        echo "<a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>";
         echo "<span class='glyphicon glyphicon-edit'></span> Altera";
         echo "</a>";
         // botão para remover um respondente
-        echo "<a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger'";
+        echo "<a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'";
         echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
         echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
+        echo "</td>";
+        
+        // botão para ver lista de respostas e corrigir
+        echo "<td>";
+        echo "<a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-info m-1'";
+        echo "<span class='glyphicon glyphicon-remove'></span> Respostas";
         echo "</a>";
         echo "</td>";
         echo "</tr>";

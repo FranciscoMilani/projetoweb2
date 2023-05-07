@@ -2,19 +2,23 @@
 include_once "verificaElaborador.php";
 include_once "fachada.php";
 
-$id = @$_GET["id"];
+$questId = @$_GET["id"];
 
 $dao = $factory->getQuestionarioDao();
-$dao2 = $factory->getQuestionarioQuestaoDao();
+$daoQq = $factory->getQuestionarioQuestaoDao();
 $daoOferta = $factory->getOfertaDao();
 
 try {
-    //exclui vinculo com questoes antes de excluir o questionario
-    $dao2->removePorQuestionario($id);
-    $daoOferta->removePorQuestionarioId($id);
-    $dao->removePorId($id);
-    header("Location: ControleQuestionarios.php");
-    exit;
+
+    if (!$daoOferta->buscaPorQuestionarioId($questId)){
+        $daoQq->removePorQuestionario($questId);
+        $dao->removePorId($questId);
+        header("Location: ControleQuestionarios.php");
+        exit;
+    } else {
+        header("Location: ControleQuestionarios.php?mensagem=Erro ao excluir, este questionário já foi ofertado e não pode ser removido.");
+        exit;
+    }
 
 } catch (\Throwable $th) {
     header("Location: ControleQuestionarios.php?mensagem=Erro ao excluir, este questionário possui vínculos!");

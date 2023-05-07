@@ -19,7 +19,8 @@ $daoSubmissao = $factory->getSubmissaoDao();
 
 //Criacao da tabela
 if ($ofertas) {
-    echo "<table id=\"tbRespondente\" class='table table-hover table-responsive table-bordered'>";
+    echo "<div class=\"table-responsive\">";
+    echo "<table id=\"tbRespondente\" class='table table-hover table-bordered'>";
     echo "<tr>";
     echo "<th>Nome</th>";
     echo "<th>Descrição</th>";
@@ -74,6 +75,7 @@ if ($ofertas) {
         echo "</tr>";
     }
     echo "</table>";
+    echo "</div>";
 } else {
     echo "<p style='text-align: center; margin-top: 10%'>Você não possui nenhum questionário ofertado para responder!</p>";
 }

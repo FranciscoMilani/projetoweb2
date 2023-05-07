@@ -13,16 +13,32 @@
     <!--<script src="sweetalert2.all.min.js"></script>-->
     <script src="js/site.js"></script>
 
-    <div class="form paginaLogin">
-        <form id="formId" action="CriaQuestao.php" method="POST" class="cadastro-questao-form">
+    <div class="form paginaLogin container">
+        <form id="formId" action="CriaQuestao.php" method="POST" class="cadastro-questao-form" enctype="multipart/form-data">
 
             <textarea class="form-control" style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição da questão..." required></textarea>
-            <fieldset class="container py-3">
-                <label for="discursiva">Discursiva</label>
-                <input type="radio" class="radio-questao" name="tipoquestao" value="discursiva" checked>
-                <br>    
-                <label for="selecionavel">Selecionável</label>
-                <input type="radio" class="radio-questao" name="tipoquestao" value="selecionavel">
+
+            <div class="my-4">
+                <input class="form-control form-control-sm" id="question-file" type="file">
+            </div>
+
+            <fieldset class="container row-cols-1 py-3">
+                <div class="row">
+                    <div class="col-2 text-start">
+                        <label for="discursiva">Discursiva:</label>
+                    </div>
+                    <div class="col-10">
+                        <input type="radio" class="radio-questao" name="tipoquestao" value="discursiva" checked>
+                    </div>
+                </div>
+                <div class="row"> 
+                    <div class="col-2 text-start">
+                        <label for="selecionavel">Selecionável:</label>
+                    </div>  
+                    <div class="col-10">
+                        <input type="radio" class="radio-questao" name="tipoquestao" value="selecionavel">                 
+                    </div>  
+                </div>
             </fieldset>
 
             

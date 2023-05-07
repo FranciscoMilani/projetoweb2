@@ -44,22 +44,22 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
         return false;
     }
 
-    public function removePorQuestionarioId($id){
-        $query = "DELETE FROM " . $this->table_name .
-        " WHERE questionarioid = :id";
+    // public function removePorQuestionarioId($id){
+    //     $query = "DELETE FROM " . $this->table_name .
+    //     " WHERE questionarioid = :id";
 
-        $stmt = $this->conn->prepare($query);
+    //     $stmt = $this->conn->prepare($query);
 
-        // bind parameters
-        $stmt->bindParam(':id', $id);
+    //     // bind parameters
+    //     $stmt->bindParam(':id', $id);
 
-        // execute the query
-        if ($stmt->execute()) {
-            return true;
-        }
+    //     // execute the query
+    //     if ($stmt->execute()) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
 
     public function remove($oferta)
@@ -109,6 +109,29 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
             extract($row);
             $ofertas[] = new Oferta($row['id'], $row['data'], $row['questionarioid'], $row['respondenteid']);
         }
+
+        return $ofertas;
+    }
+
+    
+    public function buscaPorQuestionarioId($id)
+    {
+        $ofertas = array();
+
+        $query = "SELECT id, data, questionarioid, respondenteid 
+                  FROM {$this->table_name}
+                  WHERE questionarioid = :id";
+
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $ofertas[] = new Oferta($row['id'], $row['data'], $row['questionarioid'], $row['respondenteid']);
+        }
+
         return $ofertas;
     }
 }
