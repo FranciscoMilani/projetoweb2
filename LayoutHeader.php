@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -30,7 +30,7 @@
         <nav class="py-2 d-flex bg-secondary flex-col flex-wrap flex-sm-row flex-sm-nowrap justify-content-around align-content-center">
             <div class="align-self-center w-100">
                 <a class="my-2" href="Menu.php">
-                    <img src="imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
+                    <img src="public/imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
                 </a>
             </div>
 

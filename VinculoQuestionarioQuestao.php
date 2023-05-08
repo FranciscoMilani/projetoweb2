@@ -21,7 +21,7 @@
     }
 
 ?>
-        <script src="js/vinculo.js"></script>
+        <script src="public/js/vinculo.js"></script>
         <script type="text/javascript">
             var idQuestionario = '<?php echo $obj; ?>';
         </script>
