@@ -14,12 +14,22 @@
     <script src="public/js/site.js"></script>
 
     <div class="form paginaLogin container">
-        <form id="formId" action="CriaQuestao.php" method="POST" class="cadastro-questao-form" enctype="multipart/form-data">
+        <form id="formId" action="CriaQuestao.php" method="POST" class="cadastro-questao-form" enctype="multipart/form-data" onsubmit="verificaTamanho(event)">
 
             <textarea class="form-control" style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição da questão..." required></textarea>
 
             <div class="my-4">
-                <input class="form-control form-control-sm" id="question-file" type="file">
+                <script type="text/javascript">
+                    function verificaTamanho(e){
+                        let tamanho = $("#imagem-input")[0].files[0].size;
+                        if (tamanho > (1024 * 2048)){
+                            e.preventDefault();
+                            alert("Tamanho máximo da imagem é de 2 MB. A imagem inserida possui " + (tamanho/1048576).toFixed(2) + " MB");
+                            return;
+                        } 
+                    }
+                </script>
+                <input class="form-control form-control-sm" id="imagem-input" name="imagem" type="file">
             </div>
 
             <fieldset class="container row-cols-1 py-3">

@@ -102,26 +102,32 @@
         <?php
             for ($i = 0; $i < count($questionarioQuestoes); $i++){
                 $questao = $questionarioQuestoes[$i]->getQuestao();
+                $caminhoImagem = "public/uploads/".$questao->getImagem();
                 $alternativas = $daoAlternativa->buscaPorQuestaoId($questao->getId()); 
                 $idQ = $questao->getId();
                 
                 echo '<div class="container-fluid my-3 py-4 questao" id="'.$idQ.'">';
-                echo '<div class="card mx-auto" style="max-width:700px">';    
-                echo '<div class="card-header bg-body-secondary"><span class="fw-bold"> Questão '.($i + 1).': </span>'.$questao->getDescricao().'</div>';
+                echo '<div class="card mx-auto" style="max-width:700px">';
+                echo '<div class="card-header bg-body-secondary">';
+                echo '<span class="fw-bold"> Questão '.($i + 1).': </span>';
+
+                echo $questao->getDescricao(); 
+                if (file_exists($caminhoImagem)){
+                echo '<div>';
+                echo '<img img-fluid width=250 class="m-5 img-fluid rounded mx-auto d-block" src="'.$caminhoImagem.'">';
+                echo '</div>';
+                }
+
+                echo '</div>';
                 echo '<div class="card-body bg-light">';
 
-                    
-                //$nome = 'q'.($i + 1).'';
                 if (count($alternativas) > 0) {
                     $tipo = $questao->getIsMultiplaEscolha() ? 'checkbox' : 'radio';
 
                     for ($j = 0; $j < count($alternativas); $j++){
-                        //$id = 'q'.($i + 1).'a'.($j + 1).'';
                         $idA = $alternativas[$j]->getId();
                         $id = "q{$idQ}a{$idA}";
 
-                        // $inpt = '<input class="form-check-input" type="'.$tipo.'" name="'.$nome.'" id="'.$id.'">';
-                        // $all = '<label class="form-check-label" for="'.$nome.'">' . $inpt . $alternativas[$j]->getDescricao() . '</label>';
                         $inpt = '<input class="selecionavel form-check-input" type="'.$tipo.'" name="'.$idQ.'" id="'.$idA.'" value="1">';
                         $all = '<label class="form-check-label" for="'.$idA.'">' . $inpt . $alternativas[$j]->getDescricao() . '</label>';
                         

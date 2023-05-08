@@ -11,12 +11,13 @@
         private $alternativas = array();
         private $tipo;
 
-        public function __construct($id, $descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha) {
+        public function __construct($id, $descricao, $isDiscursiva, $isObjetiva, $isMultiplaEscolha, $imagem) {
             $this->id = $id;
             $this->descricao = $descricao;
             $this->isDiscursiva = $isDiscursiva;
             $this->isObjetiva = $isObjetiva;
             $this->isMultiplaEscolha = $isMultiplaEscolha;
+            $this->imagem = $imagem;
             $this->tipo = $this->definirTipo();
         }
 
@@ -34,6 +35,9 @@
 
         public function getIsMultiplaEscolha() { return $this->isMultiplaEscolha; }
         public function setIsMultiplaEscolha($isMultiplaEscolha) {$this->isMultiplaEscolha = $isMultiplaEscolha;}
+
+        public function getImagem() { return $this->imagem; }
+        public function setImagem($imagem) {$this->imagem = $imagem;}
 
         public function getAlternativas() { return $this->alternativas; }
         public function setAlternativas($alternativas) {$this->alternativas = $alternativas;}

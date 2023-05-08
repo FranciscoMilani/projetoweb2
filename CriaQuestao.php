@@ -17,32 +17,46 @@
     $daoQuestao = $factory->getQuestaoDao();
     $daoAlternativa = $factory->getAlternativaDao();
 
+    // file upload
+    if ( is_uploaded_file($_FILES["imagem"]["tmp_name"] ) 
+         && file_exists($_FILES["imagem"]["tmp_name"] )) {
+        
+        $allowed = array("jpeg", "png", "jpg");
+        $nome_real = $_FILES["imagem"]["name"];
+        $ext = strtolower(pathinfo($nome_real, PATHINFO_EXTENSION));
+
+        $nome_novo = pathinfo($nome_real, PATHINFO_FILENAME)
+                     .'_'.intval(microtime(true) * 1000) 
+                     .'.'.pathinfo($nome_real, PATHINFO_EXTENSION);
+
+        if (in_array($ext, $allowed)) {
+            $nome_temporario = $_FILES["imagem"]["tmp_name"];
+            $nome_novo = str_replace(" ", "_", $nome_novo);
+            copy($nome_temporario, "public/uploads/$nome_novo");
+        }
+    }   
+
+    // alternativas
     if ($tipoquestao == "discursiva") {
-        $questao = new Questao(null, $descricao, 1, 0, 0);
+        $questao = new Questao(null, $descricao, 1, 0, 0, $nome_novo);
         $questaoId = $daoQuestao->insere($questao);
         
     } else if ($tipoquestao == "selecionavel") {
-        var_dump($alternativas);
-
         $arr = array_count_values($alternativas);
         $qtd = $arr[1];
         if (!empty($alternativas)) {
             if ($qtd >= 2){
-                // multipla escolha
-                $questao = new Questao(null, $descricao, 0, 0, 1);
-            } else if (($qtd == 1)) {
-                // objetiva
-                $questao = new Questao(null, $descricao, 0, 1, 0);
+                $questao = new Questao(null, $descricao, 0, 0, 1, $nome_novo);
+            } else if ($qtd == 1) {
+                $questao = new Questao(null, $descricao, 0, 1, 0, $nome_novo);
             } else {
-                //erro
                 echo 'Erro';
                 exit;
             }
             
             $questao->setId($daoQuestao->insere($questao));
-            
+
             for ($i = 0; $i < count($alternativas); $i++){
-                //$isCorreta = (bool) $alternativas[$i];
                 $alternativaTemp = new Alternativa(null, $alternativasTexto[$i], $alternativas[$i], $questao);
                 $alternativasCriadas[] = $alternativaTemp;
                 $daoAlternativa->insere($alternativaTemp);

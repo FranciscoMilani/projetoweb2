@@ -10,8 +10,8 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
     public function insere($questao) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (descricao, isdiscursiva, isobjetiva, ismultiplaescolha) VALUES" .
-        " (:descricao, :isdiscursiva, :isobjetiva, :ismultiplaescolha)" .
+        " (descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem) VALUES" .
+        " (:descricao, :isdiscursiva, :isobjetiva, :ismultiplaescolha, :caminhoimagem)" .
         " RETURNING id";
 
         $stmt = $this->conn->prepare($query);
@@ -20,6 +20,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $stmt->bindParam(":isdiscursiva", $questao->getIsDiscursiva());
         $stmt->bindParam(":isobjetiva", $questao->getIsObjetiva());
         $stmt->bindParam(":ismultiplaescolha", $questao->getIsMultiplaEscolha());
+        $stmt->bindParam(":caminhoimagem", $questao->getImagem());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -79,7 +80,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $questao = null;
 
         $query = "SELECT
-                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -93,7 +94,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $questao = new Questao($row['id'], $row['descricao'], $row['isdiscursiva'], $row['isobjetiva'], $row['ismultiplaescolha']);
+            $questao = new Questao($row['id'], $row['descricao'], $row['isdiscursiva'], $row['isobjetiva'], $row['ismultiplaescolha'], $row['caminhoimagem']);
         } 
      
         return $questao;
@@ -103,7 +104,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         $questoes = array();
 
         $query = "SELECT
-                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+                    id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -113,7 +114,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha, $caminhoimagem);
         }
         
         return $questoes;

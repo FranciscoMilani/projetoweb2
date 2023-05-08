@@ -44,6 +44,7 @@ create table questao (
     isDiscursiva boolean not null,
     isObjetiva boolean not null,
     isMultiplaEscolha boolean not null,
+    caminhoImagem varchar(255),
 	CONSTRAINT pk_questao PRIMARY KEY(id),
 	CONSTRAINT CheckOnlyOneColumnIsNull
 	CHECK 

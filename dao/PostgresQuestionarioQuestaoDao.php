@@ -164,7 +164,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
     public function buscaQuestoesPorQuestionarioId($questionarioId) {
         $questoes = array();
 
-        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem
                     FROM questao q
                     JOIN questionarioquestao qq
                     ON q.id = qq.questaoid
@@ -178,7 +178,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
      
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
-            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha, $caminhoimagem);
         } 
      
         return $questoes;
@@ -187,7 +187,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
     public function buscaQuestoesExcetoPorQuestionarioId($questionarioId) {
         $questoes = array();
 
-        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha
+        $query =   "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem
                     FROM questao q
                     LEFT OUTER JOIN questionarioquestao qq ON q.id = qq.questaoid
                     AND qq.questionarioid = :questionarioid
@@ -201,7 +201,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
      
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
-            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha);
+            $questoes[] = new Questao($id, $descricao, $isdiscursiva, $isobjetiva, $ismultiplaescolha, $caminhoimagem);
         } 
      
         return $questoes;
