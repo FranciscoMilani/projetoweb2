@@ -5,9 +5,14 @@
     include_once "Fachada.php";
 
     $respId = $_GET["id"];
+    if (!isset($respId)){
+        header('Location: ControleRespondentes.php');
+        exit;
+    }
     
     $dao = $factory->getOfertaDao();
     $ofertas = $dao->ofertasPorUsuario($respId); // ofertas por respondente
+    $ofertasSubm = $dao->buscaOfertasSubmetidasPorRespondente($respId);
     
     $daoQuestionario = $factory->getQuestionarioDao();
     $daoElab = $factory->getElaboradorDao();
@@ -15,7 +20,7 @@
 
     echo "<section class=\"mt-5\">";
 
-    if ($ofertas) {
+    if ($ofertasSubm) {
         echo "<div class=\"table-responsive\">";
         echo "<table id=\"tbRespondente\" class='table table-hover table-responsive'>";
         echo "<tr>";
@@ -32,6 +37,8 @@
         }
     
         foreach ($ofertas as $oferta) {
+
+            // ignora oferta se ainda não foi respondida
             $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $respId);
             if (!isset($submissao)){
                 continue;
@@ -48,17 +55,11 @@
             echo "<td>{$formattedDate}</td>";
             echo "<td>{$elab->getNome()}</td>";
 
-
-            // $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $respId);
-            // if (isset($submissao)){
-                echo "<td>";
-                echo "<a href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn btn-info'>";
-                echo "<span class='glyphicon glyphicon-edit'></span> Avaliar";
-                echo "</a>";
-                echo "</td>"; 
-            // } else {
-            //     echo "<td></td>"; 
-            // }
+            echo "<td>";
+            echo "<a href='AvaliarSubmissao.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn btn-info'>";
+            echo "<span class='glyphicon glyphicon-edit'></span> Avaliar";
+            echo "</a>";
+            echo "</td>"; 
 
             echo "</td>";
             echo "</tr>";
@@ -66,7 +67,7 @@
         echo "</table>";
         echo "</div>";
     } else {
-        echo "<p style='text-align: center; margin-top: 10%'>Você não possui nenhum questionário ofertado para responder!</p>";
+        echo "<p style='text-align: center; margin-top: 10%'>Não há nenhum resultado aguardando por avaliação para esse aluno</p>";
     }
     echo "</section>";
     include_once "LayoutFooter.php";

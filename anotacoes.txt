@@ -1,2 +1,3 @@
 Ofertas tem que virar lista
 tirar o cascade, deixar com mensagem de erro ao excluir
+Checar se avaliação de oferta respondida foi feita

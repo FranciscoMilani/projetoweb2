@@ -60,10 +60,12 @@ if ($respondentes) {
         echo "<td>{$resp->getEmail()}</td>";
         echo "<td>{$resp->getTelefone()}</td>";
         echo "<td>";
+        
         // botão para alterar um respondente
         echo "<a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>";
         echo "<span class='glyphicon glyphicon-edit'></span> Altera";
         echo "</a>";
+
         // botão para remover um respondente
         echo "<a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'";
         echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";

@@ -7,5 +7,6 @@
         public function buscaTodos();
         public function ofertasPorUsuario($id);
         public function buscaPorQuestionarioId($id);
+        public function buscaOfertasSubmetidasPorRespondente($id);
     } 
 ?>

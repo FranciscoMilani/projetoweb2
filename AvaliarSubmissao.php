@@ -1,11 +1,10 @@
 <?php 
-    include_once 'verificaRespondente.php';
-
-    // verificar se o responpondente pode estar vendo o resultado (resposta é dele)
-
-    $titulo = "Visualizando Respostas";
+    $titulo = "Avaliação";
+    include_once 'verificaElaborador.php';
     include_once 'LayoutHeader.php';
     include_once 'Fachada.php';
+
+    // verificar se o elaborador pode estar vendo essa oferta
 
     $respondenteId = $_SESSION['id_usuario'];
     $submissaoId = $_GET['submissaoId'];
@@ -52,6 +51,11 @@
     }
 
     $questoes = $daoQuestionarioQuestao->buscaQuestoesPorQuestionarioId($questionarioId);
+    $questoes = array_filter($questoes, function($val){
+        return $val->getIsDiscursiva();
+    });
+    $questoes = array_values($questoes);;
+
     $data = $daoSubmissao->buscaPorId($submissaoId)->getData();
 ?>
 
@@ -66,7 +70,7 @@
             <div class="justify-content-start">
                 <p class="fw-semibold fs-5"><?="Nota: {$notaObtida} de {$notaSomada}<br>
                 Nota de aprovação: {$questionario->getNotaAprovacao()}"?></p>
-                <span class="">Envio: <?=$data?></span>
+                <span class="">Enviado: <?=$data?></span>
                 <?=$status?>
             </div>
         </div>
@@ -106,76 +110,53 @@
                 }
 
                 $nota = $respostaQuestao->getNota() == null ? '?' : $respostaQuestao->getNota();
-
+                
+                echo '<form action="AvaliaSubmissao.php?submissaoId='.$submissaoId.'" method="post">';
                 echo '<div class="container-fluid my-3 py-4 questao" id="'.$idQ.'">';
-                echo    '<div class="card mx-auto" style="max-width:700px">';    
-                echo    '<div class="card-header bg-body-secondary">';
-                echo        '<span class="mx-1 fw-bold ">('.$nota.' / '.$qq->getPontos().') pts -</span>';
-                echo        '<span class="fw-bold"> Questão '.($i + 1).': </span>';
-                echo        '<p class="d-inline">'.$questao->getDescricao().'</p>';
+                echo '<div class="card mx-auto" style="max-width:700px">';    
+                echo '<div class="card-header bg-body-secondary">';
+                echo '<span class="mx-1 fw-bold ">('.$nota.' / '.$qq->getPontos().') pts -</span>';
+                echo '<span class="fw-bold"> Questão '.($i + 1).': </span>';
+                echo '<p class="d-inline">'.$questao->getDescricao().'</p>';
 
                 if (file_exists($caminhoImagem)){
-                echo '          <div>';
-                echo '              <img img-fluid width=250 class="m-5 img-fluid rounded mx-auto d-block" src="'.$caminhoImagem.'">';
-                echo '          </div>';
-                }
-
-                echo    '</div>';
-                echo    '<div class="card-body bg-light">';
-
-                if ($questao->getIsMultiplaEscolha() || $questao->getIsObjetiva()) {
-                    $tipo = $questao->getIsMultiplaEscolha() ? 'checkbox' : 'radio';
-
-                    for ($j = 0; $j < count($alternativas); $j++){
-                        $checked = '';
-                        $styleClass = '';
-
-                        if (in_array($alternativas[$j]->getId(), $idsAltsRespondidas)) {
-                            $checked = 'checked';
-                        }
-
-                        if (in_array($alternativas[$j]->getId(), $idsAltsRespondidas) && $alternativas[$j]->getIsCorreta()){
-                            $styleClass = 'rounded-2 bg-success-subtle fw-bold"';
-                        }
-
-                        if (!in_array($alternativas[$j]->getId(), $idsAltsRespondidas) && $alternativas[$j]->getIsCorreta()){
-                            $styleClass = 'rounded-2 bg-success-subtle text-success-emphasis"';
-                        }
-
-                        if (in_array($alternativas[$j]->getId(), $idsAltsRespondidas) && !$alternativas[$j]->getIsCorreta()){
-                            $styleClass = 'rounded-2 bg-danger-subtle fw-bold text-danger-emphasis"';
-                        }
-
-                        
-                        $idA = $alternativas[$j]->getId();
-                        $id = "q{$idQ}a{$idA}";
-
-                        $inpt = '<input class="selecionavel form-check-input" type="'.$tipo.'" 
-                                name="'.$idQ.'" id="'.$idA.'" value="1" disabled '.$checked.'>';
-
-                        $all = '<label class="form-check-label '.$styleClass.'" for="'.$idA.'" checked>' 
-                                . $inpt . $alternativas[$j]->getDescricao() . 
-                                '</label>';
-                        
-                        echo '<div class="form-check justify-content-center">';
-                        echo $all;
-                        echo '</div>';
-                    }
-                }
-                else {
-                    echo '<textarea class="discursiva form-control" name="respostas['.$questao->getId().']['.(-1).']" 
-                         id="'.$questao->getId().'" cols="30" rows="5" disabled>'.$respostaQuestao->getTexto().'</textarea>';
+                echo '<div>';
+                echo '<img img-fluid width=250 class="m-5 img-fluid rounded mx-auto d-block" src="'.$caminhoImagem.'">';
+                echo '</div>';
                 }
 
                 echo '</div>';
+                echo '<div class="card-body bg-light">';    
+                echo '  <div class="">';
+                echo '      <textarea class="discursiva form-control" 
+                            id="'.$questao->getId().'" cols="30" rows="5" disabled>'.$respostaQuestao->getTexto().'</textarea>';
+                echo '  </div>';
+                echo '  <div class="d-flex flex-row justify-content-between pt-4">';
+                echo '      <div class="">';
+                echo '          <label for="respostas['.$respostaQuestao->getId().'][comentario]" class="form-label">Comentários</label>';
+                echo '          <textarea class="comentario form-control" name="respostas['.$respostaQuestao->getId().'][comentario]" rows="3" cols="50"></textarea>';
+                echo '      </div>';
+                echo '      <div class="w-25 ms-3 d-flex flex-column">';
+                echo '          <label for="respostas['.$respostaQuestao->getId().'][nota]" class="form-label">Nota</label>';
+                echo '          <input type="number" class="nota form-control align-self-start" name="respostas['.$respostaQuestao->getId().'][nota]" 
+                min="0" max="'.$qq->getPontos().'" step=".01" required></input>';
+                echo '          <span class="text-secondary">(0 ... '.$qq->getPontos().')</span>';
+                echo '      </div>';
+                echo '  </div>';
                 echo '</div>';
                 echo '</div>';
+                echo '</div>';
+                echo '</div>';
+
             }
         ?>
 
         <div class="d-flex justify-content-center">
-            <a href="ListaOfertas.php" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center">Retornar</a>
+            <input type="submit" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center" value="Enviar avaliação">
         </div>
+        
+        </form>
+
     </section>
 </main>
 

@@ -30,6 +30,47 @@ class PostgresRespostaDao extends PostgresDao implements RespostaDao {
             return false;
         }
     }
+    
+    public function altera($resposta)
+    {
+        $query = "UPDATE {$this->table_name}
+                  SET texto = :texto, nota = :nota, observacao = :observacao, questaoid = :questaoid, submissaoid = :submissaoid
+                  WHERE id = :id ";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":id", $resposta->getId());
+        $stmt->bindParam(":texto", $resposta->getTexto());
+        $stmt->bindParam(":nota", $resposta->getNota());
+        $stmt->bindParam(":observacao", $resposta->getObservacao());
+        $stmt->bindParam(":questaoid", $resposta->getQuestao());
+        $stmt->bindParam(":submissaoid", $resposta->getSubmissao());
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;   
+    }
+
+    public function alteraObservacaoENota($resposta)
+    {
+        $query = "UPDATE {$this->table_name}
+                  SET nota = :nota, observacao = :observacao
+                  WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":id", $resposta->getId());
+        $stmt->bindParam(":nota", $resposta->getNota());
+        $stmt->bindParam(":observacao", $resposta->getObservacao());
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;   
+    }
 
     public function removePorId($id) {
         $query = "DELETE FROM " . $this->table_name . 

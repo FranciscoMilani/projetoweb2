@@ -4,5 +4,6 @@
         public function remove($submissao);
         public function removePorId($id);
         public function buscaTodos();
+        public function buscaPorOfertaRespondenteId($ofertaId, $respondenteId);
     } 
 ?>
