@@ -8,5 +8,7 @@
         public function buscaPorId($id);
         public function buscaPorLogin($login);
         public function buscaTodos();
+        public function buscaPorNomePaginado($nome, $limit, $offset);
+        public function contaComNome($nome);
     } 
 ?>

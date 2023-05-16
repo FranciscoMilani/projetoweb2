@@ -157,10 +157,10 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
 
         $stmt = $this->conn->prepare("SELECT id, login, nome, senha, email, instituicao, isadmin
         FROM " . $this->table_name . "
-        WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:email)");
+        WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)
+        ORDER BY nome, email ASC");
 
         $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
-        $stmt->bindValue(':email', '%'.$nome.'%', PDO::PARAM_STR);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -168,6 +168,47 @@ class PostgresElaboradorDao extends PostgresDao implements ElaboradorDao
             $elaboradores[] = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
         }
         return $elaboradores;
+    }
+
+    public function buscaPorNomePaginado($nome, $limit, $offset)
+    {
+        $elaboradores = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT id, login, nome, senha, email, instituicao, isadmin
+                FROM {$this->table_name}
+                WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)
+                ORDER BY nome, email ASC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $elaboradores[] = new Elaborador($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['instituicao'], $row['isadmin']);
+        }
+        return $elaboradores;
+    }
+
+    public function contaComNome($nome){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name}
+                  WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
     }
 }
 ?>

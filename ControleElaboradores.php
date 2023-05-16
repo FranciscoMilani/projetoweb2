@@ -1,86 +1,78 @@
 <?php
 // validar sessão
+$titulo = "Controle Elaboradores";
 include "verificaAdmin.php";
-$titulo = 'Controle Elaboradores';
-
-include_once 'LayoutHeader.php';
-include_once "fachada.php";
-
-$nome = @$_POST["pesquisaNome"];
-$email = @$_POST["pesquisaEmail"];
+include_once "LayoutHeader.php";
+include_once "Fachada.php";
 
 $mensagem = @$_GET["mensagem"];
 if (!empty($mensagem)) {
     echo "<script>alert('$mensagem');</script>";
 }
 
-echo "<section>";
-
 // procura elaboradores
 $dao = $factory->getElaboradorDao();
-if (($nome == null || $nome == "") && ($email == null || $email == "")) {
-    $elaboradores = $dao->buscaTodos();
-}
-if ($nome != null || $nome != "") {
-    $elaboradores = $dao->buscaPorNome($nome);
-}
-if ($email != null || $email != "") {
-    $elaboradores = $dao->buscaPorEmail($email);
-}
+$limit = 3;
+?>
 
-echo "<button class=\"classeBotoes\" onclick=\"location.href='CadastroElaborador.php'\">Novo Elaborador</button>";
+<section class="container mt-5 w-100 w-sm-50 w-md-25">
+    <div class="d-flex flex-column text-center justify-content-around">
+        <button class="classeBotoes" onclick="location.href='CadastroElaborador.php'">Novo Elaborador</button>
 
-//Campos de busca
-echo "<form action=\"ControleElaboradores.php\" method=\"POST\" class=\"formCampoPesquisa\">";
-echo "Pesquisa por nome ou E-mail: ";
-echo "<input type=\"text\" name=\"pesquisaNome\" value=\"" . $nome . "\" class='camposInputPesquisa'>";
-echo "<input type=\"submit\" value=\"Pesquisar\" class='btn btn-info'>";
-echo "</form>";
+        <div class="align-self-center">
+            <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
+        </div>
+        <div class="table-responsive mx-2 mt-3" id="dynamic_content">
+            <!-- conteúdo dinâmico -->
+        </div>
+        <div class="align-self-center" id="pagination_list">
 
-//cria tabela
-if ($elaboradores) {
-    echo "<div class=\"table-responsive\">";
-    echo "<table id=\"tbElaborador\" class='table table-hover table-bordered'>";
-    echo "<tr>";
-    echo "<th>Id</th>";
-    echo "<th>Login</th>";
-    echo "<th>Nome</th>";
-    echo "<th>Email</th>";
-    echo "<th>Instituição</th>";
-    echo "<th>Admin</th>";
-    echo "<th></th>";
-    echo "</tr>";
+        </div>
+    </div>
 
-    foreach ($elaboradores as $elab) {
-        echo "<tr>";
-            echo "<td>{$elab->getId()}</td>";
-            echo "<td>{$elab->getLogin()}</td>";
-            echo "<td>{$elab->getNome()}</td>";
-            echo "<td>{$elab->getEmail()}</td>";
-            echo "<td>{$elab->getInstituicao()}</td>";
-            if ($elab->getIsAdmin() == TRUE) {
-                echo "<td>Sim</td>";
-            } else {
-                echo "<td>Não</td>";
+
+<script>
+$(document).ready(function(){
+    
+    load_data(<?=$limit?>, 1);
+
+    function load_data(limit, page, query = '')
+    {
+        $.ajax({
+            url: "FetchElaborador.php",
+            method: "POST",
+            data:
+            {
+                limit: limit,
+                page: page, 
+                query: query
+            },
+            success:function(response)
+            {
+                var html1 = response.html1;
+                var html2 = response.html2;
+
+                $('#dynamic_content').html(html1);
+                $('#pagination_list').html(html2);
             }
-            echo "<td>";
-                // botão para alterar um elaborador
-                echo "<a href='ModificaElaborador.php?id={$elab->getId()}' class='btn btn-info'>";
-                echo "<span class='glyphicon glyphicon-edit'></span> Altera";
-                echo "</a>";
-                // botão para remover um elaborador
-                if (!$elab->getIsAdmin()){
-                    echo "<a href='ExcluiElaborador.php?id={$elab->getId()}' class='btn btn-danger'";
-                    echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-                    echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
-                }
-                echo "</a>";
-            echo "</td>";
-        echo "</tr>";
+        });
     }
-    echo "</table>";
-    echo "</div>";
-}
+
+    $(document).on('click', '.page-link', function() {
+        var page = $(this).data('page_number');
+        var query = $('#search_box').val();
+        load_data(<?=$limit?>, page, query);
+    });
+
+
+    $('#search_box').keyup(function(){
+        var query = $('#search_box').val();
+        load_data(<?=$limit?>, 1, query);
+    });
+});
+</script>
+
+<?php
 echo "</section>";
 include_once "LayoutFooter.php";
 ?>

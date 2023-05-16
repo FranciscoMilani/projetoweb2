@@ -53,32 +53,27 @@ if ($respondentes) {
     echo "</tr>";
 
     foreach ($respondentes as $resp) {
-        echo "<tr>";
-        echo "<td>{$resp->getId()}</td>";
-        echo "<td>{$resp->getLogin()}</td>";
-        echo "<td>{$resp->getNome()}</td>";
-        echo "<td>{$resp->getEmail()}</td>";
-        echo "<td>{$resp->getTelefone()}</td>";
-        echo "<td>";
-        
-        // botão para alterar um respondente
-        echo "<a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>";
-        echo "<span class='glyphicon glyphicon-edit'></span> Altera";
-        echo "</a>";
-
-        // botão para remover um respondente
-        echo "<a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'";
-        echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-        echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
-        echo "</td>";
-        
-        // botão para ver lista de respostas e corrigir
-        echo "<td>";
-        echo "<a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-info m-1'";
-        echo "<span class='glyphicon glyphicon-remove'></span> Respostas";
-        echo "</a>";
-        echo "</td>";
-        echo "</tr>";
+        echo "<tr>
+                <td>{$resp->getId()}</td>
+                <td>{$resp->getLogin()}</td>
+                <td>{$resp->getNome()}</td>
+                <td>{$resp->getEmail()}</td>
+                <td>{$resp->getTelefone()}</td>
+                <td>
+                    <a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>
+                        <span class='glyphicon glyphicon-edit'></span> Altera
+                    </a>
+                    <a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'
+                    onclick=\"return confirm('Tem certeza que quer excluir?')\">
+                        <span class='glyphicon glyphicon-remove'></span> Exclui
+                    </a>
+                </td>
+                <td>
+                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-info m-1'
+                        <span class='glyphicon glyphicon-remove'></span> Respostas
+                    </a>
+                </td>
+            </tr>";
     }
     echo "</table>";
     echo "</div>";
