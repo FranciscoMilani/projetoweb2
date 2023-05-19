@@ -22,6 +22,12 @@
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
 
+    <?php
+        if(isset($isPaginaElab)){
+            echo "<script src=\"public/js/geraTabelaElab.js\"></script>";
+        }
+    ?>
+
     <title>
         <?php echo $titulo ?>
     </title>
