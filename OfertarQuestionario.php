@@ -12,43 +12,58 @@ $daoResp = $factory->getRespondenteDao();
 $respondentes = $daoResp->buscaTodos();
 
 ?>
-<div class="formOfertas">
-    <form action="CadastraOferta.php" method="POST">
-        <div class="wrapper">
-            <div class="box1">
-                <label for="questionarios">Selecione um questionário:</label>
-                <select name="questionario" id="questionarios">
-                    <?php
-                    foreach ($questionarios as $questionario) {
-                        echo "<option value=\"" . $questionario->getId() . "\">" . $questionario->getNome() . "</option>";
-                    }
-                    ?>
-                </select>
+<form action="CadastraOferta.php" method="POST">
+    <div class="containerOferta">
+        <div class="divOfertas">
+            <p style='margin-left: 10px'>Selecione um questionário:</p>
+            <div class="align-self-center">
+                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
             </div>
+            <br/>
+            <table id="tbRespondentes" class='table table-hover table-bordered table-responsive'>
+                <tr>
+                    <th>Questionários</th>
+                </tr>
 
-            <div class="box2">
                 <?php
-                echo "<p style='margin-left: 10px'>Marque os respondentes a serem ofertados:</p>";
-
-                foreach ($respondentes as $resp) {
-                    echo "<div style='margin-left: 10px'>";
-                    echo "<label>";
-                    echo "<input type=\"checkbox\" name=\"respondentesid[]\" value=\"" . $resp->getId() . "\">";
-                    echo $resp->getNome() . "</label>";
-                    echo "</div>";
+                foreach ($questionarios as $questionario) {
+                    echo "<tr>
+                        <td>{$questionario->getNome()}</td>
+                        </tr>";
                 }
                 ?>
-            </div>
+            </table>
         </div>
-        <input type="submit" value="Ofertar" id="btCadastro">
-        
-        <?php 
+
+        <div class="divOfertas">
+            <p style='margin-left: 10px'>Marque os respondentes a serem ofertados:</p>
+            <div class="align-self-center">
+                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
+            </div>
+            <br/>
+            <table id="tbRespondentes" class='table table-hover table-bordered table-responsive'>
+                <tr>
+                    <th>Respondentes</th>
+                </tr>
+                <?php
+                foreach ($respondentes as $resp) {
+                    echo "<tr>
+                        <td>{$resp->getNome()}</td>
+                        </tr>";
+                }
+                ?>
+            </table>
+
+            <?php
             if (isset($_SESSION['mensagem'])) {
                 echo $_SESSION['mensagem'];
                 unset($_SESSION['mensagem']);
             }
-        ?>
-</div>
+            ?>
+        </div>
+    </div>
+    <br />
+    <input type="submit" value="Ofertar" id="btOfertar">
 </form>
 
 <?php include_once 'LayoutFooter.php' ?>
