@@ -173,5 +173,46 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
 
         return $respondentes;
     }
+
+    public function buscaPorNomePaginado($nome, $limit, $offset)
+    {
+        $respondentes = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT id, login, nome, senha, email, telefone
+                FROM {$this->table_name}
+                WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)
+                ORDER BY nome, email ASC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $respondentes[] = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+        }
+        return $respondentes;
+    }
+
+    public function contaComNome($nome){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name}
+                  WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
+    }
 }
 ?>

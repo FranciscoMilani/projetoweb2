@@ -5,8 +5,12 @@ $(document).ready(function(){
 
     function load_data(limit, page, query = '')
     {
+        let currentScript = $('script').last();
+        let tipo = currentScript.data('tipo_tabela');
+        let url = "Fetch" + tipo + ".php";
+
         $.ajax({
-            url: "FetchElaborador.php",
+            url: url,
             method: "POST",
             data:
             {

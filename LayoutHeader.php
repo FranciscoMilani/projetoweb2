@@ -23,8 +23,12 @@
         crossorigin="anonymous"></script>
 
     <?php
-        if(isset($isPaginaElab)){
-            echo "<script src=\"public/js/geraTabelaElab.js\"></script>";
+        if (isset($isPaginaElab)){
+            echo "<script data-tipo_tabela=\"Elaborador\" src=\"public/js/geraTabela.js\"></script>";
+        }
+
+        if (isset($isPaginaResp)){
+            echo "<script data-tipo_tabela=\"Respondente\" src=\"public/js/geraTabela.js\"></script>";
         }
     ?>
 
