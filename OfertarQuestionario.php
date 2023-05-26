@@ -5,19 +5,31 @@ $titulo = 'Criação de Ofertas';
 include_once 'LayoutHeader.php';
 include_once "Fachada.php";
 
+$limit = $_POST['limit'];
+$page = $_POST['page'];
+$query = $_POST['query'];
+$offset = 1;
+
+if($_POST['page'] > 1)
+{
+    $offset = (($_POST['page'] - 1) * $limit);
+    $page = $_POST['page'];
+} else {
+    $offset = 0;
+}
+
 $dao = $factory->getQuestionarioDao();
-$questionarios = $dao->buscaTodos();
+$questionarios = $dao->buscaPorNomePaginado($query, $limit, $offset);
 
-$daoResp = $factory->getRespondenteDao();
-$respondentes = $daoResp->buscaTodos();
-
+// $daoResp = $factory->getRespondenteDao();
+// $respondentes = $daoResp->buscaTodos();
 ?>
 <form action="CadastraOferta.php" method="POST">
     <div class="containerOferta">
         <div class="divOfertas">
             <p style='margin-left: 10px'>Selecione um questionário:</p>
             <div class="align-self-center">
-                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
+                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="pesquisaQuest">
             </div>
             <br/>
             <table id="tbRespondentes" class='table table-hover table-bordered table-responsive'>
@@ -33,6 +45,12 @@ $respondentes = $daoResp->buscaTodos();
                 }
                 ?>
             </table>
+            <?php
+            // Inicia o buffer de saída
+            ob_start();
+            // Inclui o layout da paginação
+            include_once "LayoutPaginacao.php";
+            ?>
         </div>
 
         <div class="divOfertas">

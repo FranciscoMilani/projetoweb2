@@ -157,5 +157,29 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
 
         return $ofertas;
     }
+
+    public function buscaPorNomePaginado($nome, $limit, $offset)
+    {
+        $questionarios = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
+                FROM {$this->table_name}
+                WHERE LOWER(nome) LIKE LOWER(:nome) LIKE LOWER(:nome)
+                ORDER BY nome ASC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $questionarios[] = new Questionario($row['id'], $row['nome'], $row['descricao'], $row['datacriacao'], $row['notaaprovacao'], $row['elaboradorid']);
+        }
+        return $questionarios;
+    }
 }
 ?>
