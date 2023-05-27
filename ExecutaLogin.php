@@ -12,6 +12,7 @@ if (!$login || !$senha) {
     exit;
 }
 
+// corrigir isso aqui. o elaborador e o respondente podem ter o mesmo login, e isso impede o elab de logar.
 $dao = $factory->getRespondenteDao();
 $respondente = $dao->buscaPorLogin($login);
 $daoElab = $factory->getElaboradorDao();
