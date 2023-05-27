@@ -26,17 +26,17 @@
     }
 
     $output .= " 
-                <table id=\"tbElaborador\" class=\"table table-hover table-bordered\">
-                <tr>
-                <th>Id</th>
-                <th>Login</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Instituição</th>
-                <th>Admin</th>
-                <th></th>
-                </tr>
-            ";
+    <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
+        <tr class=\"table-head\">
+            <th>Id</th>
+            <th>Login</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Instituição</th>
+            <th>Admin</th>
+            <th></th>
+        </tr>
+    ";
 
     foreach ($elaboradores as $elab) { 
         $output .= "
@@ -55,7 +55,7 @@
             $output .= "
             <td>
                 <a href='ModificaElaborador.php?id={$elab->getId()}' class='btn btn-info'>
-                    <span class='glyphicon glyphicon-edit'></span> Altera
+                    <span class='bi bi-pencil-square'></span>
                 </a> 
         ";
         
@@ -63,7 +63,7 @@
                 $output .= "
                 <a href='ExcluiElaborador.php?id={$elab->getId()}' class='btn btn-danger'
                 onclick=\"return confirm('Tem certeza que quer excluir?')\">
-                    <span class='glyphicon glyphicon-remove'></span> Exclui
+                    <span class='bi bi-trash3-fill'></span>
                 </a>
                 ";
             }

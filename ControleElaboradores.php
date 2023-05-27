@@ -1,23 +1,23 @@
 <?php
-$titulo = "Controle Elaboradores";
-$isPaginaElab = TRUE;
-include "verificaAdmin.php";
-include_once "LayoutHeader.php";
-
 $mensagem = @$_GET["mensagem"];
 if (!empty($mensagem)) {
     echo "<script>alert('$mensagem');</script>";
 }
+
+$titulo = "Controle Elaboradores";
+$isPaginaElab = TRUE;
+include "verificaAdmin.php";
+include_once "LayoutHeader.php";
 ?>
 
-<section class="container mt-5 w-100 w-sm-50 w-md-25">
-    <div class="d-flex flex-column text-center justify-content-around">
+<section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
+    <div class="d-flex flex-column text-center justify-content-around container-listagem">
         <button class="classeBotoes" onclick="location.href='CadastroElaborador.php'">Novo Elaborador</button>
 
-        <div class="align-self-center">
-            <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
+        <div class="align-self-stretch">
+            <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0" id="search_box">
         </div>
-        <div class="table-responsive mx-2 mt-3" id="dynamic_content">
+        <div class="table-responsive mt-3" id="dynamic_content">
             <!-- conteúdo dinâmico -->
         </div>
         <div class="align-self-center" id="pagination_list">

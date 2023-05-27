@@ -30,6 +30,10 @@
         if (isset($isPaginaResp)){
             echo "<script data-tipo_tabela=\"Respondente\" src=\"public/js/geraTabela.js\"></script>";
         }
+
+        if (isset($isPaginaQuest)){
+            echo "<script data-tipo_tabela=\"Questionario\" src=\"public/js/geraTabela.js\"></script>";
+        }
     ?>
 
     <title>

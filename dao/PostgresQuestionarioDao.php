@@ -106,7 +106,7 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
                     id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY id ASC";
+                    " ORDER BY datacriacao DESC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
@@ -165,8 +165,8 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         $stmt = $this->conn->prepare(
                 "SELECT id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
                 FROM {$this->table_name}
-                WHERE LOWER(nome) LIKE LOWER(:nome) LIKE LOWER(:nome)
-                ORDER BY nome ASC
+                WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(descricao) LIKE LOWER(:nome)
+                ORDER BY datacriacao DESC
                 LIMIT :limit OFFSET :offset"
         );
 
@@ -180,6 +180,24 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
             $questionarios[] = new Questionario($row['id'], $row['nome'], $row['descricao'], $row['datacriacao'], $row['notaaprovacao'], $row['elaboradorid']);
         }
         return $questionarios;
+    }
+
+
+    public function contaComNome($nome){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name}
+                  WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(descricao) LIKE LOWER(:nome)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
     }
 }
 ?>

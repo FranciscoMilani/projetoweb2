@@ -26,8 +26,8 @@
     }
 
     $output .= " 
-    <table id=\"tbRespondente\" class=\"table table-hover table-bordered\">
-        <tr>
+    <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
+        <tr class=\"table-head\">
             <th>Id</th>
             <th>Login</th>
             <th>Nome</th>
@@ -47,16 +47,16 @@
                 <td>{$resp->getTelefone()}</td>
                 <td>
                     <a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>
-                        <span class='glyphicon glyphicon-edit'></span> Altera
+                        <span class='bi bi-pencil-square'></span>
                     </a>
                     <a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'
                     onclick=\"return confirm('Tem certeza que quer excluir?')\">
-                        <span class='glyphicon glyphicon-remove'></span> Exclui
+                        <span class='bi bi-trash3-fill'></span>
                     </a>
                 </td>
                 <td>
-                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-info m-1'
-                        <span class='glyphicon glyphicon-remove'></span> Respostas
+                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-secondary m-1'>
+                        <span class='bi bi-clipboard-check-fill'></span>
                     </a>
                 </td>
             </tr>";
@@ -64,11 +64,10 @@
     }
 
     $output .= "
-            </a>
         </td>
     </tr>
     ";
-            
+
     $output .= "
     </table>
     ";

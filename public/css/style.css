@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #444;
-	font-family: sans-serif;
+	font-family: "Segoe UI", sans-serif !important;
 }
 
 .paginaLogin {
@@ -29,7 +29,6 @@ body {
 
 .cadastro-form input,
 .cadastro-form textarea {
-	font-family: "Roboto", sans-serif;
 	outline: 0;
 	background: #f2f2f2;
 	width: 100%;
@@ -41,7 +40,6 @@ body {
 }
 
 #btLogin {
-	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;
 	outline: 0;
 	background: #166fce;
@@ -56,7 +54,6 @@ body {
 }
 
 #btCadastro {
-	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;
 	outline: 0;
 	background: #166fce;
@@ -71,7 +68,6 @@ body {
 }
 
 #btOfertar {
-	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;
 	background: #166fce;
 	width: 30%;
@@ -85,7 +81,6 @@ body {
 }
 
 .classeVoltar {
-	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;
 	outline: 0;
 	background: #aa1616;
@@ -158,7 +153,6 @@ body {
 	overflow-y: auto;
 	padding: 20px;
 	text-align: center;
-	font-family: Arial, sans-serif;
 	font-size: 14px;
 }
 
@@ -171,7 +165,6 @@ body {
 	overflow-y: auto;
 	padding: 20px;
 	text-align: center;
-	font-family: Arial, sans-serif;
 	font-size: 14px;
 }
 
@@ -184,12 +177,10 @@ body {
 	overflow-y: auto;
 	padding: 20px;
 	text-align: center;
-	font-family: Arial, sans-serif;
 	font-size: 14px;
 }
 
 #cadastro-questao-form {
-	font-family: "Roboto", sans-serif;
 	outline: 0;
 	background: #f2f2f2;
 	width: 100%;
@@ -249,4 +240,19 @@ body {
 
 .containerOferta {
 	display: flex;
+}
+
+.container-listagem {
+	max-width: 700px;
+	margin: 0 auto 0;
+}
+
+.container-listagem table {
+	margin: 0;
+	padding: 0;
+}
+
+.table-head {
+	background-color: #f0f0f0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.411);
 }

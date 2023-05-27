@@ -1,14 +1,14 @@
 <?php
-$titulo = 'Visualiza Questões';
-
-include_once 'verificaElaborador.php';
-include_once 'LayoutHeader.php';
-include_once 'Fachada.php';
-
 $mensagem = @$_GET['mensagem'];
 if (!empty($mensagem)) {
     echo "<script>alert('$mensagem');</script>";
 }
+
+$titulo = 'Visualiza Questões';
+include_once 'verificaElaborador.php';
+include_once 'LayoutHeader.php';
+include_once 'Fachada.php';
+
 
 echo "<section>";
 
