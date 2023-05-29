@@ -46,7 +46,7 @@ foreach ($questionarios as $quest) {
     $formattedDate = date('d/m/Y', strtotime($date->format('Y-m-d')));
 
     $output .= "
-                <tr>
+                <tr onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">
                     <td>{$quest->getId()}</td>
                     <td>{$quest->getNome()}</td>
                     <td>{$quest->getDescricao()}</td>
@@ -65,11 +65,6 @@ foreach ($questionarios as $quest) {
                 </tr>
                 ";
 }
-
-$output .= "
-    </td>
-</tr>
-";
 
 $output .= "
 </table>

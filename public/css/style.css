@@ -256,3 +256,14 @@ body {
 	background-color: #f0f0f0;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.411);
 }
+
+tr[onclick] {
+	transition: transform 0.1s ease-in-out;
+}
+
+tr[onclick]:hover {
+	overflow: visible;
+    cursor: pointer;
+	transform: scale(1.01);
+	transition: transform 0.05s ease-out;
+}

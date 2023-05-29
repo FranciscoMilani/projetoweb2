@@ -5,7 +5,7 @@
     include_once 'LayoutHeader.php';
     include_once 'Fachada.php';
 
-    $questionarioId = $_GET['questionarioId'];
+    $questionarioId = $_GET['qId'];
     if (!isset($questionarioId)){
         header("Location: ControleQuestionarios.php");
         exit();

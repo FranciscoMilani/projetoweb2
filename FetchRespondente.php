@@ -59,14 +59,8 @@
                         <span class='bi bi-clipboard-check-fill'></span>
                     </a>
                 </td>
-            </tr>";
-            
+            </tr>";  
     }
-
-    $output .= "
-        </td>
-    </tr>
-    ";
 
     $output .= "
     </table>
