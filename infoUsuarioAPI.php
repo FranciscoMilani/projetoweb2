@@ -28,7 +28,15 @@ switch($request_method)
         http_response_code(200); // 200 OK
     }
     break;
-
+    
+ case 'DELETE':
+    if(!empty($_GET["id"]))
+    {
+        $id=intval($_GET["id"]);
+        $dao->remove($id);
+        http_response_code(204); // 204 Deleted
+    }
+    break;
  default:
     // Invalid Request Method
     http_response_code(405); // 405 Method Not Allowed
