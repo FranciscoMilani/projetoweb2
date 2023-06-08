@@ -80,8 +80,7 @@
                 dataType: 'text', // expecting
                 data: jsonData,
                 success: function(msg){
-                    console.log(msg);
-                    
+                    console.log(msg); 
                 }, 
                 error: function(a, b, err){
                     console.log(err);

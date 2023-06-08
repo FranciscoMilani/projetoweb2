@@ -192,7 +192,7 @@ class PostgresQuestionarioQuestaoDao extends PostgresDao implements Questionario
                     LEFT OUTER JOIN questionarioquestao qq ON q.id = qq.questaoid
                     AND qq.questionarioid = :questionarioid
                     WHERE qq.questaoid IS NULL
-                    ORDER BY qq.ordem ASC ";
+                    ORDER BY qq.ordem ASC";
 
      
         $stmt = $this->conn->prepare( $query );

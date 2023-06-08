@@ -5,7 +5,7 @@ if (!empty($mensagem)) {
 }
 
 $titulo = "Controle Elaboradores";
-$isPaginaElab = TRUE;
+$tipoLista = "Elaborador";
 include "verificaAdmin.php";
 include_once "LayoutHeader.php";
 ?>

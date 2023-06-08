@@ -23,16 +23,8 @@
         crossorigin="anonymous"></script>
 
     <?php
-        if (isset($isPaginaElab)){
-            echo "<script data-tipo_tabela=\"Elaborador\" src=\"public/js/geraTabela.js\"></script>";
-        }
-
-        if (isset($isPaginaResp)){
-            echo "<script data-tipo_tabela=\"Respondente\" src=\"public/js/geraTabela.js\"></script>";
-        }
-
-        if (isset($isPaginaQuest)){
-            echo "<script data-tipo_tabela=\"Questionario\" src=\"public/js/geraTabela.js\"></script>";
+        if(isset($tipoLista)){
+            echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
         }
     ?>
 

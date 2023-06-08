@@ -157,5 +157,54 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
 
         return $ofertas;
     }
+
+    public function buscaPorNomePaginado($nome, $respId, $limit, $offset)
+    {
+        $ofertas = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT o.id as ofertaid, o.data, o.questionarioid, o.respondenteid, q.id
+                FROM {$this->table_name} o, questionario q
+                WHERE (LOWER(q.nome) LIKE LOWER(:nome) OR LOWER(q.descricao) LIKE LOWER(:nome))
+                AND o.questionarioid = q.id
+                AND o.respondenteid = :id
+                ORDER BY o.data DESC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':id', $respId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $ofertas[] = new Oferta($row['ofertaid'], $row['data'], $row['questionarioid'], $row['respondenteid']);
+        }
+
+        return $ofertas;
+    }
+
+
+    public function contaComNome($nome, $respId){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name} o, questionario q
+                  WHERE (LOWER(q.nome) LIKE LOWER(:nome) OR LOWER(q.descricao) LIKE LOWER(:nome))
+                  AND o.questionarioid = q.id
+                  AND o.respondenteid = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':id', $respId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
+    }
 }
 ?>

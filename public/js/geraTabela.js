@@ -1,13 +1,20 @@
 $limit = 10;
+
 $(document).ready(function(){
-    
+
     load_data($limit, 1);
 
     function load_data(limit, page, query = '')
     {
         let currentScript = $('script').last();
         let tipo = currentScript.data('tipo_tabela');
-        let url = "Fetch" + tipo + ".php";
+        let url;
+        
+        if (params){
+            url = "Fetch" + tipo + ".php?" + params;
+        } else {
+            url = "Fetch" + tipo + ".php";
+        }
 
         $.ajax({
             url: url,

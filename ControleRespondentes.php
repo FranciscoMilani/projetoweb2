@@ -5,7 +5,7 @@ if (!empty($mensagem)) {
 }
 
 $titulo = "Controle Respondentes";
-$isPaginaResp = TRUE;
+$tipoLista = "Respondente";
 include "verificaElaborador.php";
 include_once "LayoutHeader.php";
 ?>

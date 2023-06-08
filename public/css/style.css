@@ -263,7 +263,7 @@ tr[onclick] {
 
 tr[onclick]:hover {
 	overflow: visible;
-    cursor: pointer;
+	cursor: pointer;
 	transform: scale(1.01);
 	transition: transform 0.05s ease-out;
 }

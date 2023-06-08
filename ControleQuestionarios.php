@@ -5,7 +5,7 @@ if (!empty($mensagem)) {
 }
 
 $titulo = "Controle Questionários";
-$isPaginaQuest = TRUE;
+$tipoLista = "Questionario";
 include_once "verificaElaborador.php";
 include_once "LayoutHeader.php";
 ?>

@@ -4,7 +4,7 @@
 
     $dadosJson = file_get_contents('php://input');
     $dados = json_decode($dadosJson, true);
-
+    
     $ofertaId = $dados['ofertaId'];
     $questionarioId = $dados['questionarioId'];
     $selecionaveis = $dados['selecionaveis'];

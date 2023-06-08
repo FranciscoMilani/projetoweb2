@@ -50,32 +50,6 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         return $this->removePorId($questao->getId());
     }
 
-    /*                  IMPLEMENTAR ALTERAÇÃO SE FOR NECESSÁRIO
-    
-    public function altera($questionario) {
-
-        $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, senha = :senha, nome = :nome, email = :email" .
-        " WHERE id = :id";
-
-        $stmt = $this->conn->prepare($query);
-
-        // bind parameters
-        $stmt->bindParam(":login", $respondente->getLogin());
-        $stmt->bindParam(":senha", md5($respondente->getSenha()));
-        $stmt->bindParam(":nome", $respondente->getNome());
-        $stmt->bindParam(':email', $respondente->getEmail());
-        $stmt->bindParam(':telefone', $respondente->getTelefone());
-
-        // execute the query
-        if($stmt->execute()){
-            return true;
-        }    
-
-        return false;
-    }
-    */
-
     public function buscaPorId($id) {
         $questao = null;
 
@@ -118,6 +92,52 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
         }
         
         return $questoes;
+    }
+
+    public function buscaPorDescricaoTipoPaginado($desc, $isDisc, $isObj, $isMult, $limit, $offset)
+    {
+        $questoes = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT id, descricao, isdiscursiva, isobjetiva, ismultiplaescolha, caminhoimagem
+                FROM {$this->table_name}
+                WHERE LOWER(descricao) LIKE LOWER(:descricao)               
+                AND ((:isDisc = true AND isdiscursiva = true) OR (:isObj = true AND isobjetiva = true) OR (:isMult = true AND ismultiplaescolha = true))
+                ORDER BY descricao DESC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':descricao', '%'.$desc.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':isDisc', $isDisc, PDO::PARAM_BOOL);
+        $stmt->bindValue(':isObj', $isObj, PDO::PARAM_BOOL);
+        $stmt->bindValue(':isMult', $isMult, PDO::PARAM_BOOL);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $questoes[] = new Questao($row['id'], $row['descricao'], $row['isdiscursiva'], $row['isobjetiva'], $row['ismultiplaescolha'], $row['caminhoimagem']);
+        }
+        return $questoes;
+    }
+
+
+    public function contaComDescricao($desc){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name}
+                  WHERE LOWER(descricao) LIKE LOWER(:descricao)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':descricao', '%'.$desc.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
     }
 }
 ?>

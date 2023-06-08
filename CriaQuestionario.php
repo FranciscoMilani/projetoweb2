@@ -30,8 +30,6 @@
 
     $questionario = new Questionario(null, $nome, $descricao, $dataCriacao, $notaAprovacao, $elaborador);
     $questionarioId = $daoQ->insere($questionario);
-    var_dump($questionarioId);
-   // $_SESSION["id_questionario"] = $questionarioId;
     header('Location: VinculoQuestionarioQuestao.php?questionarioId='.$questionarioId);
     exit;
 ?>
