@@ -9,6 +9,7 @@
     echo "
     <script type=\"text/javascript\" data-tipo_tabela=\"Vinculo\">
         var params = \"qId={$_GET['questionarioId']}\"
+        var qId = {$_GET['questionarioId']}
     </script>
     ";
     

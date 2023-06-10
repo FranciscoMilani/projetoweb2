@@ -17,7 +17,7 @@ $(document).ready(function(){
                 data: {
                     pontos: pontos,
                     ordem: ordem,
-                    questionarioId: idQuestionario,
+                    questionarioId: qId,
                     questaoId: idQuestao,
                 },
                 success: function(dados) {
@@ -56,7 +56,7 @@ $(document).ready(function(){
             type: 'POST',
             dataType: 'json',
             data: {
-                questionarioId: idQuestionario,
+                questionarioId: qId,
                 questaoId: idQuestao,
             },
             success: function(dados) {

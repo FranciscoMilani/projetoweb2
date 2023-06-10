@@ -1,5 +1,4 @@
 $limit = 10;
-
 $(document).ready(function(){
 
     load_data($limit, 1);
@@ -9,8 +8,8 @@ $(document).ready(function(){
         let currentScript = $('script').last();
         let tipo = currentScript.data('tipo_tabela');
         let url;
-        
-        if (params){
+
+        if (typeof params !== 'undefined') {
             url = "Fetch" + tipo + ".php?" + params;
         } else {
             url = "Fetch" + tipo + ".php";
