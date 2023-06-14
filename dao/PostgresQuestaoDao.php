@@ -107,6 +107,7 @@ class PostgresQuestaoDao extends PostgresDao implements QuestaoDao {
                 LIMIT :limit OFFSET :offset"
         );
 
+
         $stmt->bindValue(':descricao', '%'.$desc.'%', PDO::PARAM_STR);
         $stmt->bindValue(':isDisc', $isDisc, PDO::PARAM_BOOL);
         $stmt->bindValue(':isObj', $isObj, PDO::PARAM_BOOL);
