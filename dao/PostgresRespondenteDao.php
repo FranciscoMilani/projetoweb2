@@ -162,8 +162,8 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
         FROM " . $this->table_name . "
         WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:email)");
 
-        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
-        $stmt->bindValue(':email', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':nome', '%' . $nome . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':email', '%' . $nome . '%', PDO::PARAM_STR);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -179,58 +179,85 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
         $respondentes = array();
 
         $stmt = $this->conn->prepare(
-                "SELECT id, login, nome, senha, email, telefone
+            "SELECT id, login, nome, senha, email, telefone
                 FROM {$this->table_name}
                 WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)
                 ORDER BY nome, email ASC
                 LIMIT :limit OFFSET :offset"
         );
 
-        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':nome', '%' . $nome . '%', PDO::PARAM_STR);
         $stmt->bindValue(':limit', $limit);
         $stmt->bindValue(':offset', $offset);
         $stmt->execute();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
             $respondentes[] = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
         }
         return $respondentes;
     }
 
-    public function contaComNome($nome){
+    public function contaComNome($nome)
+    {
         $query = "SELECT COUNT(*) as contagem
                   FROM {$this->table_name}
                   WHERE LOWER(nome) LIKE LOWER(:nome) OR LOWER(email) LIKE LOWER(:nome)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':nome', '%' . $nome . '%', PDO::PARAM_STR);
         $stmt->execute();
 
-        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
             return $contagem;
         }
 
         return 0;
     }
+    public function buscaInfosApiPorId($id)
+    {
+        $respondente = null;
 
-    public function buscaRespondenteJSON($id) {
-        $resp = $this->buscaPorId($id);
-        if($resp!=null) {
-            return stripslashes(json_encode($resp->getDadosParaJSON(),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        $query = "SELECT i.id, i.login, i.nome, i.senha, i.email, i.telefone, k.questionarioid
+                  FROM {$this->table_name} i
+                  INNER JOIN oferta k
+                  ON  i.id = :id
+                  AND i.id = k.respondenteid";
+
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
+            $aux[] = $row['questionarioid'];
+            var_dump($aux);
+        }
+
+        return $respondente;
+    }
+
+    public function buscaRespondenteJSON($id)
+    {
+        $resp = $this->buscaInfosApiPorId($id);
+        if ($resp != null) {
+            return stripslashes(json_encode($resp->getDadosParaJSON(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         } else {
             return null;
         }
     }
 
-    public function buscaRespondentesJSON() {
+    public function buscaRespondentesJSON()
+    {
         $respondentes = $this->buscaTodos();
         $respJSON = array();
         foreach ($respondentes as $resp) {
             $respJSON[] = $resp->getDadosParaJSON();
         }
-        return stripslashes(json_encode($respJSON,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        return stripslashes(json_encode($respJSON, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 }
 ?>
