@@ -21,7 +21,8 @@ include_once 'LayoutHeader.php';
                     echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='ControleRespondentes.php'\">Controle de Respondentes</button>";
                     echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='ControleQuestionarios.php'\">Controle de Questionários</button>";
                     echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='ControleQuestoes.php'\">Visualiza Questões</button>";
-                    echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='OfertarQuestionario.php'\">Faz Oferta</button>";
+                    echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='OfertarQuestionario.php'\">Ofertar Questionário</button>";
+                    echo "<button class=\"classeBotoes menuBotoes btn btn-primary m-3 shadow-sm rounded-4 fs-5\" onclick=\"location.href='VisualizarGraficos.php'\">Métricas</button>";
                 }
                      
                 //se for respondente, mostra apenas botao de ofertas

@@ -158,6 +158,86 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         return $ofertas;
     }
 
+    public function contaTopPorQtdOfertas($qtd){
+        $ofertas = array();
+
+        $query = "SELECT COUNT(*) AS contagem, q.id, SUBSTRING(q.nome, 1, 11) as nome
+                  FROM questionario q, oferta o
+                  WHERE o.questionarioid = q.id
+                  GROUP BY q.id
+                  ORDER BY contagem DESC, q.id ASC
+                  LIMIT :qtd";
+
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':qtd', $qtd);
+        $stmt->execute(); 
+   
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $ofertas[] = ['count' => $contagem, 'nome' => $nome];
+        }
+
+        return $ofertas;
+    }
+
+    public function contaTopPorQtdRespostas($qtd){
+        $ofertas = array();
+
+        $query = "SELECT COUNT(*) AS contagem, q.id, SUBSTRING(q.nome, 1, 11) as nome
+                  FROM questionario q, oferta o, submissao s
+                  WHERE o.questionarioid = q.id
+                  AND s.ofertaid = o.id
+                  GROUP BY q.id
+                  ORDER BY contagem DESC, q.id ASC
+                  LIMIT :qtd";
+
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':qtd', $qtd);
+        $stmt->execute(); 
+   
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $ofertas[] = ['count' => $contagem, 'nome' => $nome];
+        }
+
+        return $ofertas;
+    }
+
+    public function contaTotalRespondidos(){
+        $query = "  SELECT SUM(contagem) as contagemTotal
+                    FROM
+                    (
+                        SELECT COUNT(*) AS contagem, q.id
+                        FROM questionario q, oferta o, submissao s
+                        WHERE o.questionarioid = q.id
+                        AND o.id = s.ofertaid
+                        GROUP BY q.id
+                    ) as subquery   ";
+
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute(); 
+
+        return $stmt->fetch(PDO::FETCH_COLUMN);
+    }
+
+    public function contaTotalNaoRespondidos(){
+        $query = "  SELECT SUM(contagem) as contagemTotal
+                    FROM
+                    (
+                        SELECT COUNT(*) as contagem
+                        FROM questionario q
+                        JOIN oferta o ON q.id = o.questionarioid
+                        LEFT JOIN submissao s ON o.id = s.ofertaid
+                        WHERE s.ofertaid IS NULL
+                        GROUP BY q.id
+                    ) as subquery  ";
+
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute(); 
+
+        return $stmt->fetch(PDO::FETCH_COLUMN);
+    }
+
     public function buscaPorNomePaginado($nome, $limit, $offset)
     {
         $questionarios = array();
