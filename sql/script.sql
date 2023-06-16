@@ -95,6 +95,7 @@ CREATE TABLE submissao (
     id SERIAL NOT NULL,
     nomeOcasiao VARCHAR(255),
     descricao VARCHAR(255),
+    notaTotal DECIMAL,
     data DATE NOT NULL DEFAULT CURRENT_DATE,
     ofertaId INTEGER NOT NULL,
 	respondenteId INTEGER NOT NULL,

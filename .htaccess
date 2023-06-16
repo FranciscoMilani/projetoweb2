@@ -1,3 +1,12 @@
 RewriteEngine On # Turn on the rewriting engine
 RewriteRule ^infoUsuarioAPI/?$ infoUsuarioAPI.php [NC,L]
 RewriteRule ^infoUsuarioAPI/([0-9]+)/?$ infoUsuarioAPI.php?id=$1 [NC,L]
+
+
+
+
+# <Directory C:/wamp64/www>
+#     Options Indexes FollowSymLinks
+#     AllowOverride all
+#     Require all granted
+# </Directory>

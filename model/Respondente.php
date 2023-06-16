@@ -19,8 +19,8 @@ class Respondente extends Usuario
         $this->telefone = $telefone;
     }
 
-    public function getDadosParaJSON() {
-        $data = ['id' => $this->getId(), 'login' => $this->getLogin(), 'senha' => $this->getSenha(), 'nome' => $this->getNome(), 'email' => $this->getEmail(), 'telefone' => $this->getTelefone()];
+    public function getDadosParaJSON($dataQuestionario) {
+        $data = ['id' => $this->getId(), 'login' => $this->getLogin(), 'senha' => $this->getSenha(), 'nome' => $this->getNome(), 'email' => $this->getEmail(), 'telefone' => $this->getTelefone(), 'Questionario' => $dataQuestionario];
         return $data;
     }
 }

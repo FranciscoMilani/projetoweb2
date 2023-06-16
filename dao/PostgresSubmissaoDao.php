@@ -10,8 +10,8 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
     public function insere($submissao) {
 
         $query = "INSERT INTO " . $this->table_name . 
-        " (nomeocasiao, descricao, data, ofertaid, respondenteid) VALUES" .
-        " (:nomeocasiao, :descricao, DEFAULT, :ofertaid, :respondenteid)" .
+        " (nomeocasiao, descricao, data, ofertaid, respondenteid, notatotal) VALUES" .
+        " (:nomeocasiao, :descricao, DEFAULT, :ofertaid, :respondenteid, :notatotal)" .
         " RETURNING id";
 
         $stmt = $this->conn->prepare($query);
@@ -20,6 +20,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $stmt->bindParam(":descricao", $submissao->getDescricao());
         $stmt->bindParam(":ofertaid", $submissao->getOferta());
         $stmt->bindParam(":respondenteid", $submissao->getRespondente());
+        $stmt->bindParam(":notatotal", $submissao->getNotaTotal());
 
         // retorna ID inserido
         if($stmt->execute()){
@@ -53,7 +54,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $submissao = null;
 
         $query = "SELECT
-                    id, nomeocasiao, descricao, data, ofertaid, respondenteid
+                    id, nomeocasiao, descricao, data, ofertaid, respondenteid, notatotal
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -68,7 +69,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
             $dataFormatada = date('d/m/Y', strtotime($row['data']));
-            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid']);
+            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid'], $row['notatotal']);
         } 
      
         return $submissao;
@@ -78,7 +79,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $submissoes = array();
 
         $query = "SELECT
-                    id, nomeocasiao, descricao, data, ofertaid, respondenteid
+                    id, nomeocasiao, descricao, data, ofertaid, respondenteid, notatotal
                 FROM
                     " . $this->table_name . 
                     " ORDER BY data DESC";
@@ -90,7 +91,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
             extract($row);
             //$data =  date('d-m-Y', strtotime($row['data']));
             $dataFormatada = date('d/m/Y', strtotime($data));
-            $submissoes[] = new Submissao($id, $nomeocasiao, $descricao, $dataFormatada, $ofertaid, $respondenteid);
+            $submissoes[] = new Submissao($id, $nomeocasiao, $descricao, $dataFormatada, $ofertaid, $respondenteid, $notatotal);
         }
         
         return $submissoes;
@@ -99,7 +100,7 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
     public function buscaPorOfertaRespondenteId($ofertaId, $respondenteId){
         $submissao = null;
 
-        $query = "SELECT id, nomeocasiao, descricao, data, ofertaid, respondenteid
+        $query = "SELECT id, nomeocasiao, descricao, data, ofertaid, respondenteid, notatotal
                   FROM {$this->table_name}
                   WHERE ofertaid = :ofertaid
                   AND respondenteid = :respondenteid";
@@ -112,12 +113,36 @@ class PostgresSubmissaoDao extends PostgresDao implements SubmissaoDao {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row){
             $dataFormatada = date('d/m/Y', strtotime($row['data']));
-            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid']);
+            $submissao = new Submissao($row['id'], $row['nomeocasiao'], $row['descricao'], $dataFormatada, $row['ofertaid'], $row['respondenteid'], $row['notatotal']);
         }
 
         return $submissao;
     }
 
+    public function altera($submissao)
+    {
+        $query = "UPDATE " . $this->table_name .
+            " SET id = :id, nomeocasiao = :nomeocasiao, descricao = :descricao, data = :data, ofertaid = :ofertaid, respondenteid = :respondenteid, notatotal = :notatotal" .
+            " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+        $stmt->bindParam(":id", $submissao->getId());
+        $stmt->bindParam(":nomeocasiao", $submissao->getNomeOcasiao());
+        $stmt->bindParam(":descricao", $submissao->getDescricao());
+        $stmt->bindParam(":data", $submissao->getData());
+        $stmt->bindParam(':ofertaid', $submissao->getOferta());
+        $stmt->bindParam(':respondenteid', $submissao->getRespondente());
+        $stmt->bindParam(':notatotal', $submissao->getNotaTotal());
+
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
     // public function buscaPorRespondente($usuario) {
     //     $submissoes = array();
 

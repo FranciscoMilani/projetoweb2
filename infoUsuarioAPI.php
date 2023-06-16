@@ -14,8 +14,7 @@ switch ($request_method) {
             $id = intval($_GET["id"]);
             $respJSON = $dao->buscaRespondenteJSON($id);
             if ($respJSON != null) {
-                echo "teste";
-                // echo $respJSON;
+                echo $respJSON;
                 http_response_code(200); // 200 OK
             } else {
                 http_response_code(404); // 404 Not Found

@@ -41,5 +41,10 @@
         public function setQuestionarioQuestao($questionarioQuestao) {$this->questionarioQuestao = $questionarioQuestao;}
 
         public function addQuestionarioQuestao($questionarioQuestao) { array_push($questionarioQuestao); }
+
+        public function getDadosParaJSON() {
+            $data = ['id' => $this->getId(), 'nome' => $this->getNome(), 'descricao' => $this->getDescricao(), 'dataCriacao' => $this->getDataCriacao(), 'notaAprovacao' => $this->getNotaAprovacao()];
+            return $data;
+        }
     }
 ?>

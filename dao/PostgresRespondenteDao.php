@@ -234,7 +234,10 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
         if ($row) {
             $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
             $aux[] = $row['questionarioid'];
-            var_dump($aux);
+            var_dump($aux[0]);
+            foreach ($aux as $questionario){
+
+            }
         }
 
         return $respondente;
@@ -242,7 +245,7 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
 
     public function buscaRespondenteJSON($id)
     {
-        $resp = $this->buscaInfosApiPorId($id);
+        $resp = $this->buscaPorId($id);
         if ($resp != null) {
             return stripslashes(json_encode($resp->getDadosParaJSON(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         } else {

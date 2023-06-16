@@ -27,8 +27,10 @@
     $submissaoDao = $factory->getSubmissaoDao();
     $alternativaDao = $factory->getAlternativaDao();
 
+    $notaTotalObtida = 0;
+
     // pensar se precisa fazer uma transaction aqui e passar tudo no dao da submissao?
-    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, $ofertaId, $respondenteId); 
+    $submissao = new Submissao(null, "Nome Ocasião", "Descrição da submissão.", null, $ofertaId, $respondenteId, 0); 
 
     $submissaoId = $submissaoDao->insere($submissao);
 
@@ -71,11 +73,14 @@
                 $r = new Resposta(null, null, $notaObtida, null, $questao, $submissaoId, $respondenteId);
                 $idR = $respostaDao->insere($r);
                 
+                $notaTotalObtida = $notaTotalObtida+$notaObtida;
+                
                 foreach ($alternativasMarcadas as $idA){      
                     // respostalternativa para alternativas nao marcadas? analisar se precisa
                     $ra = new RespostaAlternativa(null, $idR, $idA);
                     $respAltDao->insere($ra);
                 } 
+               
 
             } else if ($qst->getIsObjetiva()) {
                 $idA = $alternativasMarcadas[0];
@@ -91,10 +96,12 @@
                 $idR = $respostaDao->insere($r);
                 $ra = new RespostaAlternativa(null, $idR, $idA);
                 $respAltDao->insere($ra);
+                $notaTotalObtida = $notaTotalObtida+$qq->getPontos();
             } else {
                 // erro, nao foi possivel identificar o tipo de questão
             }
         }
+        
     }
 
     foreach($discursivas as $d) {
@@ -108,6 +115,11 @@
         }
     }
 
+    $submissaoAtualizada = $submissaoDao->buscaPorId($submissaoId);
+    $submissaoAtualizada->setNotaTotal($notaTotalObtida);
+    $submissaoDao->altera($submissaoAtualizada);
+
+    
     function mapAlternativasCorretasId($v){
         return $v->getId();
     }

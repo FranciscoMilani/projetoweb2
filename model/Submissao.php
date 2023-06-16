@@ -9,8 +9,9 @@
         private $ofertaAtendida;
         private $respostas = array();
         private $respondente;
+        private $notaTotal;
 
-        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida, $respondente)
+        public function __construct($id, $nomeOcasiao, $descricao, $data, $ofertaAtendida, $respondente, $notaTotal)
         {
             $this->id = $id;
             $this->nomeOcasiao = $nomeOcasiao;
@@ -18,6 +19,7 @@
             $this->data = $data;
             $this->ofertaAtendida = $ofertaAtendida;
             $this->respondente = $respondente;
+            $this->notaTotal = $notaTotal;
         }
 
         public function getId() { return $this->id; }
@@ -42,6 +44,9 @@
 
         public function getRespondente() { return $this->respondente; }
         public function setRespondente($respondente) { $this->respondente = $respondente; }
+
+        public function getNotaTotal() { return $this->notaTotal; }
+        public function setNotaTotal($notaTotal) { $this->notaTotal = $notaTotal; }
     }
 
 ?>
