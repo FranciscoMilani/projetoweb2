@@ -20,7 +20,7 @@ function atualiza_grafico(){
         mostra_grafico_barra(dados['c1'], 'chart-qtd-ofertas')
         mostra_grafico_barra(dados['c2'], 'chart-qtd-respostas')
         mostra_grafico_pizza(dados['c3'], 'chart-total-pizza')
-        //mostra_grafico_barra(dados['c2'], 'chart-porcento-aprovados')
+        mostra_grafico_barra(dados['c4'], 'chart-porcento-aprovados')
     })
 }
 
@@ -107,7 +107,7 @@ function mostra_grafico_pizza(dados, contexto){
                     <div class="col-md-5 col-12 card">
                         <input class="form-control mt-2 justify-content-center align-self-center" type="text" placeholder="identificador do questionário">
                         <div class="p-3" style="width:40vw !important">
-                            <canvas id="chart-porcento-aprovado" height="300"></canvas>
+                            <canvas id="chart-porcento-aprovados" height="300"></canvas>
                         </div>
                     </div>
                     <div style="width: 20px;"></div>

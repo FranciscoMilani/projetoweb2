@@ -20,9 +20,9 @@ class QuestionarioManager {
         return $dados;
     }
 
-    // public function contaTopPorPercentualAprovacao() {
-
-    // }
+    public function contaTopPorPercentualAprovacao($id) {
+        $dados = $this->daoQ->contaPercentualAprovacao($id);
+    }
 
     public function contaTotalPizza() {
         $dados = array();
@@ -38,6 +38,7 @@ $dados = array(
     "c1" => array("label" => "Qtd. Ofertas", "dados"=>$qManager->contaTopPorQtdOfertas()),
     "c2" => array("label" => "Qtd. Respostas", "dados"=>$qManager->contaTopPorQtdRespostas()),
     "c3" => $qManager->contaTotalPizza(),
+    //"c4" => $qManager->contaTopPorPercentualAprovacao()
 );
 
 echo json_encode($dados, JSON_PRETTY_PRINT);

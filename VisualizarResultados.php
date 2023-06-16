@@ -114,7 +114,7 @@
                 echo        '<span class="fw-bold"> Questão '.($i + 1).': </span>';
                 echo        '<p class="d-inline">'.$questao->getDescricao().'</p>';
 
-                if (file_exists($caminhoImagem)){
+                if (is_file($caminhoImagem) && file_exists($caminhoImagem)){
                 echo '          <div>';
                 echo '              <img img-fluid width=250 class="m-5 img-fluid rounded mx-auto d-block" src="'.$caminhoImagem.'">';
                 echo '          </div>';
@@ -165,6 +165,11 @@
                 else {
                     echo '<textarea class="discursiva form-control" name="respostas['.$questao->getId().']['.(-1).']" 
                          id="'.$questao->getId().'" cols="30" rows="5" disabled>'.$respostaQuestao->getTexto().'</textarea>';
+                        
+                    if ($respostaQuestao->getObservacao() != null){
+                        echo ' <label class="mt-2 fs-6">Observações</label>
+                        <textarea class="discursiva form-control" cols="30" rows="2" disabled style="background-color: rgba(255, 218, 97, 0.6);">'.$respostaQuestao->getObservacao().'</textarea>'; 
+                    } 
                 }
 
                 echo '</div>';

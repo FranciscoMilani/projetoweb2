@@ -238,6 +238,11 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         return $stmt->fetch(PDO::FETCH_COLUMN);
     }
 
+    public function contaPorPercentualAprovacao($id){
+        // TO-DO
+        return null;
+    }
+
     public function buscaPorNomePaginado($nome, $limit, $offset)
     {
         $questionarios = array();

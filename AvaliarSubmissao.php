@@ -119,7 +119,7 @@
                 echo '<span class="fw-bold"> Questão '.($i + 1).': </span>';
                 echo '<p class="d-inline">'.$questao->getDescricao().'</p>';
 
-                if (file_exists($caminhoImagem)){
+                if (is_file($caminhoImagem) && file_exists($caminhoImagem)){
                 echo '<div>';
                 echo '<img img-fluid width=250 class="m-5 img-fluid rounded mx-auto d-block" src="'.$caminhoImagem.'">';
                 echo '</div>';
