@@ -19,7 +19,7 @@ if($_POST['page'] > 1)
 }
 
 $dao = $factory->getQuestionarioDao();
-$questionarios = $dao->buscaPorNomePaginado($query, $limit, $offset);
+$questionarios = $dao->buscaPorNomePaginado($query, $_SESSION['id_elaborador'], $limit, $offset);
 
 // $daoResp = $factory->getRespondenteDao();
 // $respondentes = $daoResp->buscaTodos();

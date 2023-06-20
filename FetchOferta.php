@@ -92,8 +92,8 @@ if ($ofertas) {
             // botão para ver resposta
             $output .= "
             <td>
-                <a href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn btn-info'>
-                    <span class='glyphicon glyphicon-edit'></span> Visualizar
+                <a href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn position-relative btn-info'>
+                    <span class=\"glyphicon glyphicon-edit\"></span> Visualizar
                 </a>
             </td>
             ";

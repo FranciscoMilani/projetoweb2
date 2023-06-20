@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include_once "Fachada.php";
 $dao = $factory->getQuestionarioDao();
 $daoElab = $factory->getElaboradorDao();
@@ -16,8 +17,8 @@ if($_POST['page'] > 1)
     $offset = 0;
 }
 
-$questionarios = $dao->buscaPorNomePaginado($query, $limit, $offset);
-$total_data = $dao->contaComNome($query);
+$questionarios = $dao->buscaDoElaboradorPorNomePaginado($query, $_SESSION['id_elaborador'], $limit, $offset);
+$total_data = $dao->contaDoElaboradorComNome($query,  $_SESSION['id_elaborador']);
 
 if (!$questionarios || empty($questionarios)){
     header('Content-Type: application/json');
@@ -25,7 +26,6 @@ if (!$questionarios || empty($questionarios)){
                       'html2' => '']);
     exit;
 }
-
 
 $output .= "
 <table id=\"\" class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">

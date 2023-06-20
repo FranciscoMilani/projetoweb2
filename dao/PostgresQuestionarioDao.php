@@ -267,6 +267,31 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
         return $questionarios;
     }
 
+    
+    public function buscaDoElaboradorPorNomePaginado($nome, $elabId, $limit, $offset){
+        $questionarios = array();
+
+        $stmt = $this->conn->prepare(
+                "SELECT id, nome, descricao, datacriacao, notaaprovacao, elaboradorid
+                FROM {$this->table_name}
+                WHERE (LOWER(nome) LIKE LOWER(:nome) OR LOWER(descricao) LIKE LOWER(:nome))
+                AND elaboradorid = :elabId
+                ORDER BY datacriacao DESC
+                LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':elabId', $elabId);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $questionarios[] = new Questionario($row['id'], $row['nome'], $row['descricao'], $row['datacriacao'], $row['notaaprovacao'], $row['elaboradorid']);
+        }
+        return $questionarios;
+    }
 
     public function contaComNome($nome){
         $query = "SELECT COUNT(*) as contagem
@@ -275,6 +300,25 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            return $contagem;
+        }
+
+        return 0;
+    }
+
+    public function contaDoElaboradorComNome($nome, $elabId){
+        $query = "SELECT COUNT(*) as contagem
+                  FROM {$this->table_name}
+                  WHERE (LOWER(nome) LIKE LOWER(:nome) OR LOWER(descricao) LIKE LOWER(:nome))
+                  AND elaboradorid = :elabId";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':nome', '%'.$nome.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':elabId', $elabId);
         $stmt->execute();
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
