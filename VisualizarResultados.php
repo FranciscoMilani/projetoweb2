@@ -36,18 +36,25 @@
     $qqs = $daoQuestionarioQuestao->buscaPorQuestionario($questionarioId);
     $notaSomada = 0;
     $notaObtida = 0;
+    $avaliado = true;
     foreach ($qqs as $qq) {
         $notaSomada += $qq->getPontos();
     }
 
     foreach($respostas as $resp)
     {
+        if ($resp->getNota() == null){
+            $avaliado = false;
+        }
+
         $notaObtida += $resp->getNota();
     }
 
-    if ($questionario->getNotaAprovacao() > $notaObtida){
+    if ($avaliado == false) {
+        $status = '<span class="d-block fs-3 fw-bold text-warning-emphasis text-center">Aguardando Correção</span>';
+    } else if ($questionario->getNotaAprovacao() > $notaObtida) {
         $status = '<span class="d-block fs-3 fw-bold text-danger-emphasis text-center">Reprovado</span>';
-    } else {
+    } else if ($questionario->getNotaAprovacao() <= $notaObtida) {
         $status = '<span class="d-block fs-3 fw-bold text-success-emphasis text-center">Aprovado</span>';
     }
 

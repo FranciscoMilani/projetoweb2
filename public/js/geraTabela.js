@@ -1,9 +1,9 @@
-$limit = 10;
+var $limit = 10;
+
 $(document).ready(function(){
+    load_data({limit: $limit, page:1});
 
-    load_data($limit, 1);
-
-    function load_data(limit, page, query = '')
+    function load_data(object)
     {
         let currentScript = $('script').last();
         let tipo = currentScript.data('tipo_tabela');
@@ -15,15 +15,14 @@ $(document).ready(function(){
             url = "Fetch" + tipo + ".php";
         }
 
+        if (typeof newObj !== 'undefined'){
+            object = Object.assign(object, newObj);
+        }
+
         $.ajax({
             url: url,
             method: "POST",
-            data:
-            {
-                limit: limit,
-                page: page, 
-                query: query
-            },
+            data: object,
             success:function(response)
             {
                 var html1 = response.html1;
@@ -38,12 +37,12 @@ $(document).ready(function(){
     $(document).on('click', '.page-link', function() {
         var page = $(this).data('page_number');
         var query = $('#search_box').val();
-        load_data($limit, page, query);
+        load_data({limit: $limit, page:page, query:query});
     });
 
 
     $('#search_box').keyup(function(){
         var query = $('#search_box').val();
-        load_data($limit, 1, query);
+        load_data({limit:$limit, page:1, query:query});
     });
 });

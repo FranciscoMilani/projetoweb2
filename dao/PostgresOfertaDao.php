@@ -135,19 +135,21 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
         return $ofertas;
     }
 
-    public function buscaOfertasSubmetidasPorRespondente($id)
+    public function buscaOfertasSubmetidasPorRespondenteEElaborador($idResp, $idElab)
     {
         $ofertas = array();
 
-        $query = "SELECT o.id, o.data, o.questionarioid, o.respondenteid 
-                  FROM {$this->table_name} o
-                  INNER JOIN submissao s
-                  ON o.respondenteid = s.respondenteid
-                  AND o.respondenteid = :id";
-
+        $query = "  SELECT o.id, o.data, o.questionarioid, o.respondenteid 
+                    FROM {$this->table_name} o
+                    INNER JOIN submissao s ON o.respondenteid = s.respondenteid
+                    WHERE o.respondenteid = :idResp
+                    AND o.id = s.ofertaid
+                    AND o.questionarioid IN (SELECT id FROM questionario WHERE elaboradorid = :idElab)
+                 ";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":idResp", $idResp);
+        $stmt->bindParam(":idElab", $idElab);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
