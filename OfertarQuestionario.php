@@ -1,83 +1,50 @@
 <?php
-require "verificaElaborador.php";
-$titulo = 'Criação de Ofertas';
-
-include_once 'LayoutHeader.php';
-include_once "Fachada.php";
-
-$limit = $_POST['limit'];
-$page = $_POST['page'];
-$query = $_POST['query'];
-$offset = 1;
-
-if($_POST['page'] > 1)
-{
-    $offset = (($_POST['page'] - 1) * $limit);
-    $page = $_POST['page'];
-} else {
-    $offset = 0;
+$mensagem = @$_GET["mensagem"];
+if (!empty($mensagem)) {
+    echo "<script>alert('$mensagem');</script>";
 }
 
-$dao = $factory->getQuestionarioDao();
-$questionarios = $dao->buscaPorNomePaginado($query, $limit, $offset);
+$titulo = 'Criação de Ofertas';
+$tipoLista = "OfertarQuestionario";
+$tbOfertaRespondente = "Respondente";
 
-// $daoResp = $factory->getRespondenteDao();
-// $respondentes = $daoResp->buscaTodos();
+require "verificaElaborador.php";
+include_once 'LayoutHeader.php';
 ?>
+
 <form action="CadastraOferta.php" method="POST">
     <div class="containerOferta">
         <div class="divOfertas">
-            <p style='margin-left: 10px'>Selecione um questionário:</p>
-            <div class="align-self-center">
-                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="pesquisaQuest">
-            </div>
-            <br/>
-            <table id="tbRespondentes" class='table table-hover table-bordered table-responsive'>
-                <tr>
-                    <th>Questionários</th>
-                </tr>
-
-                <?php
-                foreach ($questionarios as $questionario) {
-                    echo "<tr>
-                        <td>{$questionario->getNome()}</td>
-                        </tr>";
-                }
-                ?>
-            </table>
-            <?php
-            // Inicia o buffer de saída
-            ob_start();
-            // Inclui o layout da paginação
-            include_once "LayoutPaginacao.php";
-            ?>
+            <p style='margin-left: 10px'>Marque o questionário a ser ofertado:</p>
+            <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
+                <div class="d-flex flex-column text-center justify-content-around container-listagem">
+                    <div class="align-self-stretch">
+                        <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0" id="search_box">
+                    </div>
+                    <div class="table-responsive mt-3" id="dynamic_content">
+                        <!-- conteúdo dinâmico -->
+                    </div>
+                    <div class="align-self-center" id="pagination_list">
+                        <!-- paginação -->
+                    </div>
+                </div>
         </div>
-
         <div class="divOfertas">
             <p style='margin-left: 10px'>Marque os respondentes a serem ofertados:</p>
-            <div class="align-self-center">
-                <input type="text" name="pesquisa" class="camposInputPesquisa form-control" id="search_box">
-            </div>
-            <br/>
-            <table id="tbRespondentes" class='table table-hover table-bordered table-responsive'>
-                <tr>
-                    <th>Respondentes</th>
-                </tr>
-                <?php
-                foreach ($respondentes as $resp) {
-                    echo "<tr>
-                        <td>{$resp->getNome()}</td>
-                        </tr>";
-                }
-                ?>
-            </table>
-
-            <?php
-            if (isset($_SESSION['mensagem'])) {
-                echo $_SESSION['mensagem'];
-                unset($_SESSION['mensagem']);
-            }
-            ?>
+            <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
+                <div class="d-flex flex-column text-center justify-content-around container-listagem">
+                    <div class="align-self-stretch">
+                        <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0"
+                            id="search_box2">
+                    </div>
+                    <!-- Montar o arquivo FetchRespondentes -->
+                    <div class="table-responsive mt-3" id="dynamic_content2">
+                        <!-- conteúdo dinâmico -->
+                    </div>
+                    <div class="align-self-center" id="pagination_list2">
+                        <!-- paginação -->
+                    </div>
+                </div>
         </div>
     </div>
     <br />

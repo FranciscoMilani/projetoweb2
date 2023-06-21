@@ -26,6 +26,9 @@
         if(isset($tipoLista)){
             echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
         }
+        if(isset($tbOfertaRespondente)){
+            echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaRespondente.js\"></script>";
+        }
     ?>
 
     <title>

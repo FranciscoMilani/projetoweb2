@@ -6,7 +6,7 @@ $(document).ready(function(){
     function load_data(limit, page, query = '')
     {
         $.ajax({
-            url: "OfertarQuestionario.php",
+            url: "FetchOfertarRespondente.php",
             method: "POST",
             data:
             {
@@ -16,24 +16,24 @@ $(document).ready(function(){
             },
             success:function(response)
             {
-                var html1 = response.html1;
-                var html2 = response.html2;
+                var html3 = response.html3;
+                var html4 = response.html4;
 
-                $('#dynamic_content').html(html1);
-                $('#pagination_list').html(html2);
+                $('#dynamic_content2').html(html3);
+                $('#pagination_list2').html(html4);
             }
         });
     }
 
     $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#pesquisaQuest').val();
+        var page = $(this).data('page_number_resp');
+        var query = $('#search_box2').val();
         load_data($limit, page, query);
     });
 
 
-    $('#pesquisaQuest').keyup(function(){
-        var query = $('#pesquisaQuest').val();
+    $('#search_box2').keyup(function(){
+        var query = $('#search_box2').val();
         load_data($limit, 1, query);
     });
 });

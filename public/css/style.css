@@ -267,3 +267,7 @@ tr[onclick]:hover {
 	transform: scale(1.01);
 	transition: transform 0.05s ease-out;
 }
+
+.linhaMarcada {
+	background-color: rgb(102, 102, 239);
+ }
