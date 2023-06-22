@@ -5,14 +5,12 @@ if (!empty($mensagem)) {
 }
 
 $titulo = 'Criação de Ofertas';
-$tipoLista = "OfertarQuestionario";
-$tbOfertaRespondente = "Respondente";
+$tipoLista = "OfertaQuestionarioRespondente";
 
 require "verificaElaborador.php";
 include_once 'LayoutHeader.php';
 ?>
 
-<form action="CadastraOferta.php" method="POST">
     <div class="containerOferta">
         <div class="divOfertas">
             <p style='margin-left: 10px'>Marque o questionário a ser ofertado:</p>
@@ -48,6 +46,5 @@ include_once 'LayoutHeader.php';
     </div>
     <br />
     <input type="button" value="Ofertar" id="btOfertar">
-</form>
 
 <?php include_once 'LayoutFooter.php' ?>

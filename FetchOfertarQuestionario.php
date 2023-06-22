@@ -1,12 +1,13 @@
 <?php
 include_once "Fachada.php";
+session_start();
+
 $dao = $factory->getQuestionarioDao();
 
 $limit = $_POST['limit'];
 $page = $_POST['page'];
 $query = $_POST['query'];
 $offset = 1;
-$elabId = $_POST['elabId'];
 
 if ($_POST['page'] > 1) {
     $offset = (($_POST['page'] - 1) * $limit);
@@ -15,8 +16,8 @@ if ($_POST['page'] > 1) {
     $offset = 0;
 }
 
-$questionarios = $dao->buscaPorNomePaginado($query, $limit, $offset);
-$total_data = $dao->contaComNome($query);
+$questionarios = $dao->buscaDoElaboradorPorNomePaginado($query, $_SESSION["id_elaborador"], $limit, $offset);
+$total_data = $dao->contaDoElaboradorComNome($query, $_SESSION["id_elaborador"]);
 
 if (!$questionarios || empty($questionarios)) {
     header('Content-Type: application/json');
@@ -28,7 +29,6 @@ if (!$questionarios || empty($questionarios)) {
 }
 
 $output .= " 
-    <script src=\"public/js/marcarLinha.js\"></script>
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
         <tr class=\"table-head\">
             <th>Id</th>

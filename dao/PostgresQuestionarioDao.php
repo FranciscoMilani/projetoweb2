@@ -239,8 +239,19 @@ class PostgresQuestionarioDao extends PostgresDao implements QuestionarioDao {
     }
 
     public function contaPorPercentualAprovacao($id){
-        // TO-DO
-        return null;
+        $query =   "SELECT
+                        AVG(CASE WHEN s.notatotal >= q.notaaprovacao THEN 100 ELSE 0 END) AS porcentagem_maior_igual,
+                        AVG(CASE WHEN s.notatotal < q.notaaprovacao THEN 100 ELSE 0 END) AS porcentagem_menor
+                    FROM submissao s, oferta o, questionario q
+                    WHERE s.ofertaid = o.id
+                    AND o.questionarioid = q.id
+                    AND q.id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function buscaPorNomePaginado($nome, $limit, $offset)

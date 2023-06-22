@@ -23,6 +23,7 @@ function marcarLinhaQuest(linha) {
     for (var i = 0; i < linhas.length; i++) {
         linhas[i].classList.remove('linhaMarcada');
     }
+
     // Adiciona a classe 'marcada' à linha clicada
     linha.classList.add('linhaMarcada');
 

@@ -47,17 +47,17 @@
         if ($page == $page_array[$count]) {
             $page_link .= '
             <li class="page-item active">
-            <a class="page-link" href="#">' . $page_array[$count] . '</a>
+            <a class="page-link resp" href="#">' . $page_array[$count] . '</a>
             </li>
             ';
 
             $previous_id = $page_array[$count] - 1;
             if ($previous_id > 0) {
-                $previous_link = '<li class="page-item"><a class="page-link bi bi-chevron-left" href="javascript:void(0)" data-page_number_resp="' . $previous_id . '"></a></li>';
+                $previous_link = '<li class="page-item"><a class="page-link resp bi bi-chevron-left" href="javascript:void(0)" data-page_number_resp="' . $previous_id . '"></a></li>';
             } else {
                 $previous_link = '
                 <li class="page-item disabled">
-                    <a class="page-link bi bi-chevron-left" href="#"></a>
+                    <a class="page-link resp bi bi-chevron-left" href="#"></a>
                 </li>
                 ';
             }
@@ -65,22 +65,22 @@
             if ($next_id > $total_links) {
                 $next_link = '
                 <li class="page-item disabled">
-                    <a class="page-link bi bi-chevron-right" href="#"></a>
+                    <a class="page-link resp bi bi-chevron-right" href="#"></a>
                 </li>
                     ';
             } else {
-                $next_link = '<li class="page-item"><a class="page-link bi bi-chevron-right" href="javascript:void(0)" data-page_number_resp="' . $next_id . '"></a></li>';
+                $next_link = '<li class="page-item"><a class="page-link resp bi bi-chevron-right" href="javascript:void(0)" data-page_number_resp="' . $next_id . '"></a></li>';
             }
         } else {
             if ($page_array[$count] == '...') {
                 $page_link .= '
                 <li class="page-item disabled">
-                    <a class="page-link" href="#">...</a>
+                    <a class="page-link resp" href="#">...</a>
                 </li>
                 ';
             } else {
                 $page_link .= '
-                <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number_resp="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
+                <li class="page-item"><a class="page-link resp" href="javascript:void(0)" data-page_number_resp="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
                 ';
             }
         }

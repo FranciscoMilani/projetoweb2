@@ -27,7 +27,6 @@ if (!$respondentes || empty($respondentes)) {
 }
 
 $output .= " 
-    <script src=\"public/js/marcarLinha.js\"></script>
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
         <tr class=\"table-head\">
             <th>Id</th>

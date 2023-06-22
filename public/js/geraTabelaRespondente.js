@@ -1,7 +1,6 @@
-$limit = 10;
 $(document).ready(function(){
-    
-    load_data($limit, 1);
+    let limit = 10;
+    load_data(limit, 1);
 
     function load_data(limit, page, query = '')
     {
@@ -25,15 +24,15 @@ $(document).ready(function(){
         });
     }
 
-    $(document).on('click', '.page-link', function() {
+    $(document).on('click', '.page-link.resp', function() {
         var page = $(this).data('page_number_resp');
         var query = $('#search_box2').val();
-        load_data($limit, page, query);
+        load_data(limit, page, query);
     });
 
 
     $('#search_box2').keyup(function(){
         var query = $('#search_box2').val();
-        load_data($limit, 1, query);
+        load_data(limit, 1, query);
     });
 });

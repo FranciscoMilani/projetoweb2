@@ -23,14 +23,18 @@
         crossorigin="anonymous"></script>
 
     <?php
+
         if(isset($tipoLista)){
-            if (isset($objs)){
-                echo "<script type=\"application/javascript\"> const newObj = ".json_encode(json_decode($objs))."; </script>";
+            if ($tipoLista == "OfertaQuestionarioRespondente"){
+                echo "<script src=\"public/js/marcarLinha.js\" data-tipo_tabela=\"OfertarQuestionario\"></script>";
+                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaQuestionario.js\"></script>";
+                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaRespondente.js\"></script>";
+            } else {
+                if (isset($objs)){
+                    echo "<script type=\"application/javascript\"> const newObj = ".json_encode(json_decode($objs))."; </script>";
+                }
+                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
             }
-            echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
-        }
-        if(isset($tbOfertaRespondente)){
-            echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaRespondente.js\"></script>";
         }
     ?>
 
