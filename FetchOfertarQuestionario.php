@@ -6,6 +6,7 @@ $limit = $_POST['limit'];
 $page = $_POST['page'];
 $query = $_POST['query'];
 $offset = 1;
+$elabId = $_POST['elabId'];
 
 if ($_POST['page'] > 1) {
     $offset = (($_POST['page'] - 1) * $limit);
@@ -27,6 +28,7 @@ if (!$questionarios || empty($questionarios)) {
 }
 
 $output .= " 
+    <script src=\"public/js/marcarLinha.js\"></script>
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
         <tr class=\"table-head\">
             <th>Id</th>
@@ -36,7 +38,7 @@ $output .= "
 
 foreach ($questionarios as $quest) {
     $output .= "
-        <tr>
+        <tr onclick=\"marcarLinhaQuest(this)\">
             <td>{$quest->getId()}</td>
             <td>{$quest->getNome()}</td>
         ";

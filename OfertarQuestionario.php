@@ -37,7 +37,6 @@ include_once 'LayoutHeader.php';
                         <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0"
                             id="search_box2">
                     </div>
-                    <!-- Montar o arquivo FetchRespondentes -->
                     <div class="table-responsive mt-3" id="dynamic_content2">
                         <!-- conteúdo dinâmico -->
                     </div>
@@ -48,7 +47,7 @@ include_once 'LayoutHeader.php';
         </div>
     </div>
     <br />
-    <input type="submit" value="Ofertar" id="btOfertar">
+    <input type="button" value="Ofertar" id="btOfertar">
 </form>
 
 <?php include_once 'LayoutFooter.php' ?>
