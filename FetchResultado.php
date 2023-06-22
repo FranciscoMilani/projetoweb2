@@ -1,10 +1,12 @@
 <?php 
+    session_start();
     include_once "Fachada.php";
     $daoQuestionario = $factory->getQuestionarioDao();
 
     $limit = $_POST['limit'];
     $page = $_POST['page'];
     $query = $_POST['query'];
+    $respId = $_POST['respId'];
     $offset = 1;
 
     if($_POST['page'] > 1)
@@ -17,7 +19,7 @@
 
     $ofertaDao = $factory->getOfertaDao();
     $ofertas = $ofertaDao->ofertasPorUsuario($respId); // ofertas por respondente
-    $ofertasSubm = $ofertaDao->buscaOfertasSubmetidasPorRespondente($respId);
+    $ofertasSubm = $ofertaDao-> buscaOfertasSubmetidasPorRespondenteEElaborador($respId, $_SESSION['id_elaborador']);
     $daoElab = $factory->getElaboradorDao();
     $daoSubmissao = $factory->getSubmissaoDao();
 
@@ -33,19 +35,16 @@
 
     $output .= " 
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
-        <div class=\"table-head\">
-        <table id=\"tbRespondente\" class='table table-hover table-responsive'>
-        <tr>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Data</th>
-        <th>Criado Por</th>
-        <th></th>
-        </tr>
+        <thead class=\"table-head\">
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Criado Por</th>
+            <th></th>
+        </thead>
     ";
 
-    foreach ($ofertas as $oferta) {
-
+    foreach ($ofertasSubm as $oferta) {
         // ignora oferta se ainda não foi respondida
         $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $respId);
         if (!isset($submissao)){

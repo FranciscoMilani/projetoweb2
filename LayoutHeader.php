@@ -24,6 +24,9 @@
 
     <?php
         if(isset($tipoLista)){
+            if (isset($objs)){
+                echo "<script type=\"application/javascript\"> const newObj = ".json_encode(json_decode($objs))."; </script>";
+            }
             echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
         }
         if(isset($tbOfertaRespondente)){

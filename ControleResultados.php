@@ -1,20 +1,24 @@
 <?php 
-
     $mensagem = @$_GET["mensagem"];
     if (!empty($mensagem)) {
         echo "<script>alert('$mensagem');</script>";
     }
 
-    $titulo = "Visualizar Resultados de Ofertas";
-    $tipoLista = "Resultado";
-    include_once "verificaElaborador.php";
-    include_once "LayoutHeader.php";
-
-    $respId = $_GET["id"];
+    $respId = $_GET['id'];
     if (!isset($respId)){
         header('Location: ControleRespondentes.php');
         exit;
     }
+
+    $objs = json_encode(array(
+        "respId" => intval($respId),
+        "limit" => 10
+    ));
+
+    $titulo = "Visualizar Resultados de Ofertas";
+    $tipoLista = "Resultado";
+    include_once "verificaElaborador.php";
+    include_once "LayoutHeader.php";
 ?>
 
 <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
