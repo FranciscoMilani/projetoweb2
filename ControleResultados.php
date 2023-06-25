@@ -32,7 +32,7 @@
             <!-- conteúdo dinâmico -->
         </div>
         <div class="d-flex flex-row justify-content-between align-items-center px-1 mt-2">  
-            <a href="Menu.php" class="btn btn-primary btn-lg">Voltar</a>
+            <a href="ControleRespondentes.php" class="btn btn-primary btn-lg bi bi-arrow-left"></a>
             <div class="" id="pagination_list">
                 <!-- paginação -->
             </div>    

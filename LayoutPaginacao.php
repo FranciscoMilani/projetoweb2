@@ -13,26 +13,39 @@
     ";
 
     if ($total_links > 4) {
-        if ($page < 5) {
+        if ($page < 4) {
             for ($count = 1; $count <= 5; $count++) {
                 $page_array[] = $count;
             }
-            $page_array[] = '...';
-            $page_array[] = $total_links;
+
+            if ($total_links > 6){
+                $page_array[] = '...'; 
+            }
+
+            if ($total_links > 5){
+                $page_array[] = $total_links;
+            }
+
         } else {
-            $end_limit = $total_links - 5;
+            $end_limit = $total_links - 2;
             if ($page > $end_limit) {
                 $page_array[] = 1;
-                $page_array[] = '...';
-                for ($count = $end_limit; $count <= $total_links; $count++) {
+
+                if ($total_links > 6){
+                    $page_array[] = '...';
+                }
+
+                for ($count = $end_limit - 1; $count <= $total_links; $count++) {
                     $page_array[] = $count;
                 }
             } else {
-                $page_array[] = 1;
+                $page_array[] = 1;    
                 $page_array[] = '...';
+
                 for ($count = $page - 1; $count <= $page + 1; $count++) {
                     $page_array[] = $count;
                 }
+
                 $page_array[] = '...';
                 $page_array[] = $total_links;
             }

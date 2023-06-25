@@ -45,18 +45,18 @@
                 <td>{$resp->getNome()}</td>
                 <td>{$resp->getEmail()}</td>
                 <td>{$resp->getTelefone()}</td>
-                <td>
-                    <a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info m-1'>
-                        <span class='bi bi-pencil-square'></span>
+                <td class='align-items-center'>
+                    <a href='ModificaRespondente.php?id={$resp->getId()}' class='btn btn-info w-100'>
+                        <span class='bi bi-pencil-square p-2'></span>
                     </a>
-                    <a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger m-1'
+                    <a href='ExcluiRespondente.php?id={$resp->getId()}' class='btn btn-danger mt-1 w-100'
                     onclick=\"return confirm('Tem certeza que quer excluir?')\">
-                        <span class='bi bi-trash3-fill'></span>
+                        <span class='bi bi-trash3-fill p-2'></span>
                     </a>
                 </td>
                 <td>
-                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-secondary m-1'>
-                        <span class='bi bi-clipboard-check-fill'></span>
+                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-secondary d-flex flex-column' style='height: 100% !important;'>
+                        <span class='bi bi-clipboard-check-fill p-2'></span>
                     </a>
                 </td>
             </tr>";  

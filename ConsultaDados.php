@@ -41,8 +41,8 @@ class QuestionarioManager {
 $daoQ = $factory->getQuestionarioDao();
 $qManager = new QuestionarioManager($daoQ);
 $dados = array(
-    "c1" => array("label" => "Qtd. Ofertas", "dados"=>$qManager->contaTopPorQtdOfertas()),
-    "c2" => array("label" => "Qtd. Respostas", "dados"=>$qManager->contaTopPorQtdRespostas()),
+    "c1" => array("label" => "Qtd. Ofertas", "dados" => $qManager->contaTopPorQtdOfertas()),
+    "c2" => array("label" => "Qtd. Respostas", "dados" => $qManager->contaTopPorQtdRespostas()),
     "c3" => $qManager->contaTotalPizza(),
     "c4" => $qManager->contaTopPorPercentualAprovacao($_GET['questionarioId'])
 );

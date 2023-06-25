@@ -46,13 +46,14 @@ foreach ($questionarios as $quest) {
     $formattedDate = date('d/m/Y', strtotime($date->format('Y-m-d')));
 
     $output .= "
-                <tr onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">
-                    <td>{$quest->getId()}</td>
-                    <td>{$quest->getNome()}</td>
-                    <td>{$quest->getDescricao()}</td>
-                    <td>{$formattedDate}</td>
-                    <td>{$quest->getNotaAprovacao()}</td>
-                    <td>{$elab->getNome()}</td>
+                <tr class=\"destacavel\">
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$quest->getId()}</td>
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$quest->getNome()}</td>
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$quest->getDescricao()}</td>
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$formattedDate}</td>
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$quest->getNotaAprovacao()}</td>
+                    <td onclick=\"window.location='VisualizarQuestionario.php?qId={$quest->getId()}'\">{$elab->getNome()}</td>
+
                     <td>
                         <a href='ModificaQuestionario.php?id={$quest->getId()}' class='btn btn-info w-100'>
                             <span class='bi bi-clipboard-check-fill p-2'></span>  
