@@ -19,14 +19,13 @@
 
     $ofertaDao = $factory->getOfertaDao();
     $ofertas = $ofertaDao->ofertasPorUsuario($respId); // ofertas por respondente
-    $ofertasSubm = $ofertaDao-> buscaOfertasSubmetidasPorRespondenteEElaborador($respId, $_SESSION['id_elaborador']);
     $daoElab = $factory->getElaboradorDao();
     $daoSubmissao = $factory->getSubmissaoDao();
 
-    $questionarios = $daoQuestionario->buscaDoElaboradorPorNomePaginado($query, $_SESSION['id_elaborador'], $limit, $offset);
-    $total_data = $daoQuestionario->contaDoElaboradorComNome($query, $_SESSION['id_elaborador']);
-
-    if (!$questionarios || empty($questionarios)){
+    $ofertasSubm = $ofertaDao->buscaOfertasSubmetidasPorRespondenteEElaborador($query, $respId, $_SESSION['id_elaborador'], $limit, $offset);
+    $total_data = $ofertaDao->contaResultadosPorRespondenteEElaboradorComNome($query, $_SESSION['id_elaborador'], $respId);
+    
+    if (!$ofertasSubm || empty($ofertasSubm)) {
         header('Content-Type: application/json');
         echo json_encode(['html1' => '<br><br>Não há registros disponíveis para essa pesquisa',
                           'html2' => '']);
@@ -45,12 +44,7 @@
     ";
 
     foreach ($ofertasSubm as $oferta) {
-        // ignora oferta se ainda não foi respondida
         $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $respId);
-        if (!isset($submissao)){
-            continue;
-        }
-
         $quest = $daoQuestionario->buscaPorId($oferta->getQuestionario());
         $elab = $daoElab->buscaPorId($quest->getElaborador());
         $date = new DateTime($oferta->getData());

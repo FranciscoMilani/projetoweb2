@@ -135,21 +135,30 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
         return $ofertas;
     }
 
-    public function buscaOfertasSubmetidasPorRespondenteEElaborador($idResp, $idElab)
+    public function buscaOfertasSubmetidasPorRespondenteEElaborador($input, $idResp, $idElab, $limit, $offset)
     {
         $ofertas = array();
 
         $query = "  SELECT o.id, o.data, o.questionarioid, o.respondenteid 
                     FROM {$this->table_name} o
                     INNER JOIN submissao s ON o.respondenteid = s.respondenteid
-                    WHERE o.respondenteid = :idResp
-                    AND o.id = s.ofertaid
-                    AND o.questionarioid IN (SELECT id FROM questionario WHERE elaboradorid = :idElab)
+                    WHERE o.id = s.ofertaid
+                    AND o.respondenteid = :idResp
+                    AND o.questionarioid IN 
+                        (SELECT id 
+                        FROM questionario q 
+                        WHERE elaboradorid = :idElab
+                        AND (LOWER(q.nome) LIKE LOWER(:query) OR LOWER(q.descricao) LIKE LOWER(:query)))
+                    ORDER BY o.data
+                    LIMIT :limit OFFSET :offset
                  ";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":idResp", $idResp);
         $stmt->bindParam(":idElab", $idElab);
+        $stmt->bindValue(':query', '%'.$input.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -159,6 +168,59 @@ class PostgresOfertaDao extends PostgresDao implements OfertaDao
 
         return $ofertas;
     }
+
+    
+    public function contaResultadosPorRespondenteEElaboradorComNome($input, $elabId, $respId){
+        $query = "  SELECT COUNT(*) as contagem
+                    FROM oferta o
+                    INNER JOIN submissao s ON o.respondenteid = s.respondenteid
+                    WHERE o.id = s.ofertaid
+                    AND o.respondenteid = :respId
+                    AND o.questionarioid IN 
+                        (SELECT id 
+                        FROM questionario q 
+                        WHERE elaboradorid = :elabId
+                        AND (LOWER(q.nome) LIKE LOWER(:query) OR LOWER(q.descricao) LIKE LOWER(:query)))";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':query', '%'.$input.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':elabId', $elabId, PDO::PARAM_INT);
+        $stmt->bindValue(':respId', $respId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_COLUMN);
+    }
+
+/*
+    public function buscaQuestionariosSubmetidosPorRespondenteEElaboradorPaginado($input, $idResp, $idElab, $limit, $offset)
+    {
+        $questionarios = array();
+
+        $query = "  SELECT q.id, q.nome, q.descricao, q.datacriacao as data_criado, o.data as data_submetido
+                    FROM questionario q
+                    INNER JOIN oferta o ON q.id = o.questionarioid
+                    WHERE o.id IN (SELECT s.ofertaid FROM submissao s WHERE s.respondenteid = :idResp)
+                    AND q.elaboradorid = :idElab
+                    AND (LOWER(q.nome) LIKE LOWER(:query) OR LOWER(q.descricao) LIKE LOWER(:query))
+                    LIMIT :limit OFFSET :offset
+                 ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':idResp', $idResp);
+        $stmt->bindParam(':idElab', $idElab);
+        $stmt->bindValue(':query', '%'.$input.'%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $questionarios[] = new Questionario($row['id'], $row['nome'], $row['descricao'], $row['data_criado'], null, null);
+        }
+
+        return $questionarios;
+    }
+    */
 
     public function buscaPorNomePaginado($nome, $respId, $limit, $offset)
     {

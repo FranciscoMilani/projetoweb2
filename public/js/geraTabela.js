@@ -1,6 +1,5 @@
-var $limit = 10;
-
 $(document).ready(function(){
+    var $limit = 5;
     load_data({limit: $limit, page:1});
 
     function load_data(object)

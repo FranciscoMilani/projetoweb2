@@ -13,10 +13,6 @@ foreach ($_POST as $variavel){
 $questionarioId = @$_POST["questionario"];
 $listRespondentes = @$_POST["respondentesid"];
 
-var_dump($questionarioId);
-var_dump($listRespondentes);
-exit;
-
 $daoQuestionario = $factory->getQuestionarioDao();
 $daoRespondente = $factory->getRespondenteDao();
 

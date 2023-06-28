@@ -25,6 +25,7 @@ body {
 .cadastro-form {
 	position: relative;
 	z-index: 1;
+	border-radius: 12px;
 }
 
 .cadastro-form input,
@@ -262,6 +263,13 @@ tr[onclick] {
 }
 
 tr[onclick]:hover {
+	overflow: visible;
+	cursor: pointer;
+	transform: scale(1.01);
+	transition: transform 0.05s ease-out;
+}
+
+.destacavel:hover {
 	overflow: visible;
 	cursor: pointer;
 	transform: scale(1.01);
