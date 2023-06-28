@@ -215,39 +215,101 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
 
         return 0;
     }
-    public function buscaInfosApiPorId($id)
+
+    public function buscaInfoQuestionario($idQuest)
     {
-        $respondente = null;
+        $table_name_tmp = "questionario";
 
-        $query = "SELECT i.id, i.login, i.nome, i.senha, i.email, i.telefone, k.questionarioid
-                  FROM {$this->table_name} i
-                  INNER JOIN oferta k
-                  ON  i.id = :id
-                  AND i.id = k.respondenteid";
-
+        $query = "SELECT
+                    *
+                FROM
+                    " . $table_name_tmp . "
+                WHERE
+                    id = ? ORDER BY id";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(1, $idQuest);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $questionario = new Questionario(
+            $row['id'],
+            $row['nome'],
+            $row['descricao'],
+            $row['datacriacao'],
+            $row['notaaprovacao'],
+            $row['elaboradorid']
+        );
+        return $questionario;
+    }
+
+    public function buscaOferta($idOferta)
+    {
+        $table_name_tmp = "oferta";
+
+        $query = "SELECT
+                    *
+                FROM
+                    " . $table_name_tmp . "
+                WHERE
+                    id = ? ORDER BY id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $idOferta);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $oferta = new Oferta(
+            $row['id'],
+            $row['data'],
+            null,
+            $row['respondenteid']
+        );
+        $oferta->setQuestionario($this->buscaInfoQuestionario($row['questionarioid']));
+        return $oferta;
+    }
+
+    public function buscaInfoNotasPorId($idResp)
+    {
+        $submissoes = array();
+
+        $table_name_tmp = "submissao";
+
+        $query = "SELECT
+                    *
+                FROM
+                    " . $table_name_tmp . "
+                WHERE
+                    respondenteid = ? ORDER BY id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $idResp);
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            $respondente = new Respondente($row['id'], $row['login'], $row['senha'], $row['nome'], $row['email'], $row['telefone']);
-            $aux[] = $row['questionarioid'];
-            var_dump($aux[0]);
-            foreach ($aux as $questionario){
+        // Obtém a lista de objetos
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $submissao = new Submissao(
+                $row['id'],
+                $row['nomeOcasiao'],
+                $row['descricao'],
+                $row['data'],
+                null,
+                // Define a oferta como null por enquanto
+                null, // Define o respondente como null por enquanto
+                $row['notatotal']
+            );
 
-            }
+            // Obtém a oferta e o respondente relacionados
+            $submissao->setOferta($this->buscaOferta($row['ofertaid']));
+            $submissoes[] = $submissao;
         }
-
-        return $respondente;
+        return $submissoes;
     }
 
     public function buscaRespondenteJSON($id)
     {
         $resp = $this->buscaPorId($id);
+        $listaQuest = $this->buscaInfoNotasPorId($id);
         if ($resp != null) {
-            return stripslashes(json_encode($resp->getDadosParaJSON(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            return stripslashes(json_encode($resp->getDadosParaJSON($listaQuest), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         } else {
             return null;
         }
@@ -258,7 +320,8 @@ class PostgresRespondenteDao extends PostgresDao implements RespondenteDao
         $respondentes = $this->buscaTodos();
         $respJSON = array();
         foreach ($respondentes as $resp) {
-            $respJSON[] = $resp->getDadosParaJSON();
+            $listaQuest = $this->buscaInfoNotasPorId($resp->getId());
+            $respJSON[] = $resp->getDadosParaJSON($listaQuest);
         }
         return stripslashes(json_encode($respJSON, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }

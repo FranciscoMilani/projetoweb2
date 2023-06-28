@@ -19,8 +19,23 @@ class Respondente extends Usuario
         $this->telefone = $telefone;
     }
 
-    public function getDadosParaJSON($dataQuestionario) {
-        $data = ['id' => $this->getId(), 'login' => $this->getLogin(), 'senha' => $this->getSenha(), 'nome' => $this->getNome(), 'email' => $this->getEmail(), 'telefone' => $this->getTelefone(), 'Questionario' => $dataQuestionario];
+    public function getDadosParaJSON($listQuest)
+    {
+        $data = [
+            'id' => $this->getId(),
+            'login' => $this->getLogin(),
+            'senha' => $this->getSenha(),
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'telefone' => $this->getTelefone(),
+            'Questionarios' => []
+        ];
+        foreach ($listQuest as $sub) {
+            $data['Questionarios'][] = [
+            'nomeQuestionario' => $sub->getOferta()->getQuestionario()->getNome(),
+            'notaObtida' => $sub->getNotaTotal()
+            ];
+        }
         return $data;
     }
 }
