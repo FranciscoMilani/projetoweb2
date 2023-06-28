@@ -11,9 +11,9 @@ require "verificaElaborador.php";
 include_once 'LayoutHeader.php';
 ?>
 
-    <div class="containerOferta">
-        <div class="divOfertas">
-            <p style='margin-left: 10px'>Marque o questionário a ser ofertado:</p>
+    <div class="containerOferta flex-wrap">
+        <div class="divOfertas rounded-2">
+            <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Marque um questionário</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
                     <div class="align-self-stretch">
@@ -27,8 +27,8 @@ include_once 'LayoutHeader.php';
                     </div>
                 </div>
         </div>
-        <div class="divOfertas">
-            <p style='margin-left: 10px'>Marque os respondentes a serem ofertados:</p>
+        <div class="divOfertas rounded-2">
+            <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Marque os respondentes</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
                     <div class="align-self-stretch">
@@ -44,7 +44,12 @@ include_once 'LayoutHeader.php';
                 </div>
         </div>
     </div>
-    <br />
-    <input type="button" value="Ofertar" id="btOfertar">
+    <br>
+    <div class="w-100">
+        <div class="d-flex justify-content-evenly align-items-center">
+            <a href="Menu.php" class="btn btn-primary bi bi-arrow-left p-2" style="font-size: 25px; min-width:75px;"></a>
+            <input type="button" class="btn btn-primary fw-semibold fs-6" value="Ofertar" id="btOfertar">
+        </div>
+    </div>
 
 <?php include_once 'LayoutFooter.php' ?>
