@@ -17,14 +17,14 @@ include_once 'LayoutHeader.php';
         <label for="telefone">Instituição</label>
         <input type="text" name="instituicao" required>
         <input type="submit" value="Enviar" id="btCadastro">
-        <a type="button" onclick="location.href='Index.php'" value="voltar" class="classeVoltar text-center"><i class="bi bi-arrow-left fs-4"></i></a>
-    </form>
-    <?php 
+        <a type="button" onclick="location.href='ControleElaboradores.php'" value="voltar" class="classeVoltar text-center"><i class="bi bi-arrow-left fs-4"></i></a>
+        <?php 
         if (isset($_SESSION['mensagem'])) {
-            echo $_SESSION['mensagem'];
+            echo "<span class='text-center'>{$_SESSION['mensagem']}</span>";
             unset($_SESSION['mensagem']);
         }
-    ?>
+        ?>
+    </form>
 </div>
 
 <?php

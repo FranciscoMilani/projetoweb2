@@ -20,7 +20,7 @@ include_once "LayoutHeader.php";
             <label for="login">Login</label>
             <input type="text" name="login" value="<?php echo $elaborador->getLogin(); ?>" required>
             <label for="senha">Senha</label>
-            <input type="password" name="senha" value="<?php echo $elaborador->getSenha(); ?>" required>
+            <input type="password" name="senha" required>
             <label for="email">E-mail</label>
             <input type="email" name="email" placeholder="email_elaborador@email.com"
                 value="<?php echo $elaborador->getEmail(); ?>" required>
@@ -28,7 +28,13 @@ include_once "LayoutHeader.php";
             <input type="text" name="instituicao" value="<?php echo $elaborador->getInstituicao(); ?>" required>
             <input type="submit" value="Enviar" id="btCadastro">
             <input type='hidden' name='id' value='<?php echo $elaborador->getId(); ?>' />
-            <a type="button" onclick="location.href='Index.php'" value="voltar" class="classeVoltar text-center"><i class="bi bi-arrow-left fs-4"></i></a>
+            <a type="button" onclick="location.href='ControleElaboradores.php'" value="voltar" class="classeVoltar text-center"><i class="bi bi-arrow-left fs-4"></i></a>
+            <?php 
+            if (isset($_SESSION['mensagem'])) {
+                echo "<span class='text-center'>{$_SESSION['mensagem']}</span>";
+                unset($_SESSION['mensagem']);
+            }
+            ?>
         </form>
     </div>
 </section>

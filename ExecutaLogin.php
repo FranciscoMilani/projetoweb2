@@ -12,7 +12,6 @@ if (!$login || !$senha) {
     exit;
 }
 
-// corrigir isso aqui. o elaborador e o respondente podem ter o mesmo login, e isso impede o elab de logar.
 $dao = $factory->getRespondenteDao();
 $respondente = $dao->buscaPorLogin($login);
 $daoElab = $factory->getElaboradorDao();
@@ -23,7 +22,6 @@ if ($respondente) {
     if (!strcmp($senha, $respondente->getSenha())) {
         $_SESSION["id_usuario"] = $respondente->getId();
         $_SESSION["nome_usuario"] = stripslashes($respondente->getNome());
-        // necessario para mostrar apenas os botoes de cada tipo de usuario na tela de menu
         $_SESSION["is_elaborador"] = FALSE;
         $_SESSION["is_admin"] = FALSE;
         header("Location: Menu.php");

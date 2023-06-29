@@ -3,7 +3,6 @@
 
     foreach ($_POST as $variavel){
         if (!isset($variavel) || empty($variavel)) {
-            // algo não foi setado
             header('Location: CadastroUsuario.php');
             exit;
         }

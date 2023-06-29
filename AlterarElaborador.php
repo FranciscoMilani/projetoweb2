@@ -1,5 +1,6 @@
 <?php
 include_once "fachada.php";
+include_once "verificaAdmin.php";
 
 $id = @$_POST["id"];
 $login = @$_POST["login"];
@@ -9,10 +10,39 @@ $email = @$_POST["email"];
 $instituicao = @$_POST["instituicao"];
 $isAdmin = false;
 
-$elaborador = new Elaborador($id,$login, $senha, $nome, $email, $instituicao, $isAdmin);
-$dao = $factory->getElaboradorDao();
-$dao->altera($elaborador);
+$daoElaborador = $factory->getElaboradorDao();
+$daoRespondente = $factory->getRespondenteDao();
 
-header("Location: ControleElaboradores.php");
-exit;
+$mesmoLogin = false;
+$userObj = $daoElaborador->buscaPorId($id);
+if (!empty($userObj)){
+    $mesmoLogin = $login == $userObj->getLogin();
+}
+
+$loginExistenteElab = $daoElaborador->buscaPorLogin($login);
+$loginExistenteResp = $daoRespondente->buscaPorLogin($login);
+
+if ($mesmoLogin){
+    $elaborador = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isAdmin);
+    $daoElaborador->altera($elaborador);
+
+    $_SESSION['mensagem'] = 'Cadastro atualizado!';
+    header('Location: ModificaElaborador.php?id='.$id);
+    exit;
+}
+
+if (($loginExistenteElab != null && $login == $loginExistenteElab->getLogin()) 
+    || $loginExistenteResp != null && $login == $loginExistenteResp->getLogin()) {
+
+    $_SESSION['mensagem'] = 'Login já existe';
+    header('Location: ModificaElaborador.php?id='.$id);
+    exit;
+} else {
+    $elaborador = new Elaborador($id, $login, $senha, $nome, $email, $instituicao, $isAdmin);
+    $daoElaborador->altera($elaborador);
+
+    $_SESSION['mensagem'] = 'Cadastro atualizado!';
+    header('Location: ModificaElaborador.php?id='.$id);
+    exit;
+}
 ?>
