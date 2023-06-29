@@ -4,6 +4,8 @@ let limit = 5;
 function carregaDetalhe(linha){
     let query = $('#search_box').val();
     let id = $(linha).find(">:first-child").text();
+    
+    $('#texto-selecionar-submissao').text("Selecione uma submissão de " + $(linha).find("td").eq(2).text())
 
     if ($(linha).find(">:first-child").text() !== null){
         respId = id;

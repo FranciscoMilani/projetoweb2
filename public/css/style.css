@@ -249,6 +249,17 @@ body {
 .menuBotoes {
 	width: 150px;
 	height: 150px;
+	box-shadow:  5px #000000 !important;
+	text-shadow: 10px, 10px, 10px #000000;
+	background: rgb(115,188,231);
+	background: linear-gradient(110deg, rgba(115,188,231,1) 0%, rgba(53,155,255,1) 30%, rgba(57,117,255,1) 64%, rgba(0,86,255,1) 100%);
+	border: 0 !important;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+	transition: transform 0.07s ease-in-out !important;
+}
+
+.menuBotoes:hover{
+	transform: scale(1.07) !important;
 }
 
 .containerOferta {
@@ -294,4 +305,10 @@ tr[onclick]:hover {
 
 .botao-vinculo:hover {
 	-webkit-text-stroke: .7px;
+}
+
+#texto-selecionar-submissao{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

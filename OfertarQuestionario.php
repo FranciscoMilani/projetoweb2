@@ -53,4 +53,7 @@ include_once 'LayoutHeader.php';
         </div>
     </div>
 
-<?php include_once 'LayoutFooter.php' ?>
+<?php 
+echo "</section>";
+include_once 'LayoutFooter.php' 
+?>

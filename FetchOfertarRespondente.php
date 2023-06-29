@@ -20,7 +20,7 @@ $total_data = $dao->contaComNome($query);
 if (!$respondentes || empty($respondentes)) {
     header('Content-Type: application/json');
     echo json_encode([
-        'html3' => '<br><br>Não há registros disponíveis para essa pesquisa',
+        'html3' => '<br><br>Nenhum registro foi encontrado',
         'html4' => ''
     ]);
     exit;

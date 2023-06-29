@@ -22,7 +22,7 @@ $total_data = $dao->contaDoElaboradorComNome($query,  $_SESSION['id_elaborador']
 
 if (!$questionarios || empty($questionarios)){
     header('Content-Type: application/json');
-    echo json_encode(['html1' => '<br><br>Não há registros disponíveis para essa pesquisa',
+    echo json_encode(['html1' => '<br><br>Nenhum registro foi encontrado',
                       'html2' => '']);
     exit;
 }

@@ -12,7 +12,7 @@ include_once "LayoutHeader.php";
 
 <section class="">
     <div class="containerOferta flex-wrap">
-        <div class="divOfertas rounded-2">
+        <div class="divOfertas rounded-2 container mw-100">
             <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Selecione um respondente</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
@@ -29,7 +29,7 @@ include_once "LayoutHeader.php";
                 </div>
         </div>
         <div class="divOfertas rounded-2">
-            <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Selecione uma submissão</p>
+            <p class="text-center fs-3 fw-semibold text-secondary-emphasis" id="texto-selecionar-submissao" style='margin-left: 10px'>Selecione uma submissão</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
                     <div class="input-group flex-nowrap align-self-stretch shadow-sm rounded-2">
@@ -43,6 +43,12 @@ include_once "LayoutHeader.php";
                         <!-- paginação -->
                     </div>
                 </div>
+        </div>
+    </div>
+<br>
+    <div class="w-100">
+        <div class="d-flex justify-content-evenly align-items-center">
+            <a href="Menu.php" class="btn btn-primary bi bi-arrow-left p-2" style="font-size: 25px; min-width:75px;"></a>
         </div>
     </div>
 <?php

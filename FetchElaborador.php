@@ -20,7 +20,7 @@
 
     if (!$elaboradores || empty($elaboradores)){
         header('Content-Type: application/json');
-        echo json_encode(['html1' => '<br><br>Não há registros disponíveis para essa pesquisa',
+        echo json_encode(['html1' => '<br><br>Nenhum registro foi encontrado',
                           'html2' => '']);
         exit;
     }
