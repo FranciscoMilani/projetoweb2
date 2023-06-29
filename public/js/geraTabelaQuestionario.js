@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    let limit = 10;    
+    let limit = 5;    
+
     load_data(limit, 1);
 
     function load_data(limit, page, query = '')
@@ -15,24 +16,25 @@ $(document).ready(function(){
             },
             success:function(response)
             {
-                var html1 = response.html1;
-                var html2 = response.html2;
+                let html1 = response.html1;
+                let html2 = response.html2;
 
                 $('#dynamic_content').html(html1);
+                atualiza_lista_questionario();
                 $('#pagination_list').html(html2);
             }
         });
     }
 
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
+    $(document).on('click', '#pagination_list .page-link', function() {
+        let page = $(this).data('page_number');
+        let query = $('#search_box').val();
         load_data(limit, page, query);
     });
 
 
     $('#search_box').keyup(function(){
-        var query = $('#search_box').val();
+        let query = $('#search_box').val();
         load_data(limit, 1, query);
     });
 });

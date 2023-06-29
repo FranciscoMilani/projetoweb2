@@ -22,13 +22,16 @@
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
     <?php
 
         if(isset($tipoLista)){
             if ($tipoLista == "OfertaQuestionarioRespondente"){
-                echo "<script src=\"public/js/marcarLinha.js\" data-tipo_tabela=\"OfertarQuestionario\"></script>";
-                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaQuestionario.js\"></script>";
-                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabelaRespondente.js\"></script>";
+                echo "<script src=\"public/js/marcarLinha.js\"></script>";
+                echo "<script src=\"public/js/geraTabelaQuestionario.js\"></script>";
+                echo "<script src=\"public/js/geraTabelaRespondente.js\"></script>";
             } else {
                 if (isset($objs)){
                     echo "<script type=\"application/javascript\"> const newObj = ".json_encode(json_decode($objs))."; </script>";
