@@ -35,14 +35,13 @@ if ($ofertas) {
     $output .= "
     <div class=\"table-responsive\">
         <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
-            <tr>
+            <thead>
                 <th>Nome</th>
                 <th>Descrição</th>
                 <th>Data</th>
                 <th>Criado Por</th>
                 <th></th>
-                <th></th>
-            </tr>
+            </thead>
     ";
 
     foreach ($ofertas as $oferta) {
@@ -51,53 +50,41 @@ if ($ofertas) {
         $date = new DateTime($oferta->getData());
         $formattedDate = date('d/m/Y', strtotime($date->format('Y-m-d')));
 
-        $output .= "
-        <tr>
-            <td>{$quest->getNome()}</td>
-            <td>{$quest->getDescricao()}</td>
-            <td>{$formattedDate}</td>
-            <td>{$elab->getNome()}</td>
-        ";
-
         // verifica se já foi respondido e troca botão
         $submissao = $daoSubmissao->buscaPorOfertaRespondenteId($oferta->getId(), $idUsuario);
 
         if (!isset($submissao)){
-            
-            // botão para Responder
             $output .= "
-            <td>
-                <a href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}' class='btn btn-info'>
-                    <span class='glyphicon glyphicon-edit'></span> Responder
-                </a>
-            </td>
+            <tr class=\"destacavel\">
+                <td onclick=\"location.href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}'\">{$quest->getNome()}</td>
+                <td onclick=\"location.href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}'\">{$quest->getDescricao()}</td>
+                <td onclick=\"location.href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}'\">{$formattedDate}</td>
+                <td onclick=\"location.href='RespondeQuestionario.php?ofertaId={$oferta->getId()}&questId={$oferta->getQuestionario()}'\">{$elab->getNome()}</td>
             ";
 
-            // botão para ver resposta
+            // botão para responder
             $output .= "
-            <td>
-                <span class='glyphicon glyphicon-edit btn btn-secondary disabled'>Visualizar</span>
+            <td class=\"bg-secondary text-white bi bi-clipboard-fill\">
+                    <span class=\"text-white d-block\">Responder</span>
             </td>
             ";
 
         } else {
 
-            // aviso de já respondido
             $output .= "
-            <td>
-                <button class='glyphicon glyphicon-edit btn btn-secondary' disabled>Respondido</button>
-            </td>
+            <tr class=\"destacavel\">
+                <td onclick=\"location.href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$quest->getNome()}</td>
+                <td onclick=\"location.href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$quest->getDescricao()}</td>
+                <td onclick=\"location.href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$formattedDate}</td>
+                <td onclick=\"location.href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$elab->getNome()}</td>
             ";
 
-            // botão para ver resposta
+            // aviso de já respondido
             $output .= "
-            <td>
-                <a href='VisualizarResultados.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn position-relative btn-info'>
-                    <span class=\"glyphicon glyphicon-edit\"></span> Visualizar
-                </a>
+            <td class=\"bg-light bi bi-search\">
+                <span class=\"d-block\">Visualizar</span>
             </td>
-            ";
-            
+            ";          
         }
 
         $output .= "

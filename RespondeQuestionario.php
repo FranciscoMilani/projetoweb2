@@ -48,6 +48,7 @@
                 var idQuestao;
                 
                 idQuestao = $(this).attr('id');
+                idQuestao = idQuestao.substr(1);
                 if($(this).find('.selecionavel').length){
                     $(this).find('.selecionavel:checked').each(function(){
                         var idAlternativa = $(this).attr('id');
@@ -105,7 +106,7 @@
                 $alternativas = $daoAlternativa->buscaPorQuestaoId($questao->getId()); 
                 $idQ = $questao->getId();
                 
-                echo '<div class="container-fluid my-3 py-4 questao" id="'.$idQ.'">';
+                echo '<div class="container-fluid my-3 py-4 questao" id="q'.$idQ.'">';
                 echo '<div class="card mx-auto" style="max-width:700px">';
                 echo '<div class="card-header bg-body-secondary">';
                 echo '<span class="fw-bold"> Questão '.($i + 1).': </span>';
@@ -136,7 +137,7 @@
                     }
                 }
                 else {
-                    echo '<textarea class="discursiva form-control" name="respostas['.$questao->getId().']['.(-1).']" id="'.$questao->getId().'" cols="30" rows="5"></textarea>';
+                    echo '<textarea class="discursiva form-control" name="respostas['.$questao->getId().']['.(-1).']" id="q'.$questao->getId().'" cols="30" rows="5"></textarea>';
                 }
 
                 echo '</div>';

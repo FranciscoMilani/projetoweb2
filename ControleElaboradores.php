@@ -1,9 +1,4 @@
 <?php
-$mensagem = @$_GET["mensagem"];
-if (!empty($mensagem)) {
-    echo "<script>alert('$mensagem');</script>";
-}
-
 $titulo = "Controle Elaboradores";
 $tipoLista = "Elaborador";
 include "verificaAdmin.php";

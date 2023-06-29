@@ -9,6 +9,12 @@
     $pontos = $_POST['pontos'];
     $ordem = $_POST['ordem'];
 
+    if ($ordem < 1){
+        $response_array['status'] = 'ordem_menor_que_um';
+        echo json_encode($response_array);
+        exit;
+    }
+
     // valida
     foreach ($_POST as $var){
     if (!isset($var) || empty($var)) {

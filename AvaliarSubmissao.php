@@ -138,8 +138,8 @@
                 echo '      </div>';
                 echo '      <div class="w-25 ms-3 d-flex flex-column">';
                 echo '          <label for="respostas['.$respostaQuestao->getId().'][nota]" class="form-label">Nota</label>';
-                echo '          <input type="number" class="nota form-control align-self-start" name="respostas['.$respostaQuestao->getId().'][nota]" 
-                min="0" max="'.$qq->getPontos().'" step=".01" required></input>';
+                echo '          <input type="number" class="nota form-control align-self-start" min="0" name="respostas['.$respostaQuestao->getId().'][nota]" 
+                min="0" max="'.$qq->getPontos().'" step=".10" required></input>';
                 echo '          <span class="text-secondary">(0 ... '.$qq->getPontos().')</span>';
                 echo '      </div>';
                 echo '  </div>';

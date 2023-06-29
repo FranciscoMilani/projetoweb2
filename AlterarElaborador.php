@@ -8,15 +8,16 @@ $senha = @$_POST["senha"];
 $nome = @$_POST["nome"];
 $email = @$_POST["email"];
 $instituicao = @$_POST["instituicao"];
-$isAdmin = false;
 
 $daoElaborador = $factory->getElaboradorDao();
 $daoRespondente = $factory->getRespondenteDao();
 
 $mesmoLogin = false;
+$isAdmin = false;
 $userObj = $daoElaborador->buscaPorId($id);
 if (!empty($userObj)){
     $mesmoLogin = $login == $userObj->getLogin();
+    $isAdmin = $userObj->getIsAdmin();
 }
 
 $loginExistenteElab = $daoElaborador->buscaPorLogin($login);

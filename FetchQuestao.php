@@ -36,7 +36,7 @@ $output .= "
 
 foreach ($questoes as $questao) {
     $output .= "
-                <tr class=\"destacavel\">
+                <tr>
                     <td>{$questao->getId()}</td>
                     <td>{$questao->getDescricao()}</td>
                     <td>{$questao->getTipo()}</td>

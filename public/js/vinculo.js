@@ -22,26 +22,27 @@ $(document).ready(function(){
                 },
                 success: function(dados) {
                     if (dados.status === 'sucesso'){
-                        alert('Cadastro efetuado para a questão de ID ' + idQuestao);
+                        //Swal.fire("Cadastro efetuado para a questão de ID " + idQuestao);
                         switchBotaoVinculo($botao);
                     } else if (dados.status === 'erro'){
-                        alert('Ocorreu um erro inesperado.');
+                        Swal.fire("Ocorreu um erro");
                     } else if (dados.status === 'ja_existe'){
-                        alert('Ocorreu um erro. A questão já está cadastrada.');
+                        Swal.fire("Ocorreu um erro. A questão já está cadastrada");
                     } else if (dados.status === 'ordem_repetida'){
-                        alert('A ordem não pode se repetir');
+                        Swal.fire("A ordem não pode se repetir");
+                    } else if (dados.status === 'ordem_menor_que_um'){
+                        Swal.fire("A ordem não pode ser menor que 1");
                     }
                 },
-                error: function(xhs, status, erro) {
-                    console.log(erro)
-                    alert("Ocorreu um erro");
+                error: function(xhr, status, error) {
+                    Swal.fire("Ocorreu um erro inesperado", '', 'error');
                 }
             })
             .done(function(){
 
             });
         } else {
-            alert('Não pode inserir valores vazios');
+            Swal.fire("Não pode inserir valores vazios");
             return;
         }
     });
@@ -61,15 +62,14 @@ $(document).ready(function(){
             },
             success: function(dados) {
                 if (dados.status === 'sucesso'){
-                    alert('Removido vínculo');
+                    //Swal.fire("Removido Vínculo");
                     switchBotaoVinculo(botao);
                 } else if (dados.status === 'erro'){
-                    alert('Ocorreu um erro inesperado ao remover');
+                    Swal.fire("Ocorreu um erro inesperado ao desvincular");
                 }
             },
             error: function(xhs, status, erro) {
-                console.log(erro)
-                alert("Ocorreu um erro");
+                Swal.fire("Ocorreu um erro inesperado");
             }
         })
         .done(function(){

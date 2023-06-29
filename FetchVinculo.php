@@ -64,8 +64,8 @@
         if (!in_array($questao->getId(), $idQstsExcept)){
             $qQuestao = $daoQuestionarioQuestao->buscaPorIds($qId, $questao->getId());
             $output .= "
-                <td><input type=\"number\" class=\"form-control ponto-input\" value=\"{$qQuestao->getPontos()}\" disabled></td>
-                <td><input type=\"number\" class=\"form-control ordem-input\" value=\"{$qQuestao->getOrdem()}\" disabled></td>
+                <td><input type=\"number\" class=\"form-control ponto-input\" min=1 value=\"{$qQuestao->getPontos()}\" disabled></td>
+                <td><input type=\"number\" class=\"form-control ordem-input\" min=1 value=\"{$qQuestao->getOrdem()}\" disabled></td>
                 <td>
                     <button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fs-4 bi bi-trash\"></button>
                     <button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fs-4 bi bi-link-45deg\" disabled hidden></button>
@@ -74,8 +74,8 @@
             ";
         } else {
             $output .= "
-                <td><input type=\"number\" class=\"form-control ponto-input\"></td>
-                <td><input type=\"number\" class=\"form-control ordem-input\"></td>
+                <td><input type=\"number\" class=\"form-control ponto-input\" min=1></td>
+                <td><input type=\"number\" class=\"form-control ordem-input\" min=1></td>
                 <td>
                     <button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fs-4 bi bi-link-45deg\"></button>
                     <button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fs-4 bi bi-trash\" disabled hidden></button>

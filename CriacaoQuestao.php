@@ -15,7 +15,7 @@
     <div class="form paginaLogin container">
         <form id="formId" action="CriaQuestao.php" method="POST" class="cadastro-questao-form" enctype="multipart/form-data" onsubmit="verificaTamanho(event)">
 
-            <textarea class="form-control" style="resize:none;" name="descricao" cols="30" rows="10" placeholder="Descrição da questão..." required></textarea>
+            <textarea class="form-control" name="descricao" rows="5" placeholder="Descrição da questão..." required></textarea>
 
             <div class="my-4">
                 <script type="text/javascript">

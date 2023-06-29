@@ -93,7 +93,7 @@
             }
         ?>
         <div class="d-flex justify-content-center">
-            <a href="ListaOfertas.php" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center">Retornar</a>
+            <a href="ControleQuestionarios.php" id="btn-retornar" class="btn btn-primary btn-lg m-4 mx-auto float-center">Retornar</a>
         </div>
     </section>
 </main>

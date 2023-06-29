@@ -15,7 +15,7 @@ try {
     }
     
     header("Location: ControleElaboradores.php?mensagem=Erro ao excluir, este elaborador possui vínculos!");
-
+    exit;
 } catch (\Throwable $th) {
     header("Location: ControleElaboradores.php?mensagem=Erro ao excluir, este elaborador possui vínculos!");
     exit;

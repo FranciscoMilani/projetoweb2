@@ -16,15 +16,17 @@ class Elaborador extends Usuario
     {
         return $this->instituicao;
     }
+
     public function setInstituicao($instituicao)
     {
         $this->instituicao = $instituicao;
     }
-
+    
     public function getIsAdmin()
     {
         return $this->isAdmin;
     }
+
     public function setIsAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
