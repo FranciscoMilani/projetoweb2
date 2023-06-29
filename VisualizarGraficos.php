@@ -155,13 +155,15 @@ function destroi_chart(chartId){
                     </div>
                 </div>
                 <div style="width: 20px; height: 20px;"></div>
-                <div class="row justify-content-center" style="margin-bottom: 50px;">
+                <!-- <div class="row justify-content-center" style="margin-bottom: 50px;">
                     <div class="col-10 card">
-                        <div class="p-3 text-center" style="width:40vw !important">
-                            <p style="display: block;"></p>
+                        <div class="p-3" style="width:40vw !important">
+                            <p>Número de questionários do elaborador:</p>
+                            <p>Número de questionários total:</p>
+                            <p>Número de questionários total:</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
         </main>
         
