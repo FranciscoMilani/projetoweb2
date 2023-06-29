@@ -1,53 +1,35 @@
 <?php
-$mensagem = @$_GET['mensagem'];
+$mensagem = @$_GET["mensagem"];
 if (!empty($mensagem)) {
     echo "<script>alert('$mensagem');</script>";
 }
 
-$titulo = 'Visualiza Questões';
-include_once 'verificaElaborador.php';
-include_once 'LayoutHeader.php';
-include_once 'Fachada.php';
+$titulo = "Visualiza Questões";
+$tipoLista = "Questao";
+include_once "verificaElaborador.php";
+include_once "LayoutHeader.php";
+?>
 
-
-echo "<section>";
-
-// procura questoes
-$dao = $factory->getQuestaoDao();
-$questoes = $dao->buscaTodos();
-
-$daoElab = $factory->getElaboradorDao();
-
-echo "<button class=\"classeBotoes\" onclick=\"location.href='CriacaoQuestao.php'\">Nova Questão</button>";
-
-//cria tabela
-if ($questoes) {
-    echo "<div class=\"table-responsive\">";
-    echo "<table id=\"tbQuestionario\" class='table table-hover table-bordered'>";
-    echo "<tr>";
-    echo "<th>Id</th>";
-    echo "<th>Descrição</th>";
-    echo "<th>Tipo</th>";
-    // echo "<th></th>";
-    echo "</tr>";
-    
-    foreach ($questoes as $quest) {
-        echo "<tr>";
-        echo "<td>{$quest->getId()}</td>";
-        echo "<td>{$quest->getDescricao()}</td>";
-        echo "<td>{$quest->getTipo()}</td>";
-        // echo "<td>";
-        // // botão para remover uma questão
-        // echo "<a href='ExcluiQuestao.php?id={$quest->getId()}' class='btn btn-danger'";
-        // echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-        // echo "<span class='glyphicon glyphicon-remove'></span> Exclui";
-        // echo "</a>";
-        // echo "</td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-    echo "</div>";
-}
+<section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
+    <div class="d-flex flex-column text-center justify-content-around container-listagem">
+        <button class="classeBotoes" onclick="location.href='CriacaoQuestao.php'">Nova Questão</button>
+        
+        <div class="input-group flex-nowrap align-self-stretch shadow-sm rounded-2">
+            <span class="input-group-text bi bi-search" id="addon-wrapping"></span>
+            <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0" id="search_box">
+        </div>
+        <div class="table-responsive mt-3" id="dynamic_content">
+            <!-- conteúdo dinâmico -->
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center px-1 mt-2">  
+            <a href="Menu.php" class="btn btn-primary btn-lg bi bi-arrow-left"></a>
+            <div class="" id="pagination_list">
+                <!-- paginação -->
+            </div>    
+        </div>
+    </div>
+</section>
+<?php
 echo "</section>";
 include_once "LayoutFooter.php";
 ?>

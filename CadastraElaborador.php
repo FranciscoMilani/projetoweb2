@@ -33,7 +33,7 @@ try {
     } else {
         $_SESSION['mensagem'] = 'Cadastro efetuado';
         $dao->insere(new Elaborador(null, $login, $senha, $nome, $email, $instituicao, $isAdmin));
-        header('Location: CadastroElaborador.php');
+        header('Location: ControleElaboradores.php');
         exit;
     }
 

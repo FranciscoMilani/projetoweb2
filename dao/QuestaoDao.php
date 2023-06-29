@@ -7,5 +7,6 @@
         public function buscaTodos();
         public function buscaPorDescricaoTipoPaginado($desc, $isDisc, $isObj, $isMult, $limit, $offset);
         public function contaComDescricao($desc);
+        public function buscaPorDescricaoPaginado($nome, $limit, $offset);
     }
 ?>
