@@ -27,19 +27,18 @@
 
     $output .= " 
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
-        <tr class=\"table-head\">
+        <thead class=\"table-head\">
             <th>Id</th>
             <th>Login</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Telefone</th>
             <th></th>
-            <th></th>
-        </tr>
+        </thead>
     ";
 
     foreach ($respondentes as $resp) {
-        $output .= "<tr>
+        $output .= "<tr class=\"destacavel\" onclick=\"carregaDetalhe(this)\">
                 <td>{$resp->getId()}</td>
                 <td>{$resp->getLogin()}</td>
                 <td>{$resp->getNome()}</td>
@@ -54,11 +53,6 @@
                         <span class='bi bi-trash3-fill p-2'></span>
                     </a>
                 </td>
-                <td>
-                    <a href='ControleResultados.php?id={$resp->getId()}' class='btn btn-secondary d-flex flex-column' style='height: 100% !important;'>
-                        <span class='bi bi-clipboard-check-fill p-2'></span>
-                    </a>
-                </td>
             </tr>";  
     }
 
@@ -70,15 +64,15 @@
     ob_start();
 
     // Inclui o layout da paginação
-    include_once "LayoutPaginacao.php";
+    include_once "LayoutPaginacao2.php";
 
     // Atribui a saída em string numa variável
-    $output2 = ob_get_clean();
+    $output3 = ob_get_clean();
 
     // Constrói array com saída dos dois arquivos PHP
     $response = array(
         'html1' => $output,
-        'html2' => $output2
+        'html2' => $output3
     );
         
     // Define content-type e envia JSON codificado para ser recebido pelo AJAX

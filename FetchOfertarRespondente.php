@@ -49,7 +49,7 @@ $output .= "</table>";
 ob_start();
 
 // Inclui o layout da paginação
-include_once "LayoutPaginacaoOfertarResp.php";
+include_once "LayoutPaginacao2.php";
 
 // Atribui a saída em string numa variável
 $output3 = ob_get_clean();

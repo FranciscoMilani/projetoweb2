@@ -27,8 +27,8 @@
     
     if (!$ofertasSubm || empty($ofertasSubm)) {
         header('Content-Type: application/json');
-        echo json_encode(['html1' => '<br><br>Não há registros disponíveis para essa pesquisa',
-                          'html2' => '']);
+        echo json_encode(['html3' => '<br><br>Não há registros disponíveis para essa pesquisa',
+                          'html4' => '']);
         exit;
     }
 
@@ -37,9 +37,7 @@
         <thead class=\"table-head\">
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Data</th>
-            <th>Criado Por</th>
-            <th></th>
+            <th>Data Submissão</th>
         </thead>
     ";
 
@@ -51,18 +49,11 @@
         $formattedDate = date('d/m/Y', strtotime($date->format('Y-m-d')));
 
         $output .= "
-        <tr>
-            <td>{$quest->getNome()}</td>
-            <td>{$quest->getDescricao()}</td>
-            <td>{$formattedDate}</td>
-            <td>{$elab->getNome()}</td>
-
-            <td>
-                <a href='AvaliarSubmissao.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}' class='btn btn-info'>
-                    <span class='glyphicon glyphicon-edit'></span> Avaliar
-                </a>
-            </td>
-        </tr>
+            <tr class=\"destacavel\">
+                <td onclick=\"location.href='AvaliarSubmissao.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$quest->getNome()}</td>
+                <td onclick=\"location.href='AvaliarSubmissao.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$quest->getDescricao()}</td>
+                <td onclick=\"location.href='AvaliarSubmissao.php?questionarioId={$quest->getId()}&submissaoId={$submissao->getId()}'\">{$formattedDate}</td>
+            </tr>
         ";  
     }
 
@@ -81,8 +72,8 @@
 
     // Constrói array com saída dos dois arquivos PHP
     $response = array(
-        'html1' => $output,
-        'html2' => $output2
+        'html3' => $output,
+        'html4' => $output2
     );
         
     // Define content-type e envia JSON codificado para ser recebido pelo AJAX

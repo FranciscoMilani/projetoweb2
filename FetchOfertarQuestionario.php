@@ -54,12 +54,12 @@ ob_start();
 include_once "LayoutPaginacao.php";
 
 // Atribui a saída em string numa variável
-$output2 = ob_get_clean();
+$output3 = ob_get_clean();
 
 // Constrói array com saída dos dois arquivos PHP
 $response = array(
     'html1' => $output,
-    'html2' => $output2
+    'html2' => $output3
 );
 
 // Define content-type e envia JSON codificado para ser recebido pelo AJAX

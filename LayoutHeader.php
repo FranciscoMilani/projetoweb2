@@ -30,7 +30,10 @@
         if(isset($tipoLista)){
             if ($tipoLista == "OfertaQuestionarioRespondente"){
                 echo "<script src=\"public/js/marcarLinha.js\"></script>";
-                echo "<script src=\"public/js/geraTabelaQuestionario.js\"></script>";
+                echo "<script src=\"public/js/geraTabelaOfertarQuestionario.js\"></script>";
+                echo "<script src=\"public/js/geraTabelaOfertarRespondente.js\"></script>";
+            } else if ($tipoLista == "RespondenteResultado"){
+                echo "<script src=\"public/js/mestreDetalheSubmissao.js\"></script>";
                 echo "<script src=\"public/js/geraTabelaRespondente.js\"></script>";
             } else {
                 if (isset($objs)){

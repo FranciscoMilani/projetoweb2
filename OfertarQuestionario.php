@@ -16,7 +16,8 @@ include_once 'LayoutHeader.php';
             <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Marque um questionário</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
-                    <div class="align-self-stretch">
+                    <div class="input-group flex-nowrap align-self-stretch shadow-sm rounded-2">
+                        <span class="input-group-text bi bi-search" id="addon-wrapping"></span>
                         <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0" id="search_box">
                     </div>
                     <div class="table-responsive mt-3" id="dynamic_content">
@@ -31,9 +32,9 @@ include_once 'LayoutHeader.php';
             <p class="text-center fs-3 fw-semibold text-secondary-emphasis" style='margin-left: 10px'>Marque os respondentes</p>
             <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">
                 <div class="d-flex flex-column text-center justify-content-around container-listagem">
-                    <div class="align-self-stretch">
-                        <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0"
-                            id="search_box2">
+                    <div class="input-group flex-nowrap align-self-stretch shadow-sm rounded-2">
+                        <span class="input-group-text bi bi-search" id="addon-wrapping"></span>
+                        <input type="text" name="pesquisa" class="camposInputPesquisa form-control m-0" id="search_box2">
                     </div>
                     <div class="table-responsive mt-3" id="dynamic_content2">
                         <!-- conteúdo dinâmico -->
