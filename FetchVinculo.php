@@ -41,15 +41,14 @@
     $output .= " 
     <script src=\"public/js/vinculo.js\" data-tipo_tabela=\"Vinculo\"></script>
     <table class=\"table table-hover table-striped p-3 rounded-3 overflow-hidden align-middle\">
-        <tr class=\"table-head\">
+        <thead class=\"table-head\">
             <th>#</th>
             <th>Descrição</th>
             <th>Tipo</th>
             <th>Pontos</th>
             <th>Ordem</th>
             <th>Vínculo</th>
-            <th>Remover</th>
-        </tr>
+        </thead>
     ";
 
     foreach ($questoes as $questao){  
@@ -67,15 +66,21 @@
             $output .= "
                 <td><input type=\"number\" class=\"form-control ponto-input\" value=\"{$qQuestao->getPontos()}\" disabled></td>
                 <td><input type=\"number\" class=\"form-control ordem-input\" value=\"{$qQuestao->getOrdem()}\" disabled></td>
-                <td><button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fw-bold\" disabled>Vincular</button></td>
-                <td><button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fw-bold\">Remover</button></td>
+                <td>
+                    <button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fs-4 bi bi-trash\"></button>
+                    <button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fs-4 bi bi-link-45deg\" disabled hidden></button>
+                </td>
+                
             ";
         } else {
             $output .= "
                 <td><input type=\"number\" class=\"form-control ponto-input\"></td>
                 <td><input type=\"number\" class=\"form-control ordem-input\"></td>
-                <td><button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fw-bold\">Vincular</button></td>
-                <td><button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fw-bold\" disabled>Remover</button></td>
+                <td>
+                    <button class=\"botao-vinculo btn btn-success bg-success-subtle text-black fs-4 bi bi-link-45deg\"></button>
+                    <button class=\"botao-remove-vinculo btn btn-danger bg-danger-subtle text-black fs-4 bi bi-trash\" disabled hidden></button>
+                </td>
+                
             </tr>
             ";
         }

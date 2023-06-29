@@ -4,9 +4,14 @@ $titulo = "Editar Questionário";
 include_once "fachada.php";
 
 $id = @$_GET["id"];
-
 $dao = $factory->getQuestionarioDao();
+$daoO = $factory->getOfertaDao();
+
 $questionario = $dao->buscaPorId($id);
+if ($daoO->buscaPorQuestionarioId($id)){
+    header('Location: ControleQuestionarios.php?mensagem='.urlencode("Questionário já foi ofertado e não pode ser alterado"));
+    exit;
+}
 
 include_once "LayoutHeader.php";
 

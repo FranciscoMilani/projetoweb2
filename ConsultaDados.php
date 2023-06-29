@@ -21,19 +21,30 @@ class QuestionarioManager {
     }
 
     public function contaTopPorPercentualAprovacao($id) {
-        $dados = $this->daoQ->contaPorPercentualAprovacao($id);
-        $dados = [
-            "Aprovados" => $dados['porcentagem_maior_igual'],
-            "Reprovados" => $dados['porcentagem_menor'],
-        ];
-        
+        $dados = [];
+        if ($this->daoQ->buscaPorId($id)){
+            $dados = $this->daoQ->contaPorPercentualAprovacao($id);
+            
+            if (!$dados['porcentagem_maior_igual'] || !$dados['porcentagem_menor']){
+                return null;
+            }
+
+            $dados = [
+                "% Aprovados" => $dados['porcentagem_maior_igual'],
+                "% Reprovados" => $dados['porcentagem_menor'],
+            ];
+        }
+
         return $dados;
     }
 
     public function contaTotalPizza() {
         $dados = array();
-        $dados['Total Respondidos'] = $this->daoQ->contaTotalRespondidos();
-        $dados['Total Nao Respondidos'] = $this->daoQ->contaTotalNaoRespondidos();
+        $dados = [
+            "Nº Respondidos" => $this->daoQ->contaTotalRespondidos(),
+            "Nº Não Respondidos" => $this->daoQ->contaTotalNaoRespondidos()
+        ];
+
         return $dados;
     }
 }

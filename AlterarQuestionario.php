@@ -14,7 +14,7 @@ $daoE = $factory->getElaboradorDao();
 $elaborador = $daoE->buscaPorId($elaboradorId);
 
 if (!isset($elaborador)) {
-    header('Location: CriacaoQuestionario.php');
+    header('Location: ControleQuestionarios.php');
     exit;
 }
 

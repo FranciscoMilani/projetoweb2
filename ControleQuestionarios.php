@@ -1,9 +1,4 @@
 <?php
-$mensagem = @$_GET["mensagem"];
-if (!empty($mensagem)) {
-    echo "<script>alert('$mensagem');</script>";
-}
-
 $titulo = "Controle Questionários";
 $tipoLista = "Questionario";
 include_once "verificaElaborador.php";

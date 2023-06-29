@@ -1,24 +1,9 @@
 <?php 
-    $mensagem = @$_GET["mensagem"];
-    if (!empty($mensagem)) {
-        echo "<script>alert('$mensagem');</script>";
-    }
-    
-    include_once "Fachada.php";
-    
-    echo "
-    <script type=\"text/javascript\" data-tipo_tabela=\"Vinculo\">
-        var params = \"qId={$_GET['questionarioId']}\"
-        var qId = {$_GET['questionarioId']}
-    </script>
-    ";
-    
     $titulo = "Vincular Questões (Questionário ". $_GET['questionarioId']. ")";
     $tipoLista = "Vinculo";
+    include_once "Fachada.php";
     include_once "verificaElaborador.php";
     include_once "LayoutHeader.php";
-    
-    
 ?>
 
     <section class="container-fluid mt-5 w-100 w-sm-50 w-md-25">

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="public/imagens/icone.png">
+
 
     <link rel="stylesheet" href="public/css/style.css">
 
@@ -23,9 +25,15 @@
         crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
 
     <?php
+    
+        if (isset($_GET['mensagem'])){
+            $mensagem = @$_GET['mensagem'];
+            if (!empty($mensagem)) {
+                echo "<script data-tipo_tabela=\"$tipoLista\">alert('$mensagem');</script>";
+            }
+        }
 
         if(isset($tipoLista)){
             if ($tipoLista == "OfertaQuestionarioRespondente"){
@@ -35,6 +43,13 @@
             } else if ($tipoLista == "RespondenteResultado"){
                 echo "<script src=\"public/js/mestreDetalheSubmissao.js\"></script>";
                 echo "<script src=\"public/js/geraTabelaRespondente.js\"></script>";
+            } else if ($tipoLista == "Vinculo"){
+                echo "
+                <script data-tipo_tabela=\"Vinculo\">
+                    var params = \"qId={$_GET['questionarioId']}\"
+                    var qId = {$_GET['questionarioId']}
+                </script>";
+                echo "<script id=\"tipo_tabela\" data-tipo_tabela=\"$tipoLista\" src=\"public/js/geraTabela.js\"></script>";
             } else {
                 if (isset($objs)){
                     echo "<script type=\"application/javascript\"> const newObj = ".json_encode(json_decode($objs))."; </script>";
@@ -51,7 +66,7 @@
 
 <body class="bg-light">
     <header class="text-center align-middle">
-        <nav class="py-2 d-flex bg-secondary flex-col flex-wrap flex-sm-row flex-sm-nowrap justify-content-around align-content-center">
+        <nav class="py-2 d-flex flex-col flex-wrap flex-sm-row flex-sm-nowrap justify-content-around align-content-center" style="background-color: #606060;">
             <div class="align-self-center w-100">
                 <a class="my-2" href="Menu.php">
                     <img src="public/imagens/ucs.png" width="100" class="d-inline-block align-middle" alt="Logo">
@@ -72,7 +87,7 @@
                     
                     if(isset($_SESSION["nome_usuario"])) {
                         echo "<span class=\"usuarioLogado d-block\">Login | " . $_SESSION["nome_usuario"];		
-                        echo "<a href='ExecutaLogout.php' class=\"usuarioLogado d-block\"> Logout </a></span>";
+                        echo "<a href='ExecutaLogout.php' class=\"usuarioLogado d-block\">Logout <i class=\"px-2 bi bi-box-arrow-right\"></i> </a></span>";
                     } else {
                         echo "<a href='index.php' class=\"usuarioLogado d-block\"> Efetuar Login </a></span>";
                     }

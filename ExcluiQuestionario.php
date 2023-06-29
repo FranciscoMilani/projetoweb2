@@ -16,12 +16,12 @@ try {
         header("Location: ControleQuestionarios.php");
         exit;
     } else {
-        header("Location: ControleQuestionarios.php?mensagem=Erro ao excluir, este questionário já foi ofertado e não pode ser removido.");
+        header("Location: ControleQuestionarios.php?mensagem=". urlencode("Este questionário já foi ofertado e não pode ser removido"));
         exit;
     }
 
 } catch (\Throwable $th) {
-    header("Location: ControleQuestionarios.php?mensagem=Erro ao excluir, este questionário possui vínculos!");
+    header("Location: ControleQuestionarios.php?mensagem=". urlencode("Erro ao excluir, este questionário possui vínculos!"));
     exit;
 }
 ?>

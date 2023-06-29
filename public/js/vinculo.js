@@ -79,25 +79,20 @@ $(document).ready(function(){
 });
 
 function switchBotaoVinculo($botaoVinculo){
-    pontos = $botaoVinculo.closest('tr').find('.ponto-input');
-    ordem = $botaoVinculo.closest('tr').find('.ordem-input');
+    let pontos = $botaoVinculo.closest('tr').find('.ponto-input');
+    let ordem = $botaoVinculo.closest('tr').find('.ordem-input');
+    $botaoOutro = $botaoVinculo.siblings(".btn").not($botaoVinculo);
 
-    if ($botaoVinculo.text() === 'Remover'){
-        $botaoOutro = $botaoVinculo.closest('tr').find('.botao-vinculo');
-
-        $botaoVinculo.attr('disabled', true);
-        $botaoOutro.attr('disabled', false);
+    if ($botaoVinculo.hasClass('botao-remove-vinculo')){
         ordem.val('');
         pontos.val('');
-        pontos.attr('disabled', false);
-        ordem.attr('disabled', false);
-        
-    } else {
-        $botaoOutro = $botaoVinculo.closest('tr').find('.botao-remove-vinculo');
-
-        $botaoVinculo.attr('disabled', true);
-        $botaoOutro.attr('disabled', false);
-        pontos.attr('disabled', true);
-        ordem.attr('disabled', true);
     }
+
+    pontos.prop('disabled', !pontos.is(':disabled'));
+    ordem.prop('disabled', !ordem.is(':disabled'));
+
+    $botaoVinculo.prop('hidden', true);
+    $botaoVinculo.prop('disabled', true);
+    $botaoOutro.prop('hidden', false);
+    $botaoOutro.prop('disabled', false);
 }
